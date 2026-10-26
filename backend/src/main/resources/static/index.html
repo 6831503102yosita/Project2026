@@ -95,12 +95,56 @@ const emp=(m,b)=>`<div class="emp"><div class="ic">${ic('compass',44)}</div><p>$
 const nav=()=>`<nav class="top" id="nv"><div class="w nr"><a class="logo" href="#/"><span class="lb">${ic('compass',20)}</span> BlueTrail</a><button class="hb" aria-label="menu" onclick="$('#nm').classList.toggle('open')">${ic('menu',22)}</button><div class="nm" id="nm"><a href="#/">${t('home')}</a><a href="#/events">${t('events')}</a>${ME?`<a href="#/requests">${t('myreq')}</a><a href="#/bookings">${t('mybk')}</a>`:''}<button class="btn o sm" onclick="A.lang()">${L?'ไทย':'EN'}</button>${ME?`<div class="dd"><button class="btn sm" onclick="this.parentNode.classList.toggle('open')">${ic('user')} ${Z(ME.name)} ▾</button><div class="dm"><a href="#/account">${t('acc')}</a>${ME.role=='admin'?`<a href="#/admin">${t('adm')}</a>`:''}${ME.role=='organizer'?`<a href="#/organizer">${t('org')}</a>`:''}<a href="#" onclick="A.out();return false">${t('out')}</a></div></div>`:`<a class="btn sm" href="#/login">${t('login')}</a>`}</div></div></nav>`;
 const contact=()=>{const c=DB.contact;return`<section class="s"><div class="w"><div class="card pad"><h2>${t('ch')}</h2><p>${t('cp')}</p><div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr))"><div>${ic('phone')} ${Z(c.phone)}</div><div>${ic('mail')} ${Z(c.email)}</div><div>${ic('chat')} LINE ${Z(c.line)}</div><div>${ic('fb')} ${Z(c.fb)}</div><div>${ic('ig')} ${Z(c.ig)}</div><div>${ic('bld')} ${Z(c.addr)}</div></div></div></div></section>`};
 const foot=()=>{const c=DB.contact;return`<footer class="ft"><div class="w grid"><div><h4>${ic('compass')} BlueTrail</h4><p>${L?'One platform for tours and events.':'แพลตฟอร์มทัวร์และ Event ครบวงจร'}</p></div><div><h4>${L?'Menu':'เมนู'}</h4><a href="#/">${t('home')}</a><a href="#/events">${t('events')}</a><a href="#/custom">${t('ctab')}</a><a href="#/login">${t('login')}</a></div><div><h4>${t('ch')}</h4>${ic('phone')} ${Z(c.phone)}<br>${ic('mail')} ${Z(c.email)}<br>${ic('chat')} ${Z(c.line)}</div><div><h4>Social</h4>${Z(c.fb)}<br>${Z(c.ig)}</div></div><div class="w mu" style="color:#9db0d6;margin-top:16px">© 2026 BlueTrail · ${t('rights')} · ไทย / English</div></footer>`};
+let API_EVENTS = null;
+
+async function loadAPIEvents() {
+  try {
+    const events = await EventAPI.getAll();
+    API_EVENTS = events.map(EventAPI.toFrontend);
+    console.log("BlueTrail MySQL Events:", API_EVENTS);
+    if (location.hash === "" || location.hash === "#/" || location.hash === "#/home") {
+      draw();
+    }
+  } catch (error) {
+    console.error("Cannot load MySQL Events:", error);
+    API_EVENTS = null;
+  }
+}
+
+function apiEventCard(e) {
+  return `<article class="card ev">
+    <div class="im">
+      <img src="${img(e.theme)}" alt="${Z(nm(e))}">
+    </div>
+    <div class="bd">
+      <span class="tag">${t(e.cat)} · ${P[e.prov][L]}</span>
+      <h3>${Z(nm(e))}</h3>
+      <div class="mu">
+        ${ic('cal')} ${dt(e.date)} · ${e.st}<br>
+        ${ic('pin')} ${lc(e)}<br>
+        ${ic('seat')} ${t('left')} ${e.seats}
+      </div>
+      <div class="pr"><b>${fm(e.price)}</b></div>
+      <span class="tag">Booking coming soon</span>
+    </div>
+  </article>`;
+}
+
 function pgHome(){const f=DB.events.filter(e=>e.feat&&!e.arch),pr=DB.events.filter(e=>!e.arch&&(dc(e)||e.seats<=5)).slice(0,6),cu=DB.events.filter(e=>!e.arch).sort((a,b)=>a.date<b.date?-1:1).slice(0,8);
 return`<div class="w"><form class="srch" onsubmit="return A.hs(event)"><input id="hq" placeholder="${t('sph')}" value="${Z(F.q)}"><button class="btn">${ic('search')} ${t('search')}</button></form>
 <div class="car" id="car">${f.map((e,i)=>`<div class="sl${i==CI?' on':''}" style="background-image:url('${img(e.theme)}')"><div class="tx"><span class="tag" style="width:fit-content">${t(e.cat)}</span><h2>${Z(nm(e))}</h2><p>${Z(ds(e))}</p><div>${ic('cal')} ${dt(e.date)} · ${ic('pin')} ${lc(e)} · <b>${fm(e.price)}</b></div><a class="btn wh sm" style="width:fit-content" href="#/event/${e.id}">${t('det')}</a></div></div>`).join('')}<button class="cn" style="left:10px" onclick="A.car(-1)">‹</button><button class="cn" style="right:10px" onclick="A.car(1)">›</button><div class="dots">${f.map((e,i)=>`<i class="${i==CI?'on':''}" onclick="A.car(0,${i})"></i>`).join('')}</div></div>
 <div class="cta"><div><h3>${ic('spark')} ${t('ctah')}</h3><p>${t('ctap')}</p></div><a class="btn wh" href="#/custom">${t('ctab')} →</a></div></div>
 <section class="s"><div class="w"><h2>${t('rec')}</h2><div class="grid">${pr.map(card).join('')}</div></div></section>
-<section class="s"><div class="w"><div class="sh"><h2>${t('cur')}</h2><a href="#/events">${t('seeall')}</a></div><div class="grid">${cu.map(card).join('')}</div></div></section>${contact()}`}
+<section class="s"><div class="w"><div class="sh"><h2>${t('cur')}</h2><a href="#/events">${t('seeall')}</a></div><div class="grid">${cu.map(card).join('')}</div></div></section><section class="s" id="mysql-events">
+  <div class="w">
+    <h2>Events from MySQL</h2>
+    <div class="grid">
+      ${API_EVENTS === null
+        ? '<p>Loading events...</p>'
+        : API_EVENTS.filter(e => !e.arch).map(apiEventCard).join('')}
+    </div>
+  </div>
+</section>${contact()}`}
 function pgEvents(){const q=F.q.toLowerCase();const l=DB.events.filter(e=>!e.arch&&(!F.cat||e.cat==F.cat)&&(!F.reg||e.region==F.reg)&&(!F.prov||e.prov==F.prov)&&(!q||[e.th,e.en,P[e.prov][0],P[e.prov][1],e.cat,t(e.cat),R[e.region][0],R[e.region][1]].join(' ').toLowerCase().includes(q)));
 const h=[F.cat?t(F.cat):t('events')];if(F.prov)h.push(P[F.prov][L]);else if(F.reg)h.push((L?'':'ภาค')+R[F.reg][L]+(L?' Region':''));
 const pl=(k,v,lab,on)=>`<button class="pill${on?' on':''}" onclick="A.f('${k}','${v}')">${lab}</button>`;
@@ -275,6 +319,6 @@ evs(e,id){e.preventDefault();const d=fd(e);A.rz(d.ph,u=>A.evs2(d,id,u));return f
 rz(f,cb){if(!f||!f.size)return cb('');const r=new FileReader();r.onload=()=>{const i=new Image();i.onload=()=>{const k=Math.min(1,900/i.width),c=document.createElement('canvas');c.width=i.width*k;c.height=i.height*k;c.getContext('2d').drawImage(i,0,0,c.width,c.height);cb(c.toDataURL('image/jpeg',.72))};i.onerror=()=>cb('');i.src=r.result};r.readAsDataURL(f)},
 evs2(d,id,u){const o={th:d.th,en:d.en,cat:d.cat,prov:d.prov,region:P[d.prov][2],date:d.date,st:d.st,et:d.et,price:+d.price,orig:+d.orig||0,seats:+d.seats,theme:u||(d.theme=='__keep'?ev(id).theme:d.theme),feat:!!d.feat,d:[d.d0,d.d1]};if(id)Object.assign(ev(id),o);else DB.events.push({id:DB.seq.e++,...o});sv();$('#md').innerHTML='';draw();return false}};
 window.addEventListener('hashchange',()=>{draw();window.scrollTo(0,0)});window.addEventListener('resize',sizes);if(window.ResizeObserver)new ResizeObserver(sizes).observe(document.body);
-migLegacy();setInterval(()=>{if(sweep())draw()},60000);setInterval(()=>{if($('#car')&&!document.hidden)A.car(1)},5500);draw();
+migLegacy();loadAPIEvents();setInterval(()=>{if(sweep())draw()},60000);setInterval(()=>{if($('#car')&&!document.hidden)A.car(1)},5500);draw();
 
 </script></body></html> 
