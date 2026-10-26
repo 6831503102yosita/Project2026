@@ -172,14 +172,48 @@ function mysqlEventsSection() {
   </section>`;
 }
 
-function pgEvents(){const q=F.q.toLowerCase();const l=DB.events.filter(e=>!e.arch&&(!F.cat||e.cat==F.cat)&&(!F.reg||e.region==F.reg)&&(!F.prov||e.prov==F.prov)&&(!q||[e.th,e.en,P[e.prov][0],P[e.prov][1],e.cat,t(e.cat),R[e.region][0],R[e.region][1]].join(' ').toLowerCase().includes(q)));
+function getUnifiedEvents() {
+  const localEvents = DB.events
+    .filter(e => !e.arch)
+    .map(e => ({ source: 'local', event: e }));
+
+  const mysqlEvents = (API_EVENTS || [])
+    .filter(e => !e.arch)
+    .map(e => ({ source: 'mysql', event: e }));
+
+  return [...localEvents, ...mysqlEvents];
+}
+
+function getFilteredUnifiedEvents() {
+  const query = F.q.trim().toLowerCase();
+
+  return getUnifiedEvents().filter(({ event: e }) => {
+    if (F.cat && e.cat !== F.cat) return false;
+    if (F.reg && e.region !== F.reg) return false;
+    if (F.prov && e.prov !== F.prov) return false;
+
+    if (!query) return true;
+
+    const fields = [
+      e.th, e.en, e.cat,
+      P[e.prov]?.[0],
+      P[e.prov]?.[1],
+      R[e.region]?.[0],
+      R[e.region]?.[1]
+    ];
+
+    return fields.join(' ').toLowerCase().includes(query);
+  });
+}
+
+function pgEvents(){const l=getFilteredUnifiedEvents();
 const h=[F.cat?t(F.cat):t('events')];if(F.prov)h.push(P[F.prov][L]);else if(F.reg)h.push((L?'':'ภาค')+R[F.reg][L]+(L?' Region':''));
 const pl=(k,v,lab,on)=>`<button class="pill${on?' on':''}" onclick="A.f('${k}','${v}')">${lab}</button>`;
 return`<div class="w"><h1 id="head" style="margin-top:20px">${h.join(' ')}</h1><p class="mu">${l.length} ${L?'results':'รายการ'}</p></div>
 <div class="bar" id="bar"><div class="w"><div class="rw">${pl('cat','',t('all'),!F.cat)}${pl('cat','tour',t('tour'),F.cat=='tour')}${pl('cat','event',t('event'),F.cat=='event')}<input style="width:210px" placeholder="${t('search')}…" value="${Z(F.q)}" onchange="A.f('q',this.value)">${(F.cat||F.reg||F.prov||F.q)?`<button class="pill" onclick="A.f('clear')">${ic('x')} ${t('clear')}</button>`:''}</div>
 ${F.cat=='tour'?`<div class="rw">${pl('reg','',t('all'),!F.reg)}${Object.keys(R).map(k=>pl('reg',k,R[k][L],F.reg==k)).join('')}</div>`:''}
 ${F.cat=='tour'&&F.reg?`<div class="rw">${pl('prov','',t('all'),!F.prov)}${Object.keys(P).filter(k=>P[k][2]==F.reg).map(k=>pl('prov',k,P[k][L],F.prov==k)).join('')}</div>`:''}</div></div>
-<div class="w" style="padding-top:18px">${l.length?`<div class="grid">${l.slice((_pg=pager('pe',l.length,12)).s,_pg.e).map(card).join('')}</div>${_pg.html}`:emp(L?'No tours or events found.':'ไม่พบทัวร์หรือ Event ที่ตรงกับเงื่อนไข',`<button class="btn" onclick="A.f('clear')">${t('clear')}</button>`)}</div>${mysqlEventsSection()}`}
+<div class="w" style="padding-top:18px">${l.length?`<div class="grid">${l.slice((_pg=pager('pe',l.length,12)).s,_pg.e).map(({source,event})=>source==='mysql'?apiEventCard(event):card(event)).join('')}</div>${_pg.html}`:emp(L?'No tours or events found.':'ไม่พบทัวร์หรือ Event ที่ตรงกับเงื่อนไข',`<button class="btn" onclick="A.f('clear')">${t('clear')}</button>`)}</div>`}
 function pgDetail(id){const e=ev(id);if(!e)return emp();return`<div class="w" style="padding-top:20px"><a href="#/events">← ${t('events')}</a><div class="two" style="margin-top:12px"><img src="${img(e.theme)}" alt="${Z(nm(e))}" style="border-radius:18px;width:100%;aspect-ratio:16/10;object-fit:cover"><div><span class="tag">${t(e.cat)}</span><h1>${Z(nm(e))}</h1><p>${Z(ds(e))}</p><div class="card pad">${ic('cal')} ${t('date')}: ${dt(e.date)}<br>${ic('clock')} ${e.st} – ${e.et}<br>${ic('pin')} ${lc(e)}<br>${ic('map')} ${P[e.prov][L]} · ${R[e.region][L]}<br>${ic('seat')} ${e.seats>0?t('left')+' '+e.seats:t('full')}${dc(e)?`<br><span class="badge hot">${t('off')} ${dc(e)}%</span>`:''}<div class="pr"><b style="font-size:1.8rem">${fm(e.price)}</b>${e.orig>e.price?`<s>${fm(e.orig)}</s>`:''}</div>${e.seats>0?`<a class="btn" href="#/book/${e.id}">${t('book')}</a>`:`<span class="badge er">${t('full')}</span>`}</div></div></div></div>`}
 const need=r=>{if(!ME){go('/login');return 0}if(r&&ME.role!=r){return 0}return 1};
 const lock=()=>emp(L?'Access denied':'ไม่มีสิทธิ์เข้าถึง');
