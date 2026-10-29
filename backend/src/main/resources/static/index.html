@@ -30,8 +30,10 @@ input,select,textarea{font:inherit;color:var(--tx);background:var(--bg);border:1
 .ft{background:var(--b2);color:#dbe8ff;margin-top:30px;padding:30px 0 16px}.ft a{color:#fff;display:block;text-decoration:none;padding:3px 0}.ft h4{color:#fff;margin:0 0 8px}
 .md{position:fixed;inset:0;background:#0008;z-index:60;display:flex;align-items:center;justify-content:center;padding:14px}.md .card{max-width:640px;width:100%;max-height:90vh;overflow:auto}
 .hist li{margin:4px 0;font-size:.9rem}.pg{max-width:960px;padding-top:20px}.bk{color:var(--mu);text-decoration:none;font-weight:600}.fc{background:var(--c);border:1px solid var(--ln);border-radius:28px;padding:clamp(18px,4vw,48px);margin:26px 0 40px}.fg2{display:grid;grid-template-columns:1fr 1fr;gap:0 32px}.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:0 32px}@media(max-width:700px){.fg2,.g3{grid-template-columns:1fr}}.fc label{font-weight:700;margin:16px 0 8px;font-size:1rem}.fc input,.fc select,.fc textarea{border-radius:20px;padding:14px 20px;min-height:54px;background:var(--c);border:1px solid var(--ln)}.fc textarea{min-height:140px}.fc :is(input,select,textarea):focus{outline:0;border-color:var(--b);box-shadow:0 0 0 3px #1d4ed82e}.dv{border:0;border-top:1px solid var(--ln);margin:28px 0 4px}.fc label.dz{display:flex;flex-direction:column;align-items:center;gap:8px;border:2px dashed var(--ln);border-radius:20px;padding:34px 16px;color:var(--mu);cursor:pointer;font-weight:400;margin:0}.fc label.dz:hover{border-color:var(--b);color:var(--b)}.i{width:1.1em;height:1.1em;vertical-align:-.18em;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}.logo{display:inline-flex;align-items:center;gap:8px}.lb{width:34px;height:34px;border-radius:10px;background:var(--b);color:#fff;display:inline-flex;align-items:center;justify-content:center}.emp .ic{color:var(--b)}.qr{display:grid;grid-template-columns:1fr 62px 92px 40px;gap:6px;margin:6px 0}.qr input{padding:8px 10px;min-height:40px;border-radius:10px}@media print{body *{visibility:hidden}#qt,#qt *{visibility:visible}#qt{position:absolute;left:0;top:0;width:100%;border:0;box-shadow:none}.no-pr{display:none!important}}.q7{display:grid;grid-template-columns:1fr 64px 76px 100px 90px 100px 40px;gap:6px;margin:6px 0;align-items:center}.q7 input{padding:8px 10px;min-height:40px;border-radius:10px}.two>*,.sh>*,.fg>*,.grid>*,.g3>*,.fg2>*{min-width:0}.badge,.tag{max-width:100%;overflow-wrap:anywhere}p,h1,h2,h3,td,li{overflow-wrap:anywhere}.btn.lg{width:100%;border-radius:20px;min-height:56px;font-size:1.1rem;margin-top:20px}.qr{display:block;margin:10px auto;background:#fff;padding:8px;border-radius:12px}.av{width:80px;height:80px;border-radius:50%;background:var(--b);color:#fff;display:flex;align-items:center;justify-content:center;font-size:2rem;object-fit:cover}
-</style><script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script></head><body><div id="app"></div><div id="md"></div>
+</style><script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script><script src="/js/auth-api.js"></script><script src="/js/customer-event-requests.js"></script><script src="/js/admin-event-requests.js"></script><script src="/js/booking-api.js"></script><script src="/js/quotation-mysql-ui.js"></script><script src="/js/admin-event-management.js"></script><script src="/js/payment-ui.js"></script>
+</head><body><div id="app"></div><div id="md"></div>
 <script src="/js/event-api.js"></script>
+<script src="/js/business-mysql-ui.js"></script>
 <script>
 const $=s=>document.querySelector(s),Z=x=>x==null?'':String(x).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const ls={g(k){try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}},s(k,v){try{localStorage.setItem(k,JSON.stringify(v));return true}catch(e){return false}}};
@@ -81,7 +83,7 @@ reqs:[{id:1,uid:4,name:'งานเลี้ยงบริษัทประ�
 {id:3,uid:4,name:'งานวันเกิดสวนสาธารณะ',type:'Birthday',date:day(25),st:'10:00',et:'15:00',loc:'กรุงเทพฯ',pax:30,budget:40000,theme:'Sky',equip:'โต๊ะ อาหารว่าง',detail:'',cname:'สมชาย ลูกค้า',phone:'0812345678',email:'customer@demo.com',files:[],status:'confirmed',price:38000,deposit:11400,cc:true,created:now(),updated:now()}],
 asg:[{id:1,rid:3,oid:2,by:1,at:now(),note:'',st:'assigned'}],hist:[],notes:[{rid:2,by:'Admin',text:'เสนอราคาตามรายละเอียดแล้ว',cust:true,at:now()}],pays:[],
 contact:{phone:'02-123-4567',email:'hello@bluetrail.example',line:'@bluetrail',fb:'facebook.com/bluetrail',ig:'@bluetrail',addr:'99 ถนนสุขุมวิท กรุงเทพฯ 10110',pay:'PromptPay 012-3-45678-9 บจก. บลูเทรล'}}}
-const sv=()=>{const ok=ls.s('etm1',DB);if(!ok)toast(L?'Could not save data. Storage may be full or unavailable.':'ไม่สามารถบันทึกข้อมูลได้ พื้นที่จัดเก็บอาจเต็มหรือใช้ไม่ได้',1);return ok};DB=ls.g('etm1')||seed();DB.tpl=DB.tpl||{logo:'',name:'บริษัท บลูเทรล จำกัด',addr:DB.contact.addr,phone:DB.contact.phone,email:DB.contact.email,tax:'0105500000000',terms:'ชำระมัดจำ 30% เมื่อยืนยัน ส่วนที่เหลือชำระก่อนวันงาน 7 วัน',note:'ราคานี้ไม่รวมค่าใช้จ่ายนอกเหนือจากที่ระบุ',foot:'ขอบคุณที่ไว้วางใจ BlueTrail'};DB.qts=DB.qts||[];DB.creqs=DB.creqs||[];DB.contact.hold=DB.contact.hold||24;if(!DB.slips){DB.slips=[];DB.seq.sl=0;const mk=o=>DB.slips.push({id:++DB.seq.sl,img:'',fname:'',tdate:'',reason:'',note:'',by:'',camt:0,cat:'',...o});DB.bookings.forEach(b=>{if(b.slip||b.slipd){const ok=b.pay=='Approved',rj=b.pay=='Rejected';mk({kind:'booking',ref:b.id,uid:b.uid,amt:b.total,at:b.created,fname:b.slip,img:b.slipd||'',status:ok?'confirmed':rj?'rejected':'pending',camt:ok?b.total:0,cat:ok?b.created:''})}});DB.reqs.forEach(r=>{if(r.status=='confirmed'&&r.deposit)mk({kind:'request',ref:r.id,uid:r.uid,amt:r.deposit,at:r.updated,status:'confirmed',camt:r.deposit,cat:r.updated,fname:'deposit'})})}DB.seq.qt=DB.seq.qt||0;sv();ME=us(ls.g('me'));if(!ME.role)ME=null;
+const sv=()=>{const ok=ls.s('etm1',DB);if(!ok)toast(L?'Could not save data. Storage may be full or unavailable.':'ไม่สามารถบันทึกข้อมูลได้ พื้นที่จัดเก็บอาจเต็มหรือใช้ไม่ได้',1);return ok};DB=ls.g('etm1')||seed();DB.tpl=DB.tpl||{logo:'',name:'บริษัท บลูเทรล จำกัด',addr:DB.contact.addr,phone:DB.contact.phone,email:DB.contact.email,tax:'0105500000000',terms:'ชำระมัดจำ 30% เมื่อยืนยัน ส่วนที่เหลือชำระก่อนวันงาน 7 วัน',note:'ราคานี้ไม่รวมค่าใช้จ่ายนอกเหนือจากที่ระบุ',foot:'ขอบคุณที่ไว้วางใจ BlueTrail'};DB.qts=DB.qts||[];DB.creqs=DB.creqs||[];DB.contact.hold=DB.contact.hold||24;if(!DB.slips){DB.slips=[];DB.seq.sl=0;const mk=o=>DB.slips.push({id:++DB.seq.sl,img:'',fname:'',tdate:'',reason:'',note:'',by:'',camt:0,cat:'',...o});DB.bookings.forEach(b=>{if(b.slip||b.slipd){const ok=b.pay=='Approved',rj=b.pay=='Rejected';mk({kind:'booking',ref:b.id,uid:b.uid,amt:b.total,at:b.created,fname:b.slip,img:b.slipd||'',status:ok?'confirmed':rj?'rejected':'pending',camt:ok?b.total:0,cat:ok?b.created:''})}});DB.reqs.forEach(r=>{if(r.status=='confirmed'&&r.deposit)mk({kind:'request',ref:r.id,uid:r.uid,amt:r.deposit,at:r.updated,status:'confirmed',camt:r.deposit,cat:r.updated,fname:'deposit'})})}DB.seq.qt=DB.seq.qt||0;sv();ME=null;
 const stc=s=>({Partial:'hot',Expired:'er',Cancelled:'er',pending:'wa',review:'wa',info:'wa',confirm:'hot',confirmed:'ok',progress:'hot',done:'ok',cancel:'er',assigned:'wa',Pending:'wa',Paid:'wa',Approved:'ok',Confirmed:'ok',Rejected:'er'}[s]||'');
 const bg=(p,s)=>`<span class="badge ${stc(s)}">${t(p+s)}</span>`;
 const rs=s=>`<span class="badge ${stc(s)}">${t('s_'+s)}</span>`;
@@ -92,17 +94,25 @@ const dc=e=>e.orig>e.price?Math.round((1-e.price/e.orig)*100):0;
 const bds=e=>`<div class="bds">${dc(e)?`<span class="badge hot">${t('off')} ${dc(e)}%</span>`:''}${e.seats>0&&e.seats<=5?`<span class="badge hot">${t('few').replace('{n}',e.seats)}</span><span class="badge">${t('near')}</span>`:''}</div>`;
 const card=e=>`<article class="card ev"><a href="#/event/${e.id}" class="im"><img src="${img(e.theme)}" alt="${Z(nm(e))}">${bds(e)}</a><div class="bd"><span class="tag">${t(e.cat)} · ${P[e.prov][L]}</span><h3>${Z(nm(e))}</h3><div class="mu">${ic('cal')} ${dt(e.date)} · ${e.st}–${e.et}<br>${ic('pin')} ${lc(e)}<br>${ic('seat')} ${e.seats>0?t('left')+' '+e.seats:t('full')}</div><div class="pr"><b>${fm(e.price)}</b>${e.orig>e.price?`<s>${fm(e.orig)}</s>`:''}</div><div class="ac"><a class="btn o sm" href="#/event/${e.id}">${t('det')}</a>${e.seats>0?`<a class="btn sm" href="#/book/${e.id}">${t('book')}</a>`:`<span class="badge er">${t('full')}</span>`}</div></div></article>`;
 const emp=(m,b)=>`<div class="emp"><div class="ic">${ic('compass',44)}</div><p>${m||t('nores')}</p>${b||''}</div>`;
-const nav=()=>`<nav class="top" id="nv"><div class="w nr"><a class="logo" href="#/"><span class="lb">${ic('compass',20)}</span> BlueTrail</a><button class="hb" aria-label="menu" onclick="$('#nm').classList.toggle('open')">${ic('menu',22)}</button><div class="nm" id="nm"><a href="#/">${t('home')}</a><a href="#/events">${t('events')}</a>${ME?`<a href="#/requests">${t('myreq')}</a><a href="#/bookings">${t('mybk')}</a>`:''}<button class="btn o sm" onclick="A.lang()">${L?'ไทย':'EN'}</button>${ME?`<div class="dd"><button class="btn sm" onclick="this.parentNode.classList.toggle('open')">${ic('user')} ${Z(ME.name)} ▾</button><div class="dm"><a href="#/account">${t('acc')}</a>${ME.role=='admin'?`<a href="#/admin">${t('adm')}</a>`:''}${ME.role=='organizer'?`<a href="#/organizer">${t('org')}</a>`:''}<a href="#" onclick="A.out();return false">${t('out')}</a></div></div>`:`<a class="btn sm" href="#/login">${t('login')}</a>`}</div></div></nav>`;
+const nav=()=>`<nav class="top" id="nv"><div class="w nr"><a class="logo" href="#/"><span class="lb">${ic('compass',20)}</span> BlueTrail</a><button class="hb" aria-label="menu" onclick="document.getElementById('nm').classList.toggle('open')">${ic('menu',22)}</button><div class="nm" id="nm"><a href="#/">${t('home')}</a><a href="#/events">${t('events')}</a>${ME?`<a href="#/requests">${t('myreq')}</a><a href="#/bookings">${t('mybk')}</a>`:''}<button class="btn o sm" onclick="A.lang()">${L?'ไทย':'EN'}</button>${ME?`<div class="dd"><button class="btn sm" onclick="this.parentNode.classList.toggle('open')">${ic('user')} ${Z(ME.name)} ▾</button><div class="dm"><a href="#/account">${t('acc')}</a>${ME.role=='admin'?`<a href="#/admin">${t('adm')}</a>`:''}${ME.role=='organizer'?`<a href="#/organizer">${t('org')}</a>`:''}<a href="#" onclick="A.out();return false">${t('out')}</a></div></div>`:`<a class="btn sm" href="#/login">${t('login')}</a>`}</div></div></nav>`;
 const contact=()=>{const c=DB.contact;return`<section class="s"><div class="w"><div class="card pad"><h2>${t('ch')}</h2><p>${t('cp')}</p><div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr))"><div>${ic('phone')} ${Z(c.phone)}</div><div>${ic('mail')} ${Z(c.email)}</div><div>${ic('chat')} LINE ${Z(c.line)}</div><div>${ic('fb')} ${Z(c.fb)}</div><div>${ic('ig')} ${Z(c.ig)}</div><div>${ic('bld')} ${Z(c.addr)}</div></div></div></div></section>`};
 const foot=()=>{const c=DB.contact;return`<footer class="ft"><div class="w grid"><div><h4>${ic('compass')} BlueTrail</h4><p>${L?'One platform for tours and events.':'แพลตฟอร์มทัวร์และ Event ครบวงจร'}</p></div><div><h4>${L?'Menu':'เมนู'}</h4><a href="#/">${t('home')}</a><a href="#/events">${t('events')}</a><a href="#/custom">${t('ctab')}</a><a href="#/login">${t('login')}</a></div><div><h4>${t('ch')}</h4>${ic('phone')} ${Z(c.phone)}<br>${ic('mail')} ${Z(c.email)}<br>${ic('chat')} ${Z(c.line)}</div><div><h4>Social</h4>${Z(c.fb)}<br>${Z(c.ig)}</div></div><div class="w mu" style="color:#9db0d6;margin-top:16px">© 2026 BlueTrail · ${t('rights')} · ไทย / English</div></footer>`};
 let API_EVENTS = null;
 
 async function loadAPIEvents() {
   try {
-    const events = await EventAPI.getAll();
-    API_EVENTS = events.map(EventAPI.toFrontend);
+    const [events, legacyDetails] = await Promise.all([
+      EventAPI.getAll(),
+      EventAPI.getLegacyDetails().catch(error => {
+        console.error('Legacy details unavailable:', error);
+        return {};
+      })
+    ]);
+    API_EVENTS = events.map(event =>
+      EventAPI.toFrontend(event, legacyDetails[event.id] || null)
+    );
     console.log("BlueTrail MySQL Events:", API_EVENTS);
-    if (location.hash === "" || location.hash === "#/" || location.hash === "#/home" || location.hash.startsWith("#/events")) {
+    if (location.hash === "" || location.hash === "#/" || location.hash === "#/home" || location.hash.startsWith("#/events") || (location.hash.startsWith("#/api-book/") || location.hash.startsWith("#/api-detail/"))) {
       draw();
     }
   } catch (error) {
@@ -125,26 +135,229 @@ function apiEventCard(e) {
         ${ic('seat')} ${t('left')} ${e.seats}
       </div>
       <div class="pr"><b>${fm(e.price)}</b></div>
-      <span class="tag">Booking coming soon</span>
+      <a class="btn sm" href="#/api-detail/${e.id}">${L?'View details':'ดูรายละเอียด'}</a>
     </div>
   </article>`;
 }
 
-function pgHome(){const f=DB.events.filter(e=>e.feat&&!e.arch),pr=DB.events.filter(e=>!e.arch&&(dc(e)||e.seats<=5)).slice(0,6),cu=DB.events.filter(e=>!e.arch).sort((a,b)=>a.date<b.date?-1:1).slice(0,8);
-return`<div class="w"><form class="srch" onsubmit="return A.hs(event)"><input id="hq" placeholder="${t('sph')}" value="${Z(F.q)}"><button class="btn">${ic('search')} ${t('search')}</button></form>
-<div class="car" id="car">${f.map((e,i)=>`<div class="sl${i==CI?' on':''}" style="background-image:url('${img(e.theme)}')"><div class="tx"><span class="tag" style="width:fit-content">${t(e.cat)}</span><h2>${Z(nm(e))}</h2><p>${Z(ds(e))}</p><div>${ic('cal')} ${dt(e.date)} · ${ic('pin')} ${lc(e)} · <b>${fm(e.price)}</b></div><a class="btn wh sm" style="width:fit-content" href="#/event/${e.id}">${t('det')}</a></div></div>`).join('')}<button class="cn" style="left:10px" onclick="A.car(-1)">‹</button><button class="cn" style="right:10px" onclick="A.car(1)">›</button><div class="dots">${f.map((e,i)=>`<i class="${i==CI?'on':''}" onclick="A.car(0,${i})"></i>`).join('')}</div></div>
-<div class="cta"><div><h3>${ic('spark')} ${t('ctah')}</h3><p>${t('ctap')}</p></div><a class="btn wh" href="#/custom">${t('ctab')} →</a></div></div>
-<section class="s"><div class="w"><h2>${t('rec')}</h2><div class="grid">${pr.map(card).join('')}</div></div></section>
-<section class="s"><div class="w"><div class="sh"><h2>${t('cur')}</h2><a href="#/events">${t('seeall')}</a></div><div class="grid">${cu.map(card).join('')}</div></div></section><section class="s" id="mysql-events">
-  <div class="w">
-    <h2>Events from MySQL</h2>
-    <div class="grid">
-      ${API_EVENTS === null
-        ? '<p>Loading events...</p>'
-        : API_EVENTS.filter(e => !e.arch).map(apiEventCard).join('')}
+
+
+function pgApiDetail(id) {
+  if (!API_EVENTS) {
+    return `<div class="w" style="padding:50px 0">
+      <h2>กำลังโหลดรายละเอียดจาก MySQL...</h2>
+    </div>`;
+  }
+
+  const e = API_EVENTS.find(x => Number(x.id) === Number(id));
+
+  if (!e) {
+    return `<div class="w" style="padding:50px 0">
+      <h2>ไม่พบ Event / Tour นี้</h2>
+      <a class="btn" href="#/events">กลับไปดูรายการทั้งหมด</a>
+    </div>`;
+  }
+
+  const active = !e.arch;
+  const bookable = active && Number(e.seats) > 0;
+
+  const province = P[e.prov]
+    ? P[e.prov][L]
+    : (e.prov || '-');
+
+  const region = R[e.region]
+    ? R[e.region][L]
+    : '';
+
+  const original = Number(e.orig || 0);
+  const discounted = original > Number(e.price);
+
+  const description = ds(e) || '';
+
+  return `
+    <div class="w" style="padding-top:28px;padding-bottom:60px">
+      <a href="#/events"
+        style="display:inline-block;margin-bottom:22px">
+        ← ${L ? 'All tours & events' : 'กลับไปยังทัวร์และอีเวนต์'}
+      </a>
+
+      <div class="two" style="align-items:start;gap:28px">
+
+        <div>
+          <img
+            src="${img(e.theme)}"
+            alt="${Z(nm(e))}"
+            style="
+              width:100%;aspect-ratio:16/10;object-fit:cover;
+              border-radius:20px;display:block
+            "
+          >
+
+          <div class="card pad" style="margin-top:20px">
+            <h3>${L ? 'About this experience' : 'รายละเอียดกิจกรรม'}</h3>
+            <p style="
+              line-height:1.9;color:#475569;
+              white-space:pre-line
+            ">${Z(description)}</p>
+          </div>
+        </div>
+
+        <div>
+          <span class="tag">${t(e.cat)}</span>
+
+          <h1 style="margin:14px 0 10px;line-height:1.3">
+            ${Z(nm(e))}
+          </h1>
+
+          ${e.en && e.en !== e.th ? `
+            <p class="mu" style="margin:0 0 20px">
+              ${Z(L ? e.th : e.en)}
+            </p>
+          ` : ''}
+
+          <div class="card pad" style="
+            margin-top:18px;line-height:2.1
+          ">
+            <div>${ic('cal')} <b>${t('date')}:</b> ${dt(e.date)}</div>
+
+            <div>${ic('clock')} <b>${L?'Time':'เวลา'}:</b>
+              ${Z(e.st || '-')}
+              ${e.et ? ' – ' + Z(e.et) : ''}
+            </div>
+
+            <div>${ic('pin')} <b>${L?'Location':'สถานที่'}:</b>
+              ${Z(province)}
+              ${region ? ' · ' + Z(region) : ''}
+            </div>
+
+            <div>${ic('seat')} <b>${L?'Seats available':'ที่นั่งว่าง'}:</b>
+              ${Number(e.seats)}
+            </div>
+
+            <hr>
+
+            <p style="color:#64748b;margin:0">
+              ${L?'Price per person':'ราคาต่อคน'}
+            </p>
+
+            <div style="
+              display:flex;align-items:center;gap:12px;
+              flex-wrap:wrap;margin:6px 0 18px
+            ">
+              <strong style="
+                font-size:30px;color:#172554
+              ">${fm(e.price)}</strong>
+
+              ${discounted ? `
+                <s style="color:#94a3b8">
+                  ${fm(original)}
+                </s>
+              ` : ''}
+            </div>
+
+            ${bookable ? `
+              <a class="btn"
+                href="#/api-book/${Number(e.id)}"
+                style="
+                  display:block;text-align:center;
+                  padding:15px;border-radius:12px
+                ">
+                ${L?'Book now':'จองเลย'} →
+              </a>
+            ` : `
+              <div style="
+                background:#fee2e2;color:#b91c1c;
+                padding:14px;border-radius:12px;
+                text-align:center;font-weight:700
+              ">
+                ${!active
+                  ? (L?'Booking closed':'ปิดรับจอง')
+                  : (L?'Fully booked':'ที่นั่งเต็ม')}
+              </div>
+            `}
+
+            <p class="mu" style="
+              margin:14px 0 0;font-size:13px
+            ">
+              ${L
+                ? 'Availability and price will be checked again when booking.'
+                : 'ระบบจะตรวจสอบราคาและจำนวนที่นั่งจาก MySQL อีกครั้งก่อนบันทึกการจอง'}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>`;
+}
+
+function pgApiBook(id) {
+  if (!ME) {
+    go('/login');
+    return '';
+  }
+
+  if (ME.role !== 'customer') return lock();
+
+  if (!API_EVENTS) {
+    return `<div class="w pg">
+      <p>กำลังโหลด Event จาก MySQL...</p>
+    </div>`;
+  }
+
+  const e = API_EVENTS.find(x => Number(x.id) === Number(id));
+
+  if (!e) {
+    return `<div class="w pg">
+      <h2>ไม่พบ Event ในฐานข้อมูล</h2>
+      <a class="btn" href="#/events">กลับไปดู Events</a>
+    </div>`;
+  }
+
+  if (e.arch || e.seats < 1) {
+    return `<div class="w pg">
+      <h2>Event นี้ยังไม่เปิดให้จองหรือที่นั่งเต็ม</h2>
+      <a class="btn" href="#/events">กลับไปดู Events</a>
+    </div>`;
+  }
+
+  return `<div class="w" style="padding-top:24px;max-width:760px">
+    <a href="#/events">← กลับไปดู Events</a>
+    <h1 style="margin-top:16px">จอง ${Z(nm(e))}</h1>
+
+    <div class="card pad">
+      <p><b>ราคา:</b> ${fm(e.price)} / คน</p>
+      <p><b>ที่นั่งว่าง:</b> ${e.seats}</p>
+      <p><b>วันที่:</b> ${dt(e.date)}</p>
+
+      <form onsubmit="return A.apiBook(event,${Number(e.id)})">
+        <label>จำนวนที่นั่ง</label>
+        <input name="qty" type="number"
+          min="1" max="${e.seats}" value="1" required>
+
+        <p class="mu">
+          ระบบจะคำนวณราคาจริงจาก MySQL
+        </p>
+
+        <p class="err" id="er"></p>
+
+        <button class="btn" type="submit">
+          ยืนยันการจอง
+        </button>
+      </form>
     </div>
-  </div>
-</section>${contact()}`}
+  </div>`;
+}
+
+function pgHome(){
+const all=(API_EVENTS||[]).filter(e=>!e.arch);
+const featured=all.filter(e=>e.feat);
+const f=(featured.length?featured:all).slice(0,6);
+const pr=all.filter(e=>(e.orig>e.price&&e.orig>0)||e.seats<=5).slice(0,6);
+const cu=[...all].sort((a,b)=>String(a.date).localeCompare(String(b.date))).slice(0,8);
+return`<div class="w"><form class="srch" onsubmit="return A.hs(event)"><input id="hq" placeholder="${t('sph')}" value="${Z(F.q)}"><button class="btn">${ic('search')} ${t('search')}</button></form>
+<div class="car" id="car">${f.map((e,i)=>`<div class="sl${i==CI?' on':''}" style="background-image:url('${img(e.theme)}')"><div class="tx"><span class="tag" style="width:fit-content">${t(e.cat)}</span><h2>${Z(nm(e))}</h2><p>${Z(ds(e))}</p><div>${ic('cal')} ${dt(e.date)} · ${ic('pin')} ${lc(e)} · <b>${fm(e.price)}</b></div><a class="btn wh sm" style="width:fit-content" href="#/api-detail/${e.id}">${t('det')}</a></div></div>`).join('')}<button class="cn" style="left:10px" onclick="A.car(-1)">‹</button><button class="cn" style="right:10px" onclick="A.car(1)">›</button><div class="dots">${f.map((e,i)=>`<i class="${i==CI?'on':''}" onclick="A.car(0,${i})"></i>`).join('')}</div></div>
+<div class="cta"><div><h3>${ic('spark')} ${t('ctah')}</h3><p>${t('ctap')}</p></div><a class="btn wh" href="#/custom">${t('ctab')} →</a></div></div>
+<section class="s"><div class="w"><h2>${t('rec')}</h2><div class="grid">${pr.map(apiEventCard).join('')}</div></div></section>
+<section class="s"><div class="w"><div class="sh"><h2>${t('cur')}</h2><a href="#/events">${t('seeall')}</a></div><div class="grid">${cu.map(apiEventCard).join('')}</div></div></section>${contact()}`}
 function mysqlEventsSection() {
   if (F.cat === 'tour') return '';
 
@@ -173,15 +386,9 @@ function mysqlEventsSection() {
 }
 
 function getUnifiedEvents() {
-  const localEvents = DB.events
-    .filter(e => !e.arch)
-    .map(e => ({ source: 'local', event: e }));
-
-  const mysqlEvents = (API_EVENTS || [])
+  return (API_EVENTS || [])
     .filter(e => !e.arch)
     .map(e => ({ source: 'mysql', event: e }));
-
-  return [...localEvents, ...mysqlEvents];
 }
 
 function getFilteredUnifiedEvents() {
@@ -243,17 +450,16 @@ ${r.price&&(r.cc||['confirmed','progress','done'].includes(s))?payCard('request'
 ${s=='info'||s=='confirm'?`<form onsubmit="return A.chg(event,${r.id})"><label>${s=='info'?(L?'Provide requested information':'ส่งข้อมูลเพิ่มเติม'):(L?'Request changes':'ขอแก้ไข')}</label><textarea name="m" required></textarea><button class="btn o" style="margin-top:8px">${L?'Send':'ส่ง'}</button></form>`:''}
 ${['pending','review','info','confirm'].includes(s)?`<button class="btn r sm" style="margin-top:10px" onclick="A.rcancel(${r.id})">${t('cancel')}</button>`:''}${['confirmed','progress','done','cancel'].includes(s)?`<span class="mu">${L?'No actions available':'ไม่มีการดำเนินการในสถานะนี้'}</span>`:''}</div></div></div><h3 style="margin-top:20px">${L?'Status history':'ประวัติสถานะ'}</h3>${hl('R'+r.id)}</div>`}
 function pgAcc(){if(!ME)return go('/login');return`<div class="w" style="padding-top:20px;max-width:600px"><h1>${t('acc')}</h1><form class="card pad" onsubmit="return A.acc(event)">${ME.av?`<img class="av" src="${ME.av}">`:`<div class="av">${Z(ME.name[0])}</div>`}<label>${L?'Profile image':'รูปโปรไฟล์'}</label><input type="file" name="av" accept="image/*">${fl('name',t('name'),'',1,ME.name)}${fl('phone',t('phone'),'',0,ME.phone)}<label>${t('email')}</label><input disabled value="${Z(ME.email)}"><label>Role</label><input disabled value="${ME.role}"><p><button class="btn">${t('save')}</button> <a class="btn o" href="#/bookings">${t('mybk')}</a></p></form></div>`}
-function pgAuth(reg){const d=`<p class="mu">Demo: admin@demo.com / admin123 · org@demo.com / org123 · customer@demo.com / cust123</p>`;return`<div class="w" style="padding-top:30px;max-width:440px"><h1>${reg?t('reg'):t('login')}</h1><form class="card pad" onsubmit="return A.auth(event,${reg?1:0})">${reg?fl('name',t('name'),'',1):''}${fl('email',t('email'),'email',1)}${fl('pw',t('pw'),'password',1)}<p class="err" id="er"></p><button class="btn">${reg?t('reg'):t('login')}</button> <a href="#/${reg?'login':'register'}">${reg?t('login'):t('reg')}</a></form>${reg?'':d}</div>`}
-const tb=(h,rows)=>`<div class="tw"><table><tr>${h.map(x=>`<th>${x}</th>`).join('')}</tr>${rows.join('')}</table></div>`;
+function pgAuth(reg){return `<div class="w" style="padding-top:30px;max-width:440px"><h1>${reg?t("reg"):t("login")}</h1><form class="card pad" onsubmit="return A.auth(event,${reg?1:0})">${reg?fl("name",t("name"),"",1):""}${fl("email",t("email"),"email",1)}${fl("pw",t("pw"),"password",1)}<p class="err" id="er"></p><button class="btn">${reg?t("reg"):t("login")}</button> <a href="#/${reg?"login":"register"}">${reg?t("login"):t("reg")}</a></form></div>`}const tb=(h,rows)=>`<div class="tw"><table><tr>${h.map(x=>`<th>${x}</th>`).join('')}</tr>${rows.join('')}</table></div>`;
 function pgAdmin(){if(!need('admin'))return ME?lock():'';const tabs=[['ov','Overview'],['ev',L?'Events/Tours':'ทัวร์/Event'],['bk',t('mybk').replace(/ของฉัน|My /,'')],['pay',L?'Payment Verification':'ตรวจสอบการชำระเงิน'],['rq',L?'Event Requests':'คำขอ Event'],['us',L?'Users':'ผู้ใช้'],['og',L?'Organizers':'ผู้จัด'],['qt',L?'Quotations':'ใบเสนอราคา'],['ct',t('ch')]];let b='';const cnt=s=>DB.reqs.filter(r=>r.status==s).length;
-if(AT=='ov')b=`<div class="sum">${[[L?'Events':'Event',DB.events.length],[L?'Bookings':'การจอง',DB.bookings.length],[L?'Pending slips':'สลิปรอตรวจ',DB.bookings.filter(x=>x.pay=='Paid').length],[L?'Requests':'คำขอ',DB.reqs.length],[L?'Users':'ผู้ใช้',DB.users.length]].map(x=>`<div class="card"><b>${x[1]}</b>${x[0]}</div>`).join('')}</div>`;
+if(AT=='ov')b=BTAdminOverview.render();
 if(AT=='ev')b=`<button class="btn" onclick="A.evf(0)">+ ${L?'New':'เพิ่ม'}</button><br><br>`+tb([L?'Name':'ชื่อ',t('events'),L?'Region/Province':'ภาค/จังหวัด',t('date'),L?'Price':'ราคา',L?'Seats':'ที่นั่ง',ic('star'),''],DB.events.slice((_pg=pager('ev',DB.events.length)).s,_pg.e).map(e=>`<tr><td>${Z(nm(e))}${e.arch?` <span class="badge er">${L?'Archived':'เก็บถาวร'}</span>`:''}</td><td>${t(e.cat)}</td><td>${R[e.region][L]} / ${P[e.prov][L]}</td><td>${dt(e.date)}</td><td>${fm(e.price)}${e.orig>e.price?` <s>${fm(e.orig)}</s>`:''}</td><td>${e.seats}</td><td>${e.feat?ic('star'):''}</td><td><button class="btn sm o" onclick="A.evf(${e.id})">${L?'Edit':'แก้ไข'}</button> <a class="btn sm o" href="#/event/${e.id}">${L?'View':'ดู'}</a> <button class="btn sm o" onclick="A.evar(${e.id})">${e.arch?(L?'Restore':'คืนค่า'):(L?'Archive':'เก็บถาวร')}</button> <button class="btn sm r" onclick="A.evdel(${e.id})">${L?'Delete':'ลบ'}</button></td></tr>`))+_pg.html;
-if(AT=='bk'){_pg=pager('bk',DB.bookings.length);b=tb(['#',L?'Customer':'ลูกค้า',t('events'),t('qty'),t('total'),L?'Payment':'ชำระเงิน',t('status'),t('act')],DB.bookings.slice().reverse().slice(_pg.s,_pg.e).map(x=>{const cp_=x.cx&&x.cx.status=='pending';return`<tr><td>${x.id}</td><td>${Z(x.name)}</td><td>${Z(nm(ev(x.eid)))}</td><td>${x.qty}</td><td>${fm(x.total)}</td><td>${bg('p_',x.pay)}</td><td>${bg('b_',x.st)}${cp_?`<br><span class="badge wa">${L?'Cancellation requested':'ขอยกเลิก'}</span><div class="mu">${Z(x.cx.reason)}</div>`:''}${x.log&&x.log.length?`<div class="mu">${Z(tx(x.log[x.log.length-1].txt))}</div>`:''}</td><td><div class="ac">${cp_?`<button class="btn sm g" onclick="A.bad(${x.id})">${L?'Approve cancel':'อนุมัติยกเลิก'}</button><button class="btn sm o" onclick="A.bcxno(${x.id})">${L?'Decline':'ปฏิเสธ'}</button>`:''}${['Pending','Confirmed'].includes(x.st)&&!cp_?`<button class="btn sm r" onclick="A.bad(${x.id})">${L?'Cancel booking':'ยกเลิกการจอง'}</button>`:''}${['Expired','Cancelled'].includes(x.st)?`<button class="btn sm o" onclick="A.bre(${x.id})">${L?'Reopen':'เปิดการจองคืน'}</button>`:''}</div></td></tr>`}))+_pg.html}
-if(AT=='pay')b=pgPv();
-if(AT=='rq'){const q=RF.q.toLowerCase(),l=DB.reqs.filter(r=>(!RF.st||r.status==RF.st)&&(!q||[r.name,r.loc,r.cname,us(r.uid).name].join(' ').toLowerCase().includes(q)));b=`<div class="sum">${[['pending',L?'New':'ใหม่'],['review',t('s_review')],['confirm',L?'Waiting confirm':'รอยืนยัน'],['confirmed',t('s_confirmed')],['progress',t('s_progress')],['done',t('s_done')]].map(x=>`<div class="card" onclick="A.rf('st','${x[0]}')"><b>${cnt(x[0])}</b>${x[1]}</div>`).join('')}</div><div class="fg"><input placeholder="${t('search')}…" value="${Z(RF.q)}" onchange="A.rf('q',this.value)"><select onchange="A.rf('st',this.value)"><option value="">${t('all')}</option>${['pending','review','info','confirm','confirmed','progress','done','cancel'].map(s=>`<option value="${s}" ${RF.st==s?'selected':''}>${t('s_'+s)}</option>`).join('')}</select></div><br>`+(l.length?tb([L?'Customer':'ลูกค้า',L?'Event':'งาน',t('date'),t('loc'),t('status'),L?'Budget':'งบ',t('act')],l.slice((_pg=pager('rq',l.length)).s,_pg.e).map(r=>`<tr><td>${Z(r.cname)}</td><td>${Z(r.name)}${DB.creqs.some(c=>c.rid==r.id&&c.status=='pending')?` <span class="badge wa">${L?'New change request':'มีคำขอแก้ไขใหม่'}</span>`:''}</td><td>${dt(r.date)}</td><td>${Z(r.loc)}</td><td>${rs(r.status)}</td><td>${fm(r.budget)}</td><td><a class="btn sm" href="#/admin/request/${r.id}">${L?'Open':'เปิด'}</a></td></tr>`)):emp())+(l.length?_pg.html:'')}
-if(AT=='us')b=tb([t('name'),t('email'),'Role',t('status'),''],DB.users.slice((_pg=pager('us',DB.users.length)).s,_pg.e).map(x=>`<tr><td>${Z(x.name)}</td><td>${Z(x.email)}</td><td><select onchange="A.role(${x.id},this.value)">${['customer','organizer','admin'].map(r=>`<option ${x.role==r?'selected':''}>${r}</option>`).join('')}</select></td><td>${x.off?`<span class="badge er">${L?'Disabled':'ปิดใช้งาน'}</span>`:`<span class="badge ok">${L?'Active':'ใช้งานอยู่'}</span>`}</td><td>${x.id==ME.id?'':`<button class="btn sm ${x.off?'g':'r'}" onclick="A.uoff(${x.id})">${x.off?(L?'Enable':'เปิดใช้งาน'):(L?'Disable':'ปิดใช้งาน')}</button>`}</td></tr>`))+_pg.html;
-if(AT=='og')b=tb([t('name'),t('email'),L?'Assigned':'งานที่ได้รับ'],DB.users.filter(x=>x.role=='organizer').map(x=>`<tr><td>${Z(x.name)}</td><td>${Z(x.email)}</td><td>${DB.asg.filter(a=>a.oid==x.id).length}</td></tr>`));
-if(AT=='qt')b=pgQt();if(AT=='ct'){const c=DB.contact;b=`<form class="card pad" onsubmit="return A.ct(event)"><div class="fg">${[['phone',t('phone')],['email',t('email')],['line','LINE'],['fb','Facebook'],['ig','Instagram'],['addr',L?'Address':'ที่อยู่'],['pay',L?'Payment info':'ข้อมูลชำระเงิน'],['hold',L?'Hours to hold unpaid bookings':'ชั่วโมงถือที่นั่งเมื่อยังไม่ชำระ']].map(x=>fl(x[0],x[1],'',0,c[x[0]])).join('')}</div><br><button class="btn">${t('save')}</button></form>`}
+if(AT=='ev')b=BTAdminEvents.render();if(AT=='bk'){b=BTBookings.renderAdmin();}
+if(AT=='pay')b=BTPayments.renderAdmin();
+if(AT=='rq'){b=BTAdminRequests.render({L});}
+if(AT=='us')b=BTBusiness.users();
+if(AT=='og')b=BTBusiness.organizers();
+if(AT=='qt')b=BTQuotation.renderAdmin();if(AT=='ct')b=BTBusiness.contactForm();
 return`<div class="w" style="padding-top:20px"><h1>${t('adm')}</h1><div class="tabs">${tabs.map(x=>`<button class="pill${AT==x[0]?' on':''}" onclick="A.tab('${x[0]}')">${x[1]}</button>`).join('')}</div>${b}</div>`}
 function pgAReq(id){if(!need('admin'))return ME?lock():'';const r=DB.reqs.find(x=>x.id==id);if(!r)return emp();const asg=DB.asg.find(a=>a.rid==r.id);return`<div class="w" style="padding-top:20px"><a href="#/admin">← ${t('adm')}</a><h1>${Z(r.name)} ${rs(r.status)}</h1><div class="two"><div><form class="card pad" onsubmit="return A.aedit(event,${r.id})"><b>${L?'Customer':'ลูกค้า'}: ${Z(r.cname)} · ${Z(r.phone)} · ${Z(r.email)}</b><div class="fg">${fl('name',L?'Event':'ชื่องาน','',1,r.name)}${fl('date',t('date'),'date',1,r.date)}${fl('st',L?'Start time':'เวลาเริ่ม','time',0,r.st)}${fl('et',L?'End time':'เวลาจบ','time',0,r.et)}${fl('loc',t('loc'),'',1,r.loc)}${fl('pax',L?'Participants':'ผู้เข้าร่วม','number',1,r.pax)}${fl('budget',L?'Budget':'งบ','number',0,r.budget)}${fl('theme',L?'Theme':'ธีม','',0,r.theme)}</div>${fl('equip',L?'Equipment':'อุปกรณ์','ta',0,r.equip)}${fl('detail',L?'Details':'รายละเอียด','ta',0,r.detail)}<p class="mu">${ic('clip')} ${r.files.map(Z).join(', ')||(L?'No attachments':'ไม่มีไฟล์แนบ')}</p><button class="btn">${t('save')}</button></form>
 <h3>${L?'Notes':'บันทึก'}</h3>${DB.notes.filter(n=>n.rid==r.id).map(n=>`<div class="card pad" style="margin-bottom:8px">${n.cust?'<span class="badge ok">'+(L?'Visible to customer':'ลูกค้าเห็น')+'</span>':'<span class="badge">'+(L?'Internal':'ภายใน')+'</span>'} ${Z(n.text)}<br><span class="mu">${Z(n.by)} · ${dt(n.at)}</span></div>`).join('')}<form onsubmit="return A.note(event,${r.id})"><textarea name="m" required></textarea><label><input type="checkbox" name="c" style="width:auto"> ${L?'Visible to customer':'แสดงให้ลูกค้าเห็น'}</label><button class="btn o sm">${L?'Add note':'เพิ่มบันทึก'}</button> <button class="btn o sm" name="ask" value="1">${L?'Request more info':'ขอข้อมูลเพิ่ม'}</button></form></div>
@@ -349,7 +555,7 @@ qsd(){if(sending)return;A.qread();const e=qval(QW,1);if(e)return er(e)||toast(e,
 qst(id,s){const q=DB.qts.find(x=>x.id==id);q.log.push({at:now(),by:ME.name,txt:T2(QST[q.status][0]+' → '+QST[s][0],QST[q.status][1]+' → '+QST[s][1])});q.status=s;sv();draw()},
 qts(e){e.preventDefault();const d=fd(e),f=e.target.logo.files[0];rd(f,u=>{Object.assign(DB.tpl,{name:d.name,tax:d.tax,phone:d.phone,email:d.email,addr:d.addr,terms:d.terms,note:d.note,foot:d.foot});if(u)DB.tpl.logo=u;else if(f)toast(L?'Logo too large, kept the old one':'โลโก้ใหญ่เกินไป ใช้ของเดิมต่อ',1);sv();QV='list';draw();toast(L?'Template saved':'บันทึกแม่แบบแล้ว')});return false}};
 function page(){const h=location.hash.slice(2).split('?')[0],[p,a]=h.split('/');
-switch(p){case'':return pgHome();case'events':return pgEvents();case'event':return pgDetail(a);case'book':return pgBook(a);case'pay':return pgPay(a);case'bookings':return pgBookings();case'custom':return pgCustom();case'requests':return pgReqs();case'request':return pgReq(a);case'account':return pgAcc();case'login':return pgAuth(0);case'register':return pgAuth(1);case'admin':return a=='request'?pgAReq(h.split('/')[2]):pgAdmin();case'organizer':return pgOrg(a);default:return emp()}}
+switch(p){case'':return pgHome();case'events':return pgEvents();case'event':return pgDetail(a);case'book':return pgBook(a);case'pay':return pgPay(a);case'api-detail':return pgApiDetail(a);case'api-book':return pgApiBook(a);case'bookings':return BTBookings.renderMy();case'custom':return pgCustom();case'requests':return BTQuotation.customerShortcut()+pgReqsAPI();case'quotations':return BTQuotation.renderCustomer();case'request':return pgReqAPI(a);case'account':return BTBusiness.profileForm();case'login':return pgAuth(0);case'register':return pgAuth(1);case'admin':return a=='request'?pgAReq(h.split('/')[2]):pgAdmin();case'organizer':return BTBusiness.organizerPage();default:return emp()}}
 function sizes(){const n=$('#nv'),b=$('#bar'),s=document.documentElement.style;if(n)s.setProperty('--nh',n.offsetHeight+'px');s.setProperty('--bh',(b?b.offsetHeight:0)+'px')}
 const bdue=b=>b.dueAt||new Date(new Date(b.created).getTime()+(+DB.contact.hold||24)*36e5).toISOString();
 function migLegacy(){if(DB.legMig)return;DB.reqs.forEach(r=>{if(!(r.price>0)||DB.qts.some(x=>x.work.rid==r.id))return;const q=QS(r);let no=q.no;while(DB.qts.some(x=>x.no==no))no+='x';const work={rid:r.id,co:r.cname,ct:r.cname,em:r.email,ad:'',tx:'',issue:(q.at||now()).slice(0,10),exp:q.exp||(q.at||now()).slice(0,10),items:q.items.map((i,k)=>({d:i.d,n:i.n,un:'',u:i.u,x:k?0:(q.disc||0)})),vat:q.vat?7:0,dep:q.pct==null?30:q.pct,terms:q.terms||DB.tpl.terms,note:DB.tpl.note,lang:0};DB.qts.push({id:Date.now()+r.id,no,work,status:['confirmed','progress','done'].includes(r.status)?'approved':'sent',vers:[{rev:(q.rev||1)-1,at:q.at||now(),by:'ระบบ (ย้ายข้อมูลเดิม)',snap:cp(work),tpl:cp(DB.tpl),pdf:''}],log:[],created:q.at||now(),updated:now(),by:'ระบบ'});r.q=null});DB.legMig=1;sv()}
@@ -357,15 +563,277 @@ function sweep(){let ch=0;DB.bookings.forEach(b=>{if(b.st!='Pending'||b.pay=='Pa
 function draw(){try{sweep();if(ME&&ME.off){ME=null;ls.s('me',null)}$('#app').innerHTML=nav()+(page()||'')+foot();document.documentElement.lang=L?'en':'th'}catch(x){console.error(x);$('#app').innerHTML=nav()+emp(t('err'),`<button class="btn" onclick="draw()">${t('retry')}</button>`)}sizes()}
 const fd=e=>Object.fromEntries(new FormData(e.target).entries()),er=m=>{const x=$('#er');if(x)x.textContent=m;return false};
 const rd=(f,cb)=>{if(f&&f.size&&f.size<250000){const r=new FileReader();r.onload=()=>cb(r.result);r.readAsDataURL(f)}else cb('')};
-const A={...QA,...PA,lang(){L=L?0:1;ls.s('lang',L);draw()},out(){ME=null;ls.s('me',null);go('/');draw()},tab(x){AT=x;if(x=='qt')QV='list';if(x=='pay')PVID=0;draw()},rf(k,v){RF[k]=v;AT='rq';draw()},
+const A={...QA,...PA,async apiBook(event,id){
+  event.preventDefault();
+
+  const form = event.target;
+  const button = form.querySelector('button[type="submit"]');
+  const qty = Number(form.elements.qty.value);
+  const selected = API_EVENTS &&
+    API_EVENTS.find(x => Number(x.id) === Number(id));
+
+  if (!ME || ME.role !== 'customer') {
+    return er('กรุณาเข้าสู่ระบบ CUSTOMER');
+  }
+
+  if (!selected || selected.arch) {
+    return er('Event นี้ไม่พร้อมให้จอง');
+  }
+
+  if (!Number.isInteger(qty) || qty < 1 || qty > selected.seats) {
+    return er('จำนวนที่นั่งไม่ถูกต้อง');
+  }
+
+  if (button.disabled) return false;
+
+  button.disabled = true;
+  button.textContent = 'กำลังบันทึกการจอง...';
+
+  try {
+    const csrfRes = await fetch('/api/auth/csrf', {
+      credentials: 'same-origin'
+    });
+
+    if (!csrfRes.ok) {
+      throw new Error('CSRF HTTP ' + csrfRes.status);
+    }
+
+    const csrf = await csrfRes.json();
+
+    if (!csrf.token || !csrf.headerName) {
+      throw new Error('ไม่พบ CSRF Token');
+    }
+
+    const response = await fetch('/api/bookings', {
+      method: 'POST',
+      credentials: 'same-origin',
+      headers: {
+        'Content-Type': 'application/json',
+        [csrf.headerName]: csrf.token
+      },
+      body: JSON.stringify({
+        eventId: Number(id),
+        quantity: qty
+      })
+    });
+
+    if (!response.ok) {
+      const message = await response.text();
+      throw new Error(
+        'Booking HTTP ' + response.status + ': ' +
+        message.slice(0, 200)
+      );
+    }
+
+    const booking = await response.json();
+
+
+    const modal = document.getElementById('md');
+
+    modal.innerHTML = `
+      <div style="
+        position:fixed;inset:0;z-index:99999;
+        background:rgba(10,26,55,.65);
+        backdrop-filter:blur(5px);
+        display:flex;align-items:center;justify-content:center;
+        padding:20px;overflow-y:auto;
+      ">
+        <div role="dialog" aria-modal="true"
+          aria-labelledby="bt-success-title"
+          style="
+          background:white;border-radius:24px;
+          width:100%;max-width:490px;
+          padding:30px 24px;text-align:center;
+          box-shadow:0 24px 70px rgba(0,0,0,.2);
+          color:#172554;
+        ">
+          <div style="
+            background:#dcfce7;color:#16a34a;
+            width:76px;height:76px;border-radius:50%;
+            display:grid;place-items:center;
+            font-size:42px;margin:0 auto 18px;
+          ">✓</div>
+
+          <h2 id="bt-success-title"
+              style="font-size:28px;margin:0 0 10px;
+                     color:#172554">
+            จองสำเร็จ!
+          </h2>
+
+          <p style="color:#64748b;margin-bottom:22px">
+            ระบบบันทึกรายการจองของคุณเรียบร้อยแล้ว
+          </p>
+
+          <div style="
+            background:#f1f5ff;border-radius:16px;
+            padding:20px;text-align:left;
+          ">
+            <div style="display:flex;justify-content:space-between;
+                        gap:12px;margin-bottom:14px">
+              <span>หมายเลขการจอง</span>
+              <strong>#${Z(booking.id)}</strong>
+            </div>
+
+            <div style="display:flex;justify-content:space-between;
+                        gap:12px;margin-bottom:14px">
+              <span>จำนวนที่นั่ง</span>
+              <strong>${Z(booking.quantity)} ที่นั่ง</strong>
+            </div>
+
+            <div style="display:flex;justify-content:space-between;
+                        gap:12px;margin-bottom:14px">
+              <span>ยอดรวม</span>
+              <strong style="color:#1d4ed8;font-size:22px">
+                ฿${Number(booking.totalPrice).toLocaleString(
+                  'th-TH',{minimumFractionDigits:2}
+                )}
+              </strong>
+            </div>
+
+            <div style="display:flex;justify-content:space-between;
+                        gap:12px">
+              <span>สถานะ</span>
+              <strong style="
+                background:#fef3c7;color:#92400e;
+                padding:5px 12px;border-radius:30px;
+                font-size:13px
+              ">${Z(booking.status)}</strong>
+            </div>
+          </div>
+
+          <p style="
+            color:#64748b;font-size:13px;
+            margin:20px 0;line-height:1.8
+          ">
+            รายการจองนี้ยังไม่ใช่การยืนยันชำระเงิน
+            <br>
+            กรุณาตรวจสอบสถานะในหน้าการจองของฉัน
+          </p>
+
+          <button type="button" class="btn"
+            style="
+              width:100%;padding:15px;
+              border-radius:12px;font-size:16px;
+              background:#1d4ed8;color:white
+            "
+            onclick="document.getElementById('md').innerHTML=''">
+            ดูรายการจองของฉัน →
+          </button>
+        </div>
+      </div>`;
+    go('/bookings');
+    BTBookings.refresh('my');
+    loadAPIEvents();
+
+  } catch (error) {
+    console.error('BlueTrail Booking:', error);
+    er('จองไม่สำเร็จ: ' + error.message);
+  } finally {
+    button.disabled = false;
+    button.textContent = 'ยืนยันการจอง';
+  }
+
+  return false;
+},
+lang(){L=L?0:1;ls.s('lang',L);draw()},out(){BTAuth.logout().then(()=>{ME=null;ls.s('me',null);go('/');draw();}).catch(error=>toast(error.message,1));return false},tab(x){AT=x;if(x=='rq')BTAdminRequests.load().then(()=>draw());if(x=='qt')QV='list';if(x=='pay')PVID=0;draw()},rf(k,v){RF[k]=v;AT='rq';draw()},
 hs(e){e.preventDefault();F={cat:'',reg:'',prov:'',q:$('#hq').value};go('/events');return false},
 f(k,v){PGS.pe=0;if(k=='clear')F={cat:'',reg:'',prov:'',q:''};else if(k=='cat')F={cat:v,reg:'',prov:'',q:F.q};else if(k=='reg'){F.reg=v;F.prov=''}else F[k]=v;draw();const h=$('#head');if(h&&h.getBoundingClientRect().top<(parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nh'))||64)+(parseInt(getComputedStyle(document.documentElement).getPropertyValue('--bh'))||0))h.scrollIntoView()},
 car(d,i){const n=DB.events.filter(e=>e.feat&&!e.arch).length;CI=i!=null?i:(CI+d+n)%n;const s=document.querySelectorAll('#car .sl'),o=document.querySelectorAll('#car .dots i');s.forEach((x,j)=>x.classList.toggle('on',j==CI));o.forEach((x,j)=>x.classList.toggle('on',j==CI))},
-auth(e,reg){e.preventDefault();const d=fd(e);if(!d.email||!d.pw||(reg&&!d.name))return er(t('req'));if(reg){if(DB.users.some(u=>u.email==d.email))return er(L?'Email already used':'อีเมลนี้ถูกใช้แล้ว');if(d.pw.length<4)return er(L?'Password too short':'รหัสผ่านสั้นเกินไป');DB.users.push({id:++DB.seq.u,name:d.name,email:d.email,pw:d.pw,role:'customer',phone:'',av:''});sv()}
-const u=DB.users.find(x=>x.email==d.email&&x.pw==d.pw);if(!u)return er(L?'Invalid email or password':'อีเมลหรือรหัสผ่านไม่ถูกต้อง');if(u.off)return er(L?'This account has been disabled':'บัญชีนี้ถูกปิดการใช้งาน');ME=u;ls.s('me',u.id);go(u.role=='admin'?'/admin':u.role=='organizer'?'/organizer':'/');draw();return false},
-book(e,id){e.preventDefault();const d=fd(e),x=ev(id),q=+d.qty;if(!d.name||!d.phone||!d.email||!(q>=1))return er(t('req'));if(q>x.seats)return er(L?'Not enough seats':'ที่นั่งไม่พอ');x.seats-=q;const b={id:++DB.seq.b,uid:ME.id,eid:id,qty:q,total:q*x.price,name:d.name,phone:d.phone,email:d.email,pay:'Pending',st:'Pending',slip:'',created:now(),dueAt:new Date(Date.now()+(+DB.contact.hold||24)*36e5).toISOString()};DB.bookings.push(b);sv();go('/pay/'+b.id);return false},
-creq(e){e.preventDefault();const d=fd(e),m=['name','type','date','loc','cname','phone','email'].filter(k=>!(d[k]||'').trim());if(m.length)return er(t('req')+': '+m.map(k=>FL[k][L]).join(', '));if(d.st&&d.et&&d.et<=d.st)return er(L?'End time must be after start':'เวลาสิ้นสุดต้องหลังเวลาเริ่ม');const r={...d,id:++DB.seq.r,uid:ME.id,pax:+d.pax||0,budget:+d.budget||0,files:[...e.target.files.files].map(f=>f.name),status:'pending',price:0,deposit:0,cc:false,created:now(),updated:now()};delete r.files_;DB.reqs.push(r);hist('R'+r.id,'','pending',T2('ส่งคำขอ','Submitted'));sv();go('/request/'+r.id);return false},
-cc(id){const r=DB.reqs.find(x=>x.id==id);r.cc=true;r.updated=now();hist('R'+id,'confirm','confirm',T2('ลูกค้ายืนยันข้อเสนอ','Customer confirmed proposal'));sv();draw()},
+auth(e,reg){e.preventDefault();const d=fd(e);BTAuth.submit(d,!!reg).then(user=>{ME=user;ls.s("me",null);go(user.role=="admin"?"/admin":user.role=="organizer"?"/organizer":"/");draw();}).catch(error=>er(error.message));return false},book(e,id){e.preventDefault();const d=fd(e),x=ev(id),q=+d.qty;if(!d.name||!d.phone||!d.email||!(q>=1))return er(t('req'));if(q>x.seats)return er(L?'Not enough seats':'ที่นั่งไม่พอ');x.seats-=q;const b={id:++DB.seq.b,uid:ME.id,eid:id,qty:q,total:q*x.price,name:d.name,phone:d.phone,email:d.email,pay:'Pending',st:'Pending',slip:'',created:now(),dueAt:new Date(Date.now()+(+DB.contact.hold||24)*36e5).toISOString()};DB.bookings.push(b);sv();go('/pay/'+b.id);return false},
+creq(e){
+    e.preventDefault();
+
+    const d = fd(e);
+    const required = [
+        "name", "type", "date", "loc",
+        "cname", "phone", "email"
+    ];
+
+    const missing = required.filter(
+        k => !String(d[k] || "").trim()
+    );
+
+    if (missing.length) {
+        return er(
+            L ? "Please complete all required fields"
+              : "กรุณากรอกข้อมูลที่จำเป็นให้ครบ"
+        );
+    }
+
+    if (d.st && d.et && d.et <= d.st) {
+        return er(
+            L ? "End time must be after start time"
+              : "เวลาสิ้นสุดต้องหลังเวลาเริ่ม"
+        );
+    }
+
+    const files = e.target.querySelector(
+        'input[name="files"]'
+    );
+
+    if (files && files.files.length) {
+        return er(
+            L
+              ? "File uploads are not available yet. Please remove attachments."
+              : "ระบบยังไม่รองรับการอัปโหลดไฟล์ กรุณานำไฟล์แนบออกก่อนส่งคำขอ"
+        );
+    }
+
+    if (!ME || !ME.id) {
+        go("/login");
+        return false;
+    }
+
+    const payload = {
+        title: String(d.name).trim(),
+        category: String(d.type).trim(),
+        description: String(d.detail || "").trim(),
+        location: String(d.loc).trim(),
+        requestedDate: String(d.date),
+        guestCount: Math.max(1, Number(d.pax) || 1),
+        budget: Number(d.budget) || 0,
+        additionalDetails: JSON.stringify({
+            startTime: d.st || "",
+            endTime: d.et || "",
+            theme: d.theme || "",
+            equipment: d.equip || "",
+            contactName: d.cname || "",
+            contactPhone: d.phone || "",
+            contactEmail: d.email || ""
+        })
+    };
+
+    const button = e.target.querySelector(
+        'button[type="submit"], button.btn'
+    );
+
+    if (button) button.disabled = true;
+
+    BTAuth.request("/api/event-requests", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+    })
+    .then(result => {
+        go("/");
+        draw();
+
+        toast(
+            L
+              ? "Event request #" + result.id + " submitted successfully"
+              : "ส่งคำขอจัด Event #" + result.id + " สำเร็จ"
+        );
+    })
+    .catch(error => {
+        er(error.message);
+
+        if (button) button.disabled = false;
+    });
+
+    return false;
+},cc(id){const r=DB.reqs.find(x=>x.id==id);r.cc=true;r.updated=now();hist('R'+id,'confirm','confirm',T2('ลูกค้ายืนยันข้อเสนอ','Customer confirmed proposal'));sv();draw()},
 chg(e,id){e.preventDefault();const r=DB.reqs.find(x=>x.id==id);if(!ME||!r||r.uid!=ME.id||!['info','confirm'].includes(r.status))return false;const m=fd(e).m.trim();if(m.length<5)return toast(L?'Please describe your request (at least 5 characters)':'กรุณาระบุรายละเอียดอย่างน้อย 5 ตัวอักษร',1);const ty=r.status=='info'?'info_response':'quotation_revision';DB.seq.cr=(DB.seq.cr||0)+1;DB.creqs.push({id:DB.seq.cr,type:ty,rid:id,uid:ME.id,text:m,at:now(),updated:now(),status:'pending',reply:'',result:'',log:[{at:now(),by:ME.name,txt:T2('ส่งคำขอ','Submitted')}]});r.cc=false;setR(r,'review',T2(TYP[ty][0],TYP[ty][1]));draw();toast(L?'Request sent to our team':'ส่งคำขอให้ทีมงานแล้ว');return false},
 rcancel(id){A.ask(L?'Cancel this request?':'ยืนยันยกเลิกคำขอ?',()=>{setR(DB.reqs.find(x=>x.id==id),'cancel');draw()})},
 acc(e){e.preventDefault();const d=fd(e),f=e.target.av.files[0];rd(f,u=>{ME.name=d.name||ME.name;ME.phone=d.phone;if(u)ME.av=u;sv();draw()});return false},
@@ -380,6 +848,7 @@ evs(e,id){e.preventDefault();const d=fd(e);A.rz(d.ph,u=>A.evs2(d,id,u));return f
 rz(f,cb){if(!f||!f.size)return cb('');const r=new FileReader();r.onload=()=>{const i=new Image();i.onload=()=>{const k=Math.min(1,900/i.width),c=document.createElement('canvas');c.width=i.width*k;c.height=i.height*k;c.getContext('2d').drawImage(i,0,0,c.width,c.height);cb(c.toDataURL('image/jpeg',.72))};i.onerror=()=>cb('');i.src=r.result};r.readAsDataURL(f)},
 evs2(d,id,u){const o={th:d.th,en:d.en,cat:d.cat,prov:d.prov,region:P[d.prov][2],date:d.date,st:d.st,et:d.et,price:+d.price,orig:+d.orig||0,seats:+d.seats,theme:u||(d.theme=='__keep'?ev(id).theme:d.theme),feat:!!d.feat,d:[d.d0,d.d1]};if(id)Object.assign(ev(id),o);else DB.events.push({id:DB.seq.e++,...o});sv();$('#md').innerHTML='';draw();return false}};
 window.addEventListener('hashchange',()=>{draw();window.scrollTo(0,0)});window.addEventListener('resize',sizes);if(window.ResizeObserver)new ResizeObserver(sizes).observe(document.body);
-migLegacy();loadAPIEvents();setInterval(()=>{if(sweep())draw()},60000);setInterval(()=>{if($('#car')&&!document.hidden)A.car(1)},5500);draw();
+migLegacy();BTBusiness.refreshContact();loadAPIEvents();setInterval(()=>{if(sweep())draw()},60000);setInterval(()=>{if($('#car')&&!document.hidden)A.car(1)},5500);BTAuth.restore().then(user=>{ME=user;draw()}).catch(error=>{console.error(error);ME=null;draw()});
 
-</script></body></html> 
+</script><script src="/js/admin-overview.js"></script>
+</body></html>

@@ -1,1 +1,32 @@
 .secrets/
+
+# Secrets
+.secrets/
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Local backups and database exports
+*.bak
+*.bak-*
+*.sql
+*backup*.json
+
+# Build and editor files
+**/target/
+.DS_Store
+.vscode/
+.idea/
+
+# Local BlueTrail backups and migration packages
+.bluetrail-backup-next-*/
+.bluetrail-migration-backups/
+BlueTrail-MySQL-Migration-Patch/
+BlueTrail-Next-MySQL/
+BlueTrail-Source-For-Migration.zip
+.secrets/
+.env
+.env.*
+!.env.example

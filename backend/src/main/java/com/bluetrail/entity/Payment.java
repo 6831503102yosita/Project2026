@@ -28,6 +28,9 @@ public class Payment {
     @Column(nullable = false, length = 30)
     private String status = "PENDING";
 
+    @Column(name = "rejection_reason", length = 500)
+    private String rejectionReason;
+
     private LocalDateTime verifiedAt;
 
     @Column(nullable = false, updatable = false)
@@ -87,6 +90,14 @@ public class Payment {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getRejectionReason() {
+        return rejectionReason;
+    }
+
+    public void setRejectionReason(String rejectionReason) {
+        this.rejectionReason = rejectionReason;
     }
 
     public LocalDateTime getVerifiedAt() {

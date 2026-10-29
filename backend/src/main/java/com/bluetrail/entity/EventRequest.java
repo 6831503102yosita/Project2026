@@ -26,6 +26,9 @@ public class EventRequest {
     @Column(columnDefinition = "TEXT")
     private String description;
 
+    @Column(columnDefinition = "TEXT")
+    private String additionalDetails;
+
     private String location;
 
     private LocalDateTime requestedDate;
@@ -87,6 +90,14 @@ public class EventRequest {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getAdditionalDetails() {
+        return additionalDetails;
+    }
+
+    public void setAdditionalDetails(String additionalDetails) {
+        this.additionalDetails = additionalDetails;
     }
 
     public String getLocation() {
