@@ -144,6 +144,10 @@ public class PaymentController {
         if (!"PENDING".equalsIgnoreCase(booking.getStatus())) {
             throw fail(HttpStatus.CONFLICT, "Booking is not pending");
         }
+        if (booking.getPaymentDueAt()!=null
+                && !LocalDateTime.now().isBefore(booking.getPaymentDueAt())) {
+            throw fail(HttpStatus.CONFLICT, "Payment deadline expired; seats will be released");
+        }
 
         for (Payment existing : payments.findByBookingId(bookingId)) {
             if ("PENDING".equals(existing.getStatus())

@@ -38,7 +38,9 @@
         try {
             return JSON.parse(raw);
         } catch {
-            return {other: String(raw)};
+            const map={};
+            for(const item of String(raw).matchAll(/([A-Za-z]+)=([^,}]+)/g))map[item[1]]=item[2];
+            return Object.keys(map).length?map:{other:String(raw)};
         }
     };
 
@@ -139,6 +141,33 @@
         return data;
     };
 
+    const quoteStatus = status => ({
+        SENT: thai('ส่งแล้ว','Sent'), ACCEPTED: thai('ตอบรับแล้ว','Accepted'),
+        REJECTED: thai('ปฏิเสธแล้ว','Rejected'),
+        REVISED: thai('แก้ไขแล้ว','Revised')
+    })[String(status || '').toUpperCase()] || String(status || '');
+
+    const quoteCard = q => `
+      <div class="bt-request-quote">
+        <div>
+          <strong>${thai('ใบเสนอราคาจากผู้จัด','Quotation from organizer')}</strong>
+          <p class="mu" style="margin:3px 0">
+            ${escapeHTML(q.quotationNumber || '')} ·
+            ${escapeHTML(quoteStatus(q.status))} ·
+            ${fmtMoney(q.totalAmount)}
+          </p>
+        </div>
+        <button class="btn sm" type="button"
+          onclick="BTQuotation.openCustomerFromRequest(${Number(q.id)})">
+          ${thai('ดูใบเสนอราคา','View quotation')}
+        </button>
+      </div>`;
+
+    async function myQuotes() {
+        if (!window.BTQuotation || typeof BTQuotation.fetchMy !== 'function') return [];
+        return await BTQuotation.fetchMy();
+    }
+
     window.pgReqsAPI = function () {
         Promise.resolve().then(async () => {
             const container = document.getElementById(
@@ -149,6 +178,11 @@
 
             try {
                 const requests = await getRequests();
+                // A quotation error must not hide the user's Event Requests.
+                let quotes = [], quoteError = false;
+                try { quotes = await myQuotes(); } catch(e) {
+                    console.warn('Quotation lookup:', e); quoteError = true;
+                }
 
                 if (!container.isConnected) return;
 
@@ -159,12 +193,7 @@
                                 "คุณยังไม่มีคำขอจัด Event",
                                 "You have no event requests yet"
                             )}</p>
-                            <a class="btn" href="#/custom">
-                                ${thai(
-                                    "ส่งคำขอจัด Event",
-                                    "Create Event Request"
-                                )}
-                            </a>
+
                         </div>`;
                     return;
                 }
@@ -185,10 +214,14 @@
                             ${thai("สถานที่","Location")}:
                             ${escapeHTML(r.location)}
                         </p>
-                        <a class="btn o"
-                           href="#/request/${encodeURIComponent(r.id)}">
-                            ${thai("ดูรายละเอียด","View details")}
-                        </a>
+                        <div class="bt-request-buttons">
+                          <a class="btn o"
+                             href="#/request/${encodeURIComponent(r.id)}">
+                              ${thai("ดูรายละเอียด","View details")}
+                          </a>
+                          ${quotes.filter(q => String(q.eventRequestId) === String(r.id))
+                            .map(quoteCard).join('')}
+                        </div>
                     </div>
                 `).join("");
 
@@ -200,18 +233,19 @@
 
         return `
             <div class="w" style="padding-top:24px;max-width:900px">
-                <h1>${thai(
+                <div class="bt-request-actions"><h1>${thai(
                     "คำขอ Event ของฉัน",
                     "My Event Requests"
                 )}</h1>
-                <p>
                     <a class="btn" href="#/custom">
                         ${thai(
                             "ส่งคำขอจัด Event ใหม่",
                             "New Event Request"
                         )}
-                    </a>
-                </p>
+                    </a></div>
+                <div class="bt-request-quotation-nav">
+                   <a class="btn o" href="#/quotations">${thai("ใบเสนอราคาของฉัน","My Quotations")}</a>
+                </div>
                 <div id="bt-request-list">
                     <p class="mu">${thai(
                         "กำลังโหลดข้อมูลจาก MySQL...",
@@ -248,9 +282,15 @@
                     return;
                 }
 
-                const d = requestDetails(
-                    request.additionalDetails
-                );
+                let quotes = [];
+                try { quotes = await myQuotes(); }
+                catch(e) { console.warn('Quotation lookup:', e); }
+                const requestQuotes = quotes.filter(q =>
+                    String(q.eventRequestId) === String(request.id));
+                const d = requestDetails(request.additionalDetails);
+                const filesResponse=await fetch(`/api/event-requests/${encodeURIComponent(id)}/files`,{credentials:"same-origin",cache:"no-store"});
+                const files=filesResponse.ok?await filesResponse.json():[];
+                const fileMarkup=files.map(f=>`<a class="bt-file-item" target="_blank" rel="noopener" href="/api/media/${Number(f.id)}">${escapeHTML(f.fileName||'Attachment')}</a>`).join("");
 
                 const fields = [
                     [thai("ประเภทงาน","Category"),request.category],
@@ -294,6 +334,12 @@
                         <div class="tw">
                             <table>${rows}</table>
                         </div>
+                        <h3>${thai("ใบเสนอราคา","Quotations")}</h3>
+                        ${requestQuotes.length ? requestQuotes.map(quoteCard).join('') :
+                          `<p class="mu">${thai("ยังไม่มีใบเสนอราคาที่ส่งถึงคำขอนี้","No sent quotation for this request yet")}</p>`}
+                        <a class="btn o sm" href="#/quotations">${thai("ดูใบเสนอราคาทั้งหมด","All my quotations")}</a>
+                        <h3>${thai("ไฟล์แนบ","Attachments")}</h3>
+                        <div class="bt-files">${fileMarkup||thai("ไม่มีไฟล์แนบ","No attachments")}</div>
                         <h3>${thai("รายละเอียดงาน","Description")}</h3>
                         <p style="white-space:pre-wrap">${
                             escapeHTML(request.description || "-")

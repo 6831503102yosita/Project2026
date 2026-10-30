@@ -41,6 +41,8 @@ public class AdminEventController {
     private Map<String, String> snapshot(Event e) {
         Map<String, String> values = new LinkedHashMap<>();
         values.put("title", str(e.getTitle()));
+        values.put("titleEn", str(e.getTitleEn()));
+        values.put("descriptionEn", str(e.getDescriptionEn()));
         values.put("category", str(e.getCategory()));
         values.put("description", str(e.getDescription()));
         values.put("location", str(e.getLocation()));
@@ -111,7 +113,9 @@ public class AdminEventController {
         String location,
         LocalDateTime eventDate,
         BigDecimal price,
-        Integer totalSeats
+        Integer totalSeats,
+        String titleEn,
+        String descriptionEn
     ) {}
 
     public record StatusInput(String status) {}
@@ -134,6 +138,8 @@ public class AdminEventController {
         if (title.isEmpty() || title.length() > 200)
             throw invalid("Invalid title");
 
+        if (input.titleEn()!=null && input.titleEn().length()>200)throw invalid("English title too long");
+        if (input.descriptionEn()!=null && input.descriptionEn().length()>10000)throw invalid("English description too long");
         if (!Set.of("event", "tour").contains(category))
             throw invalid("Category must be event or tour");
 
@@ -160,6 +166,8 @@ public class AdminEventController {
 
     private void apply(Event event, EventInput input) {
         event.setTitle(clean(input.title()));
+        event.setTitleEn(clean(input.titleEn()));
+        event.setDescriptionEn(clean(input.descriptionEn()));
         event.setCategory(clean(input.category()).toLowerCase(Locale.ROOT));
         event.setDescription(clean(input.description()));
         event.setLocation(clean(input.location()));

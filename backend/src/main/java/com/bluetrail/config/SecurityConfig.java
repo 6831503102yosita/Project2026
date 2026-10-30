@@ -86,7 +86,8 @@ public class SecurityConfig {
                 .requestMatchers(
                     HttpMethod.GET,
                     "/api/events",
-                    "/api/events/**"
+                    "/api/events/**",
+                    "/api/media/**"
                 ).permitAll()
 
                 // Admin only

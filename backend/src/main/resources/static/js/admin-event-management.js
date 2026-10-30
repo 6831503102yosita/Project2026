@@ -240,11 +240,12 @@ window.BTAdminEvents = (() => {
     dialog.innerHTML = `
       <div class="md">
         <div class="card pad"
-          style="width:min(95vw,620px);max-height:85vh;overflow:auto">
-          <h2>${e ? "แก้ไข Event / Tour" : "เพิ่ม Event / Tour"}</h2>
+          style="width:min(95vw,620px);max-height:85vh;overflow:auto;position:relative">
+          <div class="bt-edit-head"><h2>${e ? "แก้ไข Event / Tour" : "เพิ่ม Event / Tour"}</h2><button type="button" class="bt-edit-close" aria-label="Close" title="ปิดหน้าต่าง" onclick="document.getElementById('md').innerHTML=''">&times;</button></div>
 
           <form onsubmit="return BTAdminEvents.save(event,${Number(id)})">
-            ${field("ชื่อ Event / Tour", "title", e?.title || "")}
+            ${field("ชื่อ Event / Tour (ภาษาไทย)", "title", e?.title || "")}
+            ${field("Event / Tour title (English)", "titleEn", e?.titleEn || "")}
 
             <label style="display:block;margin:12px 0 4px">
               ประเภท
@@ -267,6 +268,9 @@ window.BTAdminEvents = (() => {
             ${field("จำนวนที่นั่งทั้งหมด", "totalSeats",
                     e?.totalSeats ?? 20, "number")}
 
+            <label style="display:block;margin:12px 0 4px">รูปภาพทัวร์ / Event (JPG, PNG, WebP ไม่เกิน 5 MB)</label>
+            <input type="file" name="eventImage" accept="image/png,image/jpeg,image/webp">
+            ${e?.imageUrl ? `<img src="${esc(e.imageUrl)}" alt="รูปปัจจุบัน" style="width:180px;max-height:120px;object-fit:cover;border-radius:12px;margin-top:8px">` : ''}
             <label style="display:block;margin:12px 0 4px">
               รายละเอียด
             </label>
@@ -274,6 +278,8 @@ window.BTAdminEvents = (() => {
               style="width:100%;box-sizing:border-box"
             >${esc(e?.description || "")}</textarea>
 
+            <label>Details (English)</label>
+            <textarea name="descriptionEn" rows="3">${esc(e?.descriptionEn || "")}</textarea>
             <p id="bt-event-error" style="color:#dc2626"></p>
 
             <div style="display:flex;gap:10px;margin-top:18px">
@@ -305,7 +311,9 @@ window.BTAdminEvents = (() => {
       eventDate: f.eventDate.value + ":00",
       price: Number(f.price.value),
       totalSeats: Number(f.totalSeats.value),
-      description: f.description.value.trim()
+      description: f.description.value.trim(),
+      titleEn: f.titleEn.value.trim(),
+      descriptionEn: f.descriptionEn.value.trim()
     };
 
     if (!Number.isFinite(input.price) || input.price < 0 ||
@@ -321,7 +329,7 @@ window.BTAdminEvents = (() => {
     try {
       const headers = await csrf();
 
-      await request(
+      const savedEvent = await request(
         id ? `/api/admin/events/${id}` : "/api/admin/events",
         {
           method: id ? "PUT" : "POST",
@@ -333,6 +341,14 @@ window.BTAdminEvents = (() => {
         }
       );
 
+      const picture = f.eventImage?.files?.[0];
+      if (picture) {
+        if (picture.size > 5000000 || !['image/jpeg','image/png','image/webp'].includes(picture.type))
+          throw new Error('รูปต้องเป็น JPG, PNG หรือ WebP ขนาดไม่เกิน 5 MB');
+        const data = new FormData(); data.append('file',picture);
+        await request(`/api/admin/events/${Number(id || savedEvent.id)}/image`,
+          {method:'POST',headers:await csrf(),body:data});
+      }
       document.getElementById("md").innerHTML = "";
       await loadAPIEvents();
       refresh();
@@ -590,8 +606,8 @@ window.BTAdminEvents = (() => {
       <div class="card pad">กำลังโหลด Event จาก MySQL...</div>`;
 
     const rows = [...state.rows].reverse().map(e => `
-      <tr>
-        <td><b>${esc(e.title)}</b></td>
+      <tr class="bt-event-row" data-search="${esc([e.title,e.titleEn,e.category,e.location].join(' ').toLowerCase())}">
+        <td><div class="bt-event-cell">${e.imageUrl ? `<img src="${esc(e.imageUrl)}" loading="lazy" alt="" onerror="this.style.display='none'">` : `<span class="bt-event-noimage">◈</span>`}<div><b>${esc(e.titleEn && typeof L !== 'undefined' && L ? e.titleEn : e.title)}</b><small>${esc(String(e.eventDate || '').slice(0,10))}</small></div></div></td>
         <td>${esc(e.category)}</td>
         <td>${esc(e.location)}</td>
         <td>${esc(String(e.eventDate || "").slice(0,10))}</td>
@@ -638,7 +654,8 @@ window.BTAdminEvents = (() => {
 
 
 
-      <div class="tw">
+      <div class="bt-event-toolbar"><input type="search" aria-label="Search tours and events" placeholder="${typeof L!=='undefined'&&L?'Search tours and events...':'ค้นหาทัวร์ / Event...'}" oninput="BTAdminEvents.filterRows(this.value)"></div>
+      <div class="tw bt-event-table">
         <table>
           <tr>
             <th>ชื่อ</th><th>ประเภท</th><th>สถานที่</th>
@@ -650,5 +667,11 @@ window.BTAdminEvents = (() => {
       </div>`;
   }
 
-  return {render, refresh, edit, save, toggle, history, deleteEvent};
+  function filterRows(query){
+    const q=String(query||'').toLowerCase().trim();
+    document.querySelectorAll('.bt-event-row').forEach(row=>{
+      row.hidden=!row.dataset.search.includes(q);
+    });
+  }
+  return {render, refresh, edit, save, toggle, history, deleteEvent, filterRows};
 })();

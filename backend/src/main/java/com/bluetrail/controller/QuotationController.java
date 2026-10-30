@@ -35,7 +35,8 @@ public class QuotationController {
         List<ItemInput> items,
         BigDecimal discount,
         BigDecimal taxPercent,
-        String adminNote
+        String adminNote,
+        String documentJson
     ) {}
 
     public record CustomerDecision(
@@ -62,12 +63,14 @@ public class QuotationController {
             "q.admin_note AS adminNote, " +
             "q.customer_note AS customerNote, " +
             "q.created_by AS createdBy, " +
+            "d.document_json AS documentJson, " +
             "q.created_at AS createdAt, " +
             "q.sent_at AS sentAt, " +
             "q.responded_at AS respondedAt, " +
             "r.title AS eventTitle " +
             "FROM quotations q " +
             "JOIN event_requests r ON r.id=q.event_request_id " +
+            "LEFT JOIN quotation_documents d ON d.quotation_id=q.id " +
             "WHERE q.id=?", id
         );
 
@@ -251,6 +254,13 @@ public class QuotationController {
             );
         }
 
+        if (input.documentJson() != null && !input.documentJson().isBlank()) {
+            if (input.documentJson().length() > 30000) {
+                throw error(HttpStatus.BAD_REQUEST, "Quotation document too large");
+            }
+            jdbc.update("INSERT INTO quotation_documents(quotation_id,document_json) VALUES (?,?)",
+                id, input.documentJson());
+        }
         return quotation(id);
     }
 
