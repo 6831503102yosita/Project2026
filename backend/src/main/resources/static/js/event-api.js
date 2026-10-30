@@ -64,6 +64,9 @@ EventAPI.toFrontend = function(event, legacy = null) {
     'Udon Thani': ['udon', 'northeast'],
     'Phuket': ['phuket', 'south'],
     'Krabi': ['krabi', 'south'],
+    'เชียงราย': ['chiangrai','north'],
+    'เชียงใหม่': ['chiangmai','north'],
+    'กระบี่': ['krabi','south'],
     'Surat Thani': ['suratthani', 'south']
   };
 
@@ -72,18 +75,45 @@ EventAPI.toFrontend = function(event, legacy = null) {
 
   const details = legacy || {};
 
-  const descriptions = Array.isArray(details.d)
-    ? details.d
-    : [event.description || '', event.description || ''];
+  // Use bilingual fields persisted in MySQL. Known demo fallbacks are only
+  // used for older records that were created before the bilingual migration.
+  const knownTitles = {
+    'ทัวร์ดอยช้าง เชียงราย': 'Doi Chang Chiang Rai Tour',
+    'เวิร์กช็อปจัดดอกไม้': 'Flower Arrangement Workshop',
+    'เที่ยวทะเลกระบี่': 'Krabi Beach Tour',
+    'เส้นทางชมภูเขาและป่าเชียงใหม่': 'Chiang Mai Mountain Nature Trail',
+    'ทริปชมทะเลและเกาะ': 'Island and Sea Explorer',
+    'เวิร์กช็อปจัดช่อดอกไม้': 'Flower Bouquet Workshop',
+    'ทัวร์ชมทะเลสาบและธรรมชาติ': 'Lake and Nature Experience',
+    'ทริปเดินป่าชมทิวทัศน์': 'Scenic Hiking Experience',
+    'เวิร์กช็อปถ่ายภาพธรรมชาติ': 'Nature Photography Workshop'
+  };
+  const knownDescriptions = {
+    'ทัวร์ดอยช้าง เชียงราย': 'Enjoy scenic mountain views and Doi Chang coffee plantations.',
+    'เวิร์กช็อปจัดดอกไม้': 'Learn floral arrangement with a hands-on workshop.',
+    'เที่ยวทะเลกระบี่': 'Explore beaches and natural scenery in Krabi.',
+    'เส้นทางชมภูเขาและป่าเชียงใหม่': 'Discover Chiang Mai mountains and forest trails.',
+    'ทริปชมทะเลและเกาะ': 'Explore tropical islands and beautiful coastline.',
+    'เวิร์กช็อปจัดช่อดอกไม้': 'Learn to arrange bouquets in a beginner-friendly workshop.',
+    'ทัวร์ชมทะเลสาบและธรรมชาติ': 'Explore tranquil lakes and natural scenery.',
+    'ทริปเดินป่าชมทิวทัศน์': 'Hiking and scenic outdoor experience.',
+    'เวิร์กช็อปถ่ายภาพธรรมชาติ': 'Practice nature and landscape photography.'
+  };
+  const thaiTitle = String(event.title || '').replace(/^ตัวอย่าง:\s*/, '');
+  const englishTitle = String(event.titleEn || '').trim() ||
+    knownTitles[thaiTitle] || details.en || thaiTitle;
+  const thaiDescription = String(event.description || '') ||
+    (Array.isArray(details.d) ? details.d[0] || '' : '');
+  const englishDescription = String(event.descriptionEn || '').trim() ||
+    knownDescriptions[thaiTitle] ||
+    (Array.isArray(details.d) ? details.d[1] || '' : '') ||
+    thaiDescription;
 
   return {
     id: event.id,
-    th: event.title || '',
-    en: details.en || event.title || '',
-    d: [
-      descriptions[0] || event.description || '',
-      descriptions[1] || descriptions[0] || event.description || ''
-    ],
+    th: thaiTitle,
+    en: englishTitle,
+    d: [thaiDescription, englishDescription],
     cat: event.category === 'tour' ? 'tour' : 'event',
     prov: details.prov || fallback[0],
     region: details.region || fallback[1],
@@ -96,6 +126,7 @@ EventAPI.toFrontend = function(event, legacy = null) {
     theme: details.theme || 'festival',
     feat: Boolean(details.feat),
     arch: event.status !== 'ACTIVE',
+    imageUrl: event.imageUrl || '',
     mysql: true
   };
 };

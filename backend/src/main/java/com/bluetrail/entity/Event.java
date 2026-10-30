@@ -16,6 +16,12 @@ public class Event {
     @Column(nullable = false, length = 200)
     private String title;
 
+    @Column(name="title_en",length=200)
+    private String titleEn;
+
+    @Column(name="description_en",columnDefinition="TEXT")
+    private String descriptionEn;
+
     @Column(nullable = false, length = 30)
     private String category;
 
@@ -64,6 +70,11 @@ public class Event {
     public void setTitle(String title) {
         this.title = title;
     }
+
+    public String getTitleEn(){return titleEn;}
+    public void setTitleEn(String v){titleEn=v;}
+    public String getDescriptionEn(){return descriptionEn;}
+    public void setDescriptionEn(String v){descriptionEn=v;}
 
     public String getCategory() {
         return category;

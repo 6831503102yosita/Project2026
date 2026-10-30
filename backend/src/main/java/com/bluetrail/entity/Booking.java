@@ -33,6 +33,16 @@ public class Booking {
     @Column(nullable = false, updatable = false)
     private LocalDateTime bookingDate;
 
+    // Existing bookings remain untouched. New reservations get a 30-minute deadline.
+    @Column(name="payment_due_at")
+    private LocalDateTime paymentDueAt;
+    @Column(name="contact_name",length=100)
+    private String contactName;
+    @Column(name="contact_phone",length=30)
+    private String contactPhone;
+    @Column(name="contact_email",length=160)
+    private String contactEmail;
+
     public Booking() {
     }
 
@@ -92,4 +102,12 @@ public class Booking {
     public LocalDateTime getBookingDate() {
         return bookingDate;
     }
+    public LocalDateTime getPaymentDueAt(){return paymentDueAt;}
+    public void setPaymentDueAt(LocalDateTime v){paymentDueAt=v;}
+    public String getContactName(){return contactName;}
+    public void setContactName(String v){contactName=v;}
+    public String getContactPhone(){return contactPhone;}
+    public void setContactPhone(String v){contactPhone=v;}
+    public String getContactEmail(){return contactEmail;}
+    public void setContactEmail(String v){contactEmail=v;}
 }

@@ -19,6 +19,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 import java.util.LinkedHashMap;
+import java.time.LocalDateTime;
 
 @RestController
 public class BookingController {
@@ -32,7 +33,7 @@ public class BookingController {
         this.bookings = bookings;
     }
 
-    public record NewBooking(Long eventId, Integer quantity) {}
+    public record NewBooking(Long eventId, Integer quantity, String contactName, String contactPhone, String contactEmail) {}
 
     private User currentUser(Authentication auth) {
         if (auth == null || !auth.isAuthenticated()
@@ -61,6 +62,10 @@ public class BookingController {
         result.put("totalPrice", b.getTotalPrice());
         result.put("status", b.getStatus());
         result.put("bookingDate", b.getBookingDate());
+        result.put("paymentDueAt", b.getPaymentDueAt());
+        result.put("contactName", b.getContactName());
+        result.put("contactPhone", b.getContactPhone());
+        result.put("contactEmail", b.getContactEmail());
         return result;
     }
 
@@ -78,6 +83,14 @@ public class BookingController {
                 .body(Map.of("error", "Invalid booking information"));
         }
 
+        if (input.contactName() == null || input.contactName().isBlank()
+                || input.contactName().length() > 100
+                || input.contactPhone() == null || input.contactPhone().isBlank()
+                || input.contactPhone().length() > 30
+                || input.contactEmail() == null || !input.contactEmail().matches("^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$")
+                || input.contactEmail().length() > 160) {
+            return ResponseEntity.badRequest().body(Map.of("error", "Valid contact details are required"));
+        }
         if (input.quantity() > 1000) {
             return ResponseEntity.badRequest()
                 .body(Map.of("error", "Quantity exceeds limit"));
@@ -122,6 +135,10 @@ public class BookingController {
             )
         );
         booking.setStatus("PENDING");
+        booking.setPaymentDueAt(LocalDateTime.now().plusMinutes(30));
+        booking.setContactName(input.contactName().trim());
+        booking.setContactPhone(input.contactPhone().trim());
+        booking.setContactEmail(input.contactEmail().trim());
 
         event.setAvailableSeats(available - input.quantity());
         em.flush();

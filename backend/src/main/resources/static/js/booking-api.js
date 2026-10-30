@@ -89,7 +89,8 @@ window.BTBookings = (() => {
         <td>${esc(b.quantity)}</td>
         <td>${money(b.totalPrice)}</td>
         <td><span class="badge">${esc(b.status)}</span>
-        ${!admin ? `<button class="btn sm o"
+        ${!admin && b.status === 'PENDING' && b.paymentDueAt ? `<div class="mu bt-due" data-due="${esc(b.paymentDueAt)}">${en?'Payment deadline':'กำหนดชำระ'}: ${esc(String(b.paymentDueAt).replace('T',' ').slice(0,16))}</div>` : ''}
+        ${!admin && b.status === 'PENDING' ? `<button class="btn sm o"
           ${BTPayments.bookingButtonStyle(Number(b.id))}
           onclick="BTPayments.openCustomer(
             ${Number(b.id)},

@@ -12,7 +12,7 @@ nav.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:v
 @media(max-width:860px){.hb{display:block}.nm{display:none;width:100%;flex-direction:column;align-items:stretch;padding-bottom:12px}.nm.open{display:flex}.nm>*{width:100%}.nm .btn{min-height:44px}.dm{position:static;box-shadow:none}}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;background:var(--b);color:#fff;border:2px solid var(--b);border-radius:12px;padding:10px 18px;font:600 1rem inherit;font-family:inherit;text-decoration:none;cursor:pointer;min-height:42px}.btn.o{background:transparent;color:var(--b)}.btn.sm{padding:6px 14px;min-height:38px;font-size:.92rem}.btn.r{background:var(--er);border-color:var(--er)}.btn.g{background:var(--ok);border-color:var(--ok)}.btn.wh{background:#fff;color:var(--b2);border-color:#fff}
 .card{background:var(--c);border:1px solid var(--ln);border-radius:18px;overflow:hidden;box-shadow:0 2px 10px #0b2a6f0d}.pad{padding:18px}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px}
-.ev .im{position:relative;display:block}.ev img{width:100%;aspect-ratio:16/10;object-fit:cover}.ev .bd{padding:14px}.ev h3{font-size:1.05rem;margin:.3em 0}.ev .bds{position:absolute;top:10px;left:10px;display:flex;gap:6px;flex-wrap:wrap}.pr{display:flex;gap:8px;align-items:baseline;margin:6px 0}.pr b{font-size:1.3rem;color:var(--b)}.pr s{color:var(--mu)}.ac{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.ev .im{position:relative;display:block}.ev img{width:100%;aspect-ratio:16/10;object-fit:cover}.ev .bd{padding:14px}.ev h3{font-size:1.05rem;margin:.3em 0}.ev .bds{position:absolute;top:10px;left:10px;display:flex;gap:6px;flex-wrap:wrap}.pr{display:flex;gap:8px;align-items:baseline;margin:6px 0}.pr b{font-size:1.3rem;color:var(--tx);font-weight:800}.pr s{color:var(--mu)}.ac{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 .badge,.tag{display:inline-block;font-size:.78rem;font-weight:700;padding:3px 10px;border-radius:99px;background:#dbe8ff;color:var(--b2)}.badge.hot{background:#1d4ed8;color:#fff}.badge.ok{background:#dcfce7;color:#166534}.badge.er{background:#fee2e2;color:#991b1b}.badge.wa{background:#fef9c3;color:#854d0e}
 section.s{padding:30px 0}.sh{display:flex;justify-content:space-between;align-items:end;gap:10px;flex-wrap:wrap}
 .srch{display:flex;gap:8px;background:var(--c);border:1px solid var(--ln);border-radius:16px;padding:10px;margin:16px 0;box-shadow:0 4px 16px #0b2a6f14}.srch input{flex:1;min-width:0}
@@ -30,6 +30,66 @@ input,select,textarea{font:inherit;color:var(--tx);background:var(--bg);border:1
 .ft{background:var(--b2);color:#dbe8ff;margin-top:30px;padding:30px 0 16px}.ft a{color:#fff;display:block;text-decoration:none;padding:3px 0}.ft h4{color:#fff;margin:0 0 8px}
 .md{position:fixed;inset:0;background:#0008;z-index:60;display:flex;align-items:center;justify-content:center;padding:14px}.md .card{max-width:640px;width:100%;max-height:90vh;overflow:auto}
 .hist li{margin:4px 0;font-size:.9rem}.pg{max-width:960px;padding-top:20px}.bk{color:var(--mu);text-decoration:none;font-weight:600}.fc{background:var(--c);border:1px solid var(--ln);border-radius:28px;padding:clamp(18px,4vw,48px);margin:26px 0 40px}.fg2{display:grid;grid-template-columns:1fr 1fr;gap:0 32px}.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:0 32px}@media(max-width:700px){.fg2,.g3{grid-template-columns:1fr}}.fc label{font-weight:700;margin:16px 0 8px;font-size:1rem}.fc input,.fc select,.fc textarea{border-radius:20px;padding:14px 20px;min-height:54px;background:var(--c);border:1px solid var(--ln)}.fc textarea{min-height:140px}.fc :is(input,select,textarea):focus{outline:0;border-color:var(--b);box-shadow:0 0 0 3px #1d4ed82e}.dv{border:0;border-top:1px solid var(--ln);margin:28px 0 4px}.fc label.dz{display:flex;flex-direction:column;align-items:center;gap:8px;border:2px dashed var(--ln);border-radius:20px;padding:34px 16px;color:var(--mu);cursor:pointer;font-weight:400;margin:0}.fc label.dz:hover{border-color:var(--b);color:var(--b)}.i{width:1.1em;height:1.1em;vertical-align:-.18em;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}.logo{display:inline-flex;align-items:center;gap:8px}.lb{width:34px;height:34px;border-radius:10px;background:var(--b);color:#fff;display:inline-flex;align-items:center;justify-content:center}.emp .ic{color:var(--b)}.qr{display:grid;grid-template-columns:1fr 62px 92px 40px;gap:6px;margin:6px 0}.qr input{padding:8px 10px;min-height:40px;border-radius:10px}@media print{body *{visibility:hidden}#qt,#qt *{visibility:visible}#qt{position:absolute;left:0;top:0;width:100%;border:0;box-shadow:none}.no-pr{display:none!important}}.q7{display:grid;grid-template-columns:1fr 64px 76px 100px 90px 100px 40px;gap:6px;margin:6px 0;align-items:center}.q7 input{padding:8px 10px;min-height:40px;border-radius:10px}.two>*,.sh>*,.fg>*,.grid>*,.g3>*,.fg2>*{min-width:0}.badge,.tag{max-width:100%;overflow-wrap:anywhere}p,h1,h2,h3,td,li{overflow-wrap:anywhere}.btn.lg{width:100%;border-radius:20px;min-height:56px;font-size:1.1rem;margin-top:20px}.qr{display:block;margin:10px auto;background:#fff;padding:8px;border-radius:12px}.av{width:80px;height:80px;border-radius:50%;background:var(--b);color:#fff;display:flex;align-items:center;justify-content:center;font-size:2rem;object-fit:cover}
+
+/* BlueTrail refinement: accessible, responsive and manually selectable theme */
+:root[data-theme="light"]{--bg:#f3f7ff;--c:#fff;--tx:#0f1f3d;--mu:#475569;--ln:#d9e4f8;--b:#1d4ed8;color-scheme:light}
+:root[data-theme="dark"]{--bg:#0a1226;--c:#101b38;--tx:#e8eefc;--mu:#b5c4e2;--ln:#22325c;--b:#6b9bff;color-scheme:dark}
+:root[data-theme="dark"] .pr b,:root[data-theme="dark"] .bt-price{color:#eaf2ff!important}
+.bt-theme{min-width:42px;padding:7px 10px}
+.bt-admin{display:grid;grid-template-columns:245px minmax(0,1fr);width:100%;max-width:none;margin:0 0 32px;padding:0;gap:0;align-items:stretch;min-height:calc(100vh - 160px)}
+.bt-sidebar{position:sticky;top:var(--nh);display:flex;flex-direction:column;gap:7px;padding:24px 13px;min-height:calc(100vh - var(--nh));height:max-content;background:var(--c);border-right:1px solid var(--ln);border-radius:0;box-shadow:2px 0 8px #0b2a6f0a}
+.bt-sidebar button{display:flex;align-items:center;text-align:left;padding:11px 13px;color:var(--tx);background:transparent;border:0;border-radius:10px;font:600 .92rem inherit;font-family:inherit;cursor:pointer}
+.bt-sidebar button:hover{background:var(--bg)}.bt-sidebar button.active{background:var(--b);color:white}
+.bt-admin-content{min-width:0;padding:25px clamp(16px,3vw,42px)}.bt-admin-content .w{max-width:100%;padding:0}.bt-admin-content .tw{max-width:100%;overflow-x:auto}
+.bt-profile-card{max-width:650px;margin:24px auto}.bt-request-actions{display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:space-between;margin:0 0 14px}
+.bt-request-data th{width:38%;text-align:left;color:var(--mu)}.bt-request-data td{word-break:break-word}.bt-request-data th,.bt-request-data td{padding:10px 12px}
+.bt-price{font-size:1.65rem;font-weight:800;color:var(--tx)}
+@media(max-width:850px){.bt-admin{grid-template-columns:1fr;padding:0}.bt-sidebar{position:static;min-height:0;height:auto;display:flex;flex-direction:row;overflow-x:auto;padding:10px;border-right:0;border-bottom:1px solid var(--ln)}.bt-sidebar button{min-width:max-content}.bt-admin-content{padding:18px 12px}}
+ .bt-files{display:flex;flex-wrap:wrap;gap:10px}.bt-file-item{display:inline-flex;align-items:center;border:1px solid var(--ln);border-radius:10px;padding:10px 14px;background:var(--bg);color:var(--b);font-weight:600;text-decoration:none}.bt-file-item:hover{text-decoration:underline}
+ .bt-admin-brand{display:flex;align-items:center;gap:12px;padding:0 10px 18px;margin-bottom:10px;border-bottom:1px solid var(--ln)}.bt-admin-brand small{display:block;color:var(--mu);font-size:.75rem}.bt-sidebar button{width:100%;font-size:.92rem}.bt-admin-home{margin-top:24px;padding:10px;color:var(--mu);text-decoration:none}.bt-sidebar button.active{box-shadow:0 2px 6px #1d4ed833}
+@media(max-width:850px){.bt-admin-brand,.bt-admin-home{display:none}}
+
+/* BlueTrail consistent customer/admin polish */
+.bt-event-toolbar{display:flex;gap:12px;align-items:center;margin:14px 0}.bt-event-toolbar input{width:min(100%,470px);border:1px solid var(--ln);background:var(--c);color:var(--tx);border-radius:12px;padding:12px 16px}
+.bt-event-table table{min-width:850px}.bt-event-table th{font-size:.78rem;text-transform:uppercase;letter-spacing:.025em}.bt-event-table td{vertical-align:middle}.bt-event-row[hidden]{display:none}
+.bt-event-cell{display:flex;align-items:center;gap:12px;min-width:200px}.bt-event-cell img,.bt-event-noimage{width:58px;height:52px;flex:none;border-radius:10px;object-fit:cover;background:var(--bg)}.bt-event-noimage{display:grid;place-items:center;color:var(--b)}.bt-event-cell small{display:block;color:var(--mu);margin-top:3px}
+
+.bt-modal-card{width:min(94vw,760px)!important;max-width:760px!important;max-height:min(88vh,900px)!important;border-radius:22px;display:flex;flex-direction:column;overflow:hidden!important}
+.bt-modal-head{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:15px 22px;border-bottom:1px solid var(--ln);position:sticky;top:0;background:var(--c);z-index:2}
+.bt-close{width:42px;height:42px;border-radius:12px;background:var(--bg);color:var(--tx);border:1px solid var(--ln);font:700 26px/1 sans-serif;cursor:pointer}
+.bt-close:hover{background:var(--b);color:#fff}
+.bt-modal-body{padding:20px 24px;overflow:auto;min-height:0}
+.bt-modal-body>.card{margin:0 0 14px;border-radius:14px}
+.bt-modal-foot{padding:12px 22px;border-top:1px solid var(--ln);display:flex;justify-content:flex-end}
+.bt-modal-body .tw{max-width:100%}.bt-modal-body table{min-width:0}
+.bt-contact-section{padding:25px 0}.bt-contact-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:20px}
+.bt-contact-card{display:flex;align-items:center;gap:14px;padding:20px;background:var(--c);border:1px solid var(--ln);border-radius:16px;min-width:0;box-shadow:0 3px 14px #11224e0b}
+.bt-contact-icon{width:43px;height:43px;display:grid;place-items:center;flex:none;border-radius:13px;background:var(--bg);color:var(--b)}
+.bt-contact-card small{display:block;color:var(--mu);font-weight:700;font-size:11px;letter-spacing:.03em}
+.bt-contact-card a{color:var(--tx);text-decoration:none}.bt-contact-card div div{word-break:break-word;font-weight:600}
+.bt-file-gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px}
+.bt-file-preview{display:flex;flex-direction:column;gap:8px;padding:10px;border:1px solid var(--ln);border-radius:14px;background:var(--c);color:var(--tx);min-width:0;text-decoration:none}
+.bt-file-preview img{width:100%;height:110px;object-fit:cover;border-radius:9px;background:var(--bg)}.bt-file-preview span{font-size:12px;overflow-wrap:anywhere}
+.bt-request-data tr:nth-child(even){background:var(--bg)}.bt-request-data th{background:var(--bg)}
+@media(max-width:760px){.bt-contact-grid{grid-template-columns:1fr}.bt-modal-body{padding:14px}.bt-modal-card{max-height:92vh!important}}
+
+/* Consistent primary buttons in light & dark mode; avoid pale-on-pale login CTA */
+.btn:not(.o):not(.wh):not(.r):not(.g),a.btn:not(.o):not(.wh):not(.r):not(.g){background:#1d4ed8!important;border-color:#1d4ed8!important;color:#fff!important;opacity:1}
+.btn:not(.o):not(.wh):not(.r):not(.g):hover,a.btn:not(.o):not(.wh):not(.r):not(.g):hover{background:#173fae!important;border-color:#173fae!important;color:#fff!important}
+.btn.o:hover{background:rgba(29,78,216,.08)}
+.bt-edit-head{position:sticky;top:-18px;z-index:2;background:var(--c);display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 0 14px;margin-top:-8px;border-bottom:1px solid var(--ln)}
+.bt-edit-head h2{margin:0}
+.bt-edit-close{flex:none!important;width:38px!important;height:38px!important;min-height:38px!important;display:grid!important;place-items:center;background:var(--bg)!important;border:1px solid var(--ln)!important;border-radius:10px!important;color:var(--tx)!important;font-size:28px!important;line-height:1!important;cursor:pointer}
+.bt-edit-close:hover{background:var(--ln)!important}
+.bt-request-quote{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;border:1px solid var(--ln);border-radius:14px;padding:12px 14px;background:var(--bg);margin-top:12px}
+.bt-request-quote .btn{flex:none}
+.bt-request-buttons{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.bt-request-quotation-nav{margin:10px 0 18px}
+/* Short route entrance only; do not fade out existing content or the header. */
+#bt-page-mount{min-width:0;contain:layout;}
+.bt-route-enter{animation:bt-route-in .16s ease-out both;}
+@keyframes bt-route-in{from{opacity:.91;transform:translateY(3px)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.bt-route-enter{animation:none}}
 </style><script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script><script src="/js/auth-api.js"></script><script src="/js/customer-event-requests.js"></script><script src="/js/admin-event-requests.js"></script><script src="/js/booking-api.js"></script><script src="/js/quotation-mysql-ui.js"></script><script src="/js/admin-event-management.js"></script><script src="/js/payment-ui.js"></script>
 </head><body><div id="app"></div><div id="md"></div>
 <script src="/js/event-api.js"></script>
@@ -71,7 +131,8 @@ music:sk('#0d1240','#2f46b4')+`<path d="M200 60L120 330H300zM400 40L330 330H470z
 const img=k=>k&&k.startsWith('data')?k:'data:image/svg+xml;utf8,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500">'+(SC[k]||SC.city)+'</svg>');
 const img0=k=>{const[a,b,c]=TH[k]||TH.city;return'data:image/svg+xml;utf8,'+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500"><defs><linearGradient id="g" x2="1" y2="1"><stop offset="0" stop-color="${b}"/><stop offset="1" stop-color="${c}"/></linearGradient></defs><rect width="800" height="500" fill="url(#g)"/><text x="400" y="320" font-size="220" text-anchor="middle">${a}</text></svg>`)};
 const day=n=>new Date(Date.now()+n*864e5).toISOString().slice(0,10),now=()=>new Date().toISOString(),fm=n=>'฿'+Number(n||0).toLocaleString(),dt=d=>d?new Date(d).toLocaleDateString(L?'en-GB':'th-TH',{day:'numeric',month:'short',year:'numeric'}):'-';
-const nm=e=>(L?e.en||e.th:e.th||e.en),ds=e=>(L?e.d[1]||e.d[0]:e.d[0]||e.d[1]),lc=e=>P[e.prov][L]+(L?', Thailand':' ประเทศไทย'),ev=id=>DB.events.find(e=>e.id==id),us=id=>DB.users.find(u=>u.id==id)||{name:'-'};
+const BTNames={'ทัวร์ดอยช้าง เชียงราย':'Doi Chang Chiang Rai Tour','เวิร์กช็อปจัดดอกไม้':'Flower Arrangement Workshop','เที่ยวทะเลกระบี่':'Krabi Beach Tour','เส้นทางชมภูเขาและป่าเชียงใหม่':'Chiang Mai Mountain Nature Trail','ทริปชมทะเลและเกาะ':'Island and Sea Explorer','เวิร์กช็อปจัดช่อดอกไม้':'Flower Bouquet Workshop','ทัวร์ชมทะเลสาบและธรรมชาติ':'Lake and Nature Experience','ทริปเดินป่าชมทิวทัศน์':'Scenic Hiking Experience','เวิร์กช็อปถ่ายภาพธรรมชาติ':'Nature Photography Workshop'};
+const nm=e=>(L?(e.en&&e.en!==e.th?e.en:BTNames[e.th]||e.en||e.th):e.th||e.en),ds=e=>(L?e.d[1]||e.d[0]:e.d[0]||e.d[1]),lc=e=>P[e.prov][L]+(L?', Thailand':' ประเทศไทย'),ev=id=>DB.events.find(e=>e.id==id),us=id=>DB.users.find(u=>u.id==id)||{name:'-'};
 function seed(){const T=[['chiangmai','mountain','ขึ้นดอยอินทนนท์ 2 วัน 1 คืน','Doi Inthanon 2D1N',3500,7000,12,20,1],['chiangrai','temple','เชียงราย วัดร่องขุ่น–สามเหลี่ยมทองคำ','Chiang Rai White Temple & Golden Triangle',2900,0,20,25,0],['maehongson','mountain','แม่ฮ่องสอน ลูปปาย–ปางอุ๋ง','Mae Hong Son Loop',4200,0,8,30,0],['bangkok','city','ล่องเรือเจ้าพระยายามค่ำ','Chao Phraya Dinner Cruise',1500,0,30,12,0],['ayutthaya','temple','อยุธยา ปั่นจักรยานชมโบราณสถาน','Ayutthaya Bike Tour',990,1500,25,15,0],['nakhonpathom','temple','นครปฐม พระปฐมเจดีย์และตลาดน้ำ','Nakhon Pathom Chedi & Floating Market',890,0,18,18,0],['chonburi','sea','พัทยา เกาะล้าน','Pattaya Koh Larn',1290,0,22,10,0],['rayong','sea','ระยอง เกาะเสม็ด','Rayong Koh Samet',3200,0,5,22,0],['chanthaburi','forest','จันทบุรี สวนผลไม้และน้ำตก','Chanthaburi Orchards & Falls',1800,0,14,28,0],['kanchanaburi','falls','กาญจนบุรี น้ำตกเอราวัณ','Kanchanaburi Erawan Falls',1900,0,16,14,0],['phetchaburi','forest','เพชรบุรี แก่งกระจาน ทะเลหมอก','Phetchaburi Kaeng Krachan',2400,0,10,35,0],['prachuap','sea','ประจวบฯ หัวหิน–ปราณบุรี','Hua Hin & Pranburi',2100,0,2,16,0],['khonkaen','city','ขอนแก่น ภูเวียง ไดโนเสาร์','Khon Kaen Dinosaur Trail',1600,0,20,26,0],['korat','forest','โคราช เขาใหญ่ ธรรมชาติ','Khao Yai Nature Trip',2600,3900,15,19,1],['udon','falls','อุดรธานี ทะเลบัวแดง','Udon Thani Red Lotus Lake',1400,0,24,40,0],['phuket','sea','ภูเก็ต เกาะพีพี 3 วัน 2 คืน','Phuket Phi Phi 3D2N',6500,13000,6,24,1],['krabi','sea','กระบี่ 4 เกาะ เรือหางยาว','Krabi 4 Islands',1700,0,3,13,0],['suratthani','sea','สุราษฎร์ธานี เกาะเต่า–นางยวน','Koh Tao & Nang Yuan',3900,0,9,29,0]];
 const E=[['chiangmai','festival','ลอยกระทง ยี่เป็ง เชียงใหม่','Loy Krathong Yi Peng Chiang Mai',800,1200,100,18,1],['bangkok','music','คอนเสิร์ตริมแม่น้ำ','Riverside Music Night',1200,0,200,32,0],['phuket','festival','เทศกาลอาหารทะเลภูเก็ต','Phuket Seafood Festival',500,0,150,21,0],['khonkaen','festival','งานไหมนานาชาติ ขอนแก่น','Khon Kaen Silk Fair',300,0,300,45,0]];
 const events=[...T.map(r=>[...r,'tour']),...E.map(r=>[...r,'event'])].map((r,i)=>({id:i+1,prov:r[0],region:P[r[0]][2],theme:r[1],th:r[2],en:r[3],price:r[4],orig:r[5],seats:r[6],date:day(r[7]),st:r[9]=='tour'?'07:00':'17:00',et:r[9]=='tour'?'18:00':'22:00',feat:!!r[8],cat:r[9],d:[`ประสบการณ์ ${r[2]} พร้อมไกด์ท้องถิ่น อาหาร และประกันการเดินทาง`,`${r[3]} with a local guide, meals and travel insurance.`]}));
@@ -92,10 +153,12 @@ function hist(ref,o,n,note){DB.hist.push({ref,o,n,by:ME?ME.name:'-',at:now(),not
 function setR(r,s,note){hist('R'+r.id,r.status,s,note);r.status=s;r.updated=now();sv()}
 const dc=e=>e.orig>e.price?Math.round((1-e.price/e.orig)*100):0;
 const bds=e=>`<div class="bds">${dc(e)?`<span class="badge hot">${t('off')} ${dc(e)}%</span>`:''}${e.seats>0&&e.seats<=5?`<span class="badge hot">${t('few').replace('{n}',e.seats)}</span><span class="badge">${t('near')}</span>`:''}</div>`;
-const card=e=>`<article class="card ev"><a href="#/event/${e.id}" class="im"><img src="${img(e.theme)}" alt="${Z(nm(e))}">${bds(e)}</a><div class="bd"><span class="tag">${t(e.cat)} · ${P[e.prov][L]}</span><h3>${Z(nm(e))}</h3><div class="mu">${ic('cal')} ${dt(e.date)} · ${e.st}–${e.et}<br>${ic('pin')} ${lc(e)}<br>${ic('seat')} ${e.seats>0?t('left')+' '+e.seats:t('full')}</div><div class="pr"><b>${fm(e.price)}</b>${e.orig>e.price?`<s>${fm(e.orig)}</s>`:''}</div><div class="ac"><a class="btn o sm" href="#/event/${e.id}">${t('det')}</a>${e.seats>0?`<a class="btn sm" href="#/book/${e.id}">${t('book')}</a>`:`<span class="badge er">${t('full')}</span>`}</div></div></article>`;
+const card=e=>`<article class="card ev"><a href="#/event/${e.id}" class="im"><img src="${Z(e.imageUrl || img(e.theme))}" alt="${Z(nm(e))}">${bds(e)}</a><div class="bd"><span class="tag">${t(e.cat)} · ${P[e.prov][L]}</span><h3>${Z(nm(e))}</h3><div class="mu">${ic('cal')} ${dt(e.date)} · ${e.st}–${e.et}<br>${ic('pin')} ${lc(e)}<br>${ic('seat')} ${e.seats>0?t('left')+' '+e.seats:t('full')}</div><div class="pr"><b>${fm(e.price)}</b>${e.orig>e.price?`<s>${fm(e.orig)}</s>`:''}</div><div class="ac"><a class="btn o sm" href="#/event/${e.id}">${t('det')}</a>${e.seats>0?`<a class="btn sm" href="#/book/${e.id}">${t('book')}</a>`:`<span class="badge er">${t('full')}</span>`}</div></div></article>`;
 const emp=(m,b)=>`<div class="emp"><div class="ic">${ic('compass',44)}</div><p>${m||t('nores')}</p>${b||''}</div>`;
-const nav=()=>`<nav class="top" id="nv"><div class="w nr"><a class="logo" href="#/"><span class="lb">${ic('compass',20)}</span> BlueTrail</a><button class="hb" aria-label="menu" onclick="document.getElementById('nm').classList.toggle('open')">${ic('menu',22)}</button><div class="nm" id="nm"><a href="#/">${t('home')}</a><a href="#/events">${t('events')}</a>${ME?`<a href="#/requests">${t('myreq')}</a><a href="#/bookings">${t('mybk')}</a>`:''}<button class="btn o sm" onclick="A.lang()">${L?'ไทย':'EN'}</button>${ME?`<div class="dd"><button class="btn sm" onclick="this.parentNode.classList.toggle('open')">${ic('user')} ${Z(ME.name)} ▾</button><div class="dm"><a href="#/account">${t('acc')}</a>${ME.role=='admin'?`<a href="#/admin">${t('adm')}</a>`:''}${ME.role=='organizer'?`<a href="#/organizer">${t('org')}</a>`:''}<a href="#" onclick="A.out();return false">${t('out')}</a></div></div>`:`<a class="btn sm" href="#/login">${t('login')}</a>`}</div></div></nav>`;
-const contact=()=>{const c=DB.contact;return`<section class="s"><div class="w"><div class="card pad"><h2>${t('ch')}</h2><p>${t('cp')}</p><div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr))"><div>${ic('phone')} ${Z(c.phone)}</div><div>${ic('mail')} ${Z(c.email)}</div><div>${ic('chat')} LINE ${Z(c.line)}</div><div>${ic('fb')} ${Z(c.fb)}</div><div>${ic('ig')} ${Z(c.ig)}</div><div>${ic('bld')} ${Z(c.addr)}</div></div></div></div></section>`};
+const BTTheme={dark(){const v=localStorage.getItem('bt-theme');return v==='dark'||(!v&&matchMedia('(prefers-color-scheme:dark)').matches)},toggle(){const next=this.dark()?'light':'dark';localStorage.setItem('bt-theme',next);document.documentElement.dataset.theme=next;draw()},init(){document.documentElement.dataset.theme=this.dark()?'dark':'light'}};
+BTTheme.init();
+const nav=()=>`<nav class="top" id="nv"><div class="w nr"><a class="logo" href="#/"><span class="lb">${ic('compass',20)}</span> BlueTrail</a><button class="hb" aria-label="menu" onclick="document.getElementById('nm').classList.toggle('open')">${ic('menu',22)}</button><div class="nm" id="nm"><a href="#/">${t('home')}</a><a href="#/events">${t('events')}</a>${ME&&ME.role=="customer"?`<a href="#/requests">${t('myreq')}</a><a href="#/bookings">${t('mybk')}</a>`:''}<button class="btn o sm" onclick="A.lang()">${L?'ไทย':'EN'}</button><button class="btn o sm bt-theme" title="${L?'Toggle color theme':'เปลี่ยนโหมดสี'}" onclick="BTTheme.toggle()">${BTTheme.dark()?'☀':'☾'}</button>${ME?`<div class="dd"><button class="btn sm" onclick="this.parentNode.classList.toggle('open')">${ic('user')} ${Z(ME.name)} ▾</button><div class="dm"><a href="#/account">${t('acc')}</a>${ME.role=='admin'?`<a href="#/admin">${t('adm')}</a>`:''}${ME.role=='organizer'?`<a href="#/organizer">${t('org')}</a>`:''}<a href="#" onclick="A.out();return false">${t('out')}</a></div></div>`:`<a class="btn sm" href="#/login">${t('login')}</a>`}</div></div></nav>`;
+const contact=()=>{const c=DB.contact;const rows=[["phone",L?"PHONE":"โทรศัพท์",c.phone,c.phone?"tel:"+c.phone.replace(/[^+0-9]/g,""):""],["mail",L?"EMAIL":"อีเมล",c.email,c.email?"mailto:"+c.email:""],["chat","LINE",c.line, ""],["fb","FACEBOOK",c.fb, ""],["ig","INSTAGRAM",c.ig, ""],["bld",L?"ADDRESS":"ที่อยู่",c.addr, ""]];return`<section class="s bt-contact-section"><div class="w"><h2>${t('ch')}</h2><p class="mu">${t('cp')}</p><div class="bt-contact-grid">${rows.filter(x=>x[2]).map(([ico,label,val,url])=>`<div class="bt-contact-card"><span class="bt-contact-icon">${ic(ico)}</span><div><small>${label}</small><div>${url?`<a href="${Z(url)}">${Z(val)}</a>`:Z(val)}</div></div></div>`).join('')}</div></div></section>`};
 const foot=()=>{const c=DB.contact;return`<footer class="ft"><div class="w grid"><div><h4>${ic('compass')} BlueTrail</h4><p>${L?'One platform for tours and events.':'แพลตฟอร์มทัวร์และ Event ครบวงจร'}</p></div><div><h4>${L?'Menu':'เมนู'}</h4><a href="#/">${t('home')}</a><a href="#/events">${t('events')}</a><a href="#/custom">${t('ctab')}</a><a href="#/login">${t('login')}</a></div><div><h4>${t('ch')}</h4>${ic('phone')} ${Z(c.phone)}<br>${ic('mail')} ${Z(c.email)}<br>${ic('chat')} ${Z(c.line)}</div><div><h4>Social</h4>${Z(c.fb)}<br>${Z(c.ig)}</div></div><div class="w mu" style="color:#9db0d6;margin-top:16px">© 2026 BlueTrail · ${t('rights')} · ไทย / English</div></footer>`};
 let API_EVENTS = null;
 
@@ -124,7 +187,7 @@ async function loadAPIEvents() {
 function apiEventCard(e) {
   return `<article class="card ev">
     <div class="im">
-      <img src="${img(e.theme)}" alt="${Z(nm(e))}">
+      <img src="${Z(e.imageUrl || img(e.theme))}" alt="${Z(nm(e))}">
     </div>
     <div class="bd">
       <span class="tag">${t(e.cat)} · ${P[e.prov][L]}</span>
@@ -185,7 +248,7 @@ function pgApiDetail(id) {
 
         <div>
           <img
-            src="${img(e.theme)}"
+            src="${Z(e.imageUrl || img(e.theme))}"
             alt="${Z(nm(e))}"
             style="
               width:100%;aspect-ratio:16/10;object-fit:cover;
@@ -245,7 +308,7 @@ function pgApiDetail(id) {
               flex-wrap:wrap;margin:6px 0 18px
             ">
               <strong style="
-                font-size:30px;color:#172554
+                font-size:30px;color:var(--tx);text-shadow:0 0 0 currentColor
               ">${fm(e.price)}</strong>
 
               ${discounted ? `
@@ -281,7 +344,7 @@ function pgApiDetail(id) {
             ">
               ${L
                 ? 'Availability and price will be checked again when booking.'
-                : 'ระบบจะตรวจสอบราคาและจำนวนที่นั่งจาก MySQL อีกครั้งก่อนบันทึกการจอง'}
+                : 'จำนวนที่นั่งและราคาจะได้รับการยืนยันเมื่อทำรายการ'}
             </p>
           </div>
         </div>
@@ -321,21 +384,27 @@ function pgApiBook(id) {
 
   return `<div class="w" style="padding-top:24px;max-width:760px">
     <a href="#/events">← กลับไปดู Events</a>
-    <h1 style="margin-top:16px">จอง ${Z(nm(e))}</h1>
+    <h1 style="margin-top:16px">${L?'Book':'จอง'} ${Z(nm(e))}</h1>
 
     <div class="card pad">
-      <p><b>ราคา:</b> ${fm(e.price)} / คน</p>
-      <p><b>ที่นั่งว่าง:</b> ${e.seats}</p>
-      <p><b>วันที่:</b> ${dt(e.date)}</p>
+      <p><b>${L?'Price':'ราคา'}:</b> <span class="bt-price">${fm(e.price)}</span> / ${L?'person':'คน'}</p>
+      <p><b>${L?'Available seats':'ที่นั่งว่าง'}:</b> ${e.seats}</p>
+      <p><b>${L?'Date':'วันที่'}:</b> ${dt(e.date)}</p>
 
       <form onsubmit="return A.apiBook(event,${Number(e.id)})">
-        <label>จำนวนที่นั่ง</label>
+        <label>${L?'Number of seats':'จำนวนที่นั่ง'}</label>
         <input name="qty" type="number"
-          min="1" max="${e.seats}" value="1" required>
+          min="1" max="${e.seats}" value="1" required
+          oninput="document.getElementById('bt-book-total').textContent='ยอดชำระ: '+new Intl.NumberFormat('th-TH',{style:'currency',currency:'THB'}).format(Number(this.value||0)*${Number(e.price)})">
 
-        <p class="mu">
-          ระบบจะคำนวณราคาจริงจาก MySQL
+        <p style="font-size:1.3rem;font-weight:800;color:var(--tx)" id="bt-book-total">
+          ยอดชำระ: ${fm(e.price)}
         </p>
+        <div class="fg"><div><label>${L?'Full name':'ชื่อ-นามสกุลผู้จอง'} *</label><input name="contactName" value="${Z(ME.name)}" required maxlength="100"></div><div><label>${L?'Phone':'เบอร์โทรศัพท์'} *</label><input name="contactPhone" type="tel" value="${Z(ME.phone||'')}" required maxlength="30"></div><div><label>${L?'Email':'อีเมล'} *</label><input name="contactEmail" type="email" value="${Z(ME.email)}" required maxlength="160"></div></div>
+        <p class="mu">${L?'Please complete payment within 30 minutes of booking, or the reserved seats will be released.':'กรุณาชำระภายใน 30 นาทีหลังจอง มิฉะนั้นระบบจะคืนที่นั่งโดยอัตโนมัติ'}</p>
+        <label>${L?'Payment slip (optional now; submit within 30 minutes)':'แนบสลิปชำระเงิน (แนบตอนนี้หรือภายใน 30 นาที)'}</label>
+        <input name="slip" type="file" accept="image/jpeg,image/png,image/webp">
+        <p class="mu">${L?'Reserve seats and upload a payment slip on the same page.':'จองที่นั่งและแนบสลิปได้ในหน้าเดียว'}</p>
 
         <p class="err" id="er"></p>
 
@@ -351,12 +420,12 @@ function pgHome(){
 const all=(API_EVENTS||[]).filter(e=>!e.arch);
 const featured=all.filter(e=>e.feat);
 const f=(featured.length?featured:all).slice(0,6);
-const pr=all.filter(e=>(e.orig>e.price&&e.orig>0)||e.seats<=5).slice(0,6);
+const highlighted=all.filter(e=>(e.orig>e.price&&e.orig>0)||e.seats<=5);const pr=(highlighted.length?highlighted:all.filter(e=>e.feat).length?all.filter(e=>e.feat):all).slice(0,6);
 const cu=[...all].sort((a,b)=>String(a.date).localeCompare(String(b.date))).slice(0,8);
 return`<div class="w"><form class="srch" onsubmit="return A.hs(event)"><input id="hq" placeholder="${t('sph')}" value="${Z(F.q)}"><button class="btn">${ic('search')} ${t('search')}</button></form>
-<div class="car" id="car">${f.map((e,i)=>`<div class="sl${i==CI?' on':''}" style="background-image:url('${img(e.theme)}')"><div class="tx"><span class="tag" style="width:fit-content">${t(e.cat)}</span><h2>${Z(nm(e))}</h2><p>${Z(ds(e))}</p><div>${ic('cal')} ${dt(e.date)} · ${ic('pin')} ${lc(e)} · <b>${fm(e.price)}</b></div><a class="btn wh sm" style="width:fit-content" href="#/api-detail/${e.id}">${t('det')}</a></div></div>`).join('')}<button class="cn" style="left:10px" onclick="A.car(-1)">‹</button><button class="cn" style="right:10px" onclick="A.car(1)">›</button><div class="dots">${f.map((e,i)=>`<i class="${i==CI?'on':''}" onclick="A.car(0,${i})"></i>`).join('')}</div></div>
+${!f.length ? `<div class="card pad" style="padding:48px 24px;text-align:center"><h2>ค้นพบประสบการณ์ใหม่ไปกับ BlueTrail</h2><p>พบกับทัวร์และกิจกรรมที่น่าสนใจ หรือส่งคำขอให้ทีมงานช่วยจัดกิจกรรมเฉพาะของคุณ</p><a class="btn" href="#/custom">ส่งคำขอจัด Event</a></div>` : `<div class="car" id="car">${f.map((e,i)=>`<div class="sl${i==CI?' on':''}" style="background-image:url('${Z(e.imageUrl || img(e.theme))}')"><div class="tx"><span class="tag" style="width:fit-content">${t(e.cat)}</span><h2>${Z(nm(e))}</h2><p>${Z(ds(e))}</p><div>${ic('cal')} ${dt(e.date)} · ${ic('pin')} ${lc(e)} · <b>${fm(e.price)}</b></div><a class="btn wh sm" style="width:fit-content" href="#/api-detail/${e.id}">${t('det')}</a></div></div>`).join('')}<button class="cn" style="left:10px" onclick="A.car(-1)">‹</button><button class="cn" style="right:10px" onclick="A.car(1)">›</button><div class="dots">${f.map((e,i)=>`<i class="${i==CI?'on':''}" onclick="A.car(0,${i})"></i>`).join('')}</div></div>`}
 <div class="cta"><div><h3>${ic('spark')} ${t('ctah')}</h3><p>${t('ctap')}</p></div><a class="btn wh" href="#/custom">${t('ctab')} →</a></div></div>
-<section class="s"><div class="w"><h2>${t('rec')}</h2><div class="grid">${pr.map(apiEventCard).join('')}</div></div></section>
+<section class="s"><div class="w"><h2>${t('rec')}</h2><div class="grid">${pr.length?pr.map(apiEventCard).join(''):`<p class="mu">${L?"No recommendations available yet":"ยังไม่มีรายการแนะนำ"}</p>`}</div></div></section>
 <section class="s"><div class="w"><div class="sh"><h2>${t('cur')}</h2><a href="#/events">${t('seeall')}</a></div><div class="grid">${cu.map(apiEventCard).join('')}</div></div></section>${contact()}`}
 function mysqlEventsSection() {
   if (F.cat === 'tour') return '';
@@ -421,7 +490,7 @@ return`<div class="w"><h1 id="head" style="margin-top:20px">${h.join(' ')}</h1><
 ${F.cat=='tour'?`<div class="rw">${pl('reg','',t('all'),!F.reg)}${Object.keys(R).map(k=>pl('reg',k,R[k][L],F.reg==k)).join('')}</div>`:''}
 ${F.cat=='tour'&&F.reg?`<div class="rw">${pl('prov','',t('all'),!F.prov)}${Object.keys(P).filter(k=>P[k][2]==F.reg).map(k=>pl('prov',k,P[k][L],F.prov==k)).join('')}</div>`:''}</div></div>
 <div class="w" style="padding-top:18px">${l.length?`<div class="grid">${l.slice((_pg=pager('pe',l.length,12)).s,_pg.e).map(({source,event})=>source==='mysql'?apiEventCard(event):card(event)).join('')}</div>${_pg.html}`:emp(L?'No tours or events found.':'ไม่พบทัวร์หรือ Event ที่ตรงกับเงื่อนไข',`<button class="btn" onclick="A.f('clear')">${t('clear')}</button>`)}</div>`}
-function pgDetail(id){const e=ev(id);if(!e)return emp();return`<div class="w" style="padding-top:20px"><a href="#/events">← ${t('events')}</a><div class="two" style="margin-top:12px"><img src="${img(e.theme)}" alt="${Z(nm(e))}" style="border-radius:18px;width:100%;aspect-ratio:16/10;object-fit:cover"><div><span class="tag">${t(e.cat)}</span><h1>${Z(nm(e))}</h1><p>${Z(ds(e))}</p><div class="card pad">${ic('cal')} ${t('date')}: ${dt(e.date)}<br>${ic('clock')} ${e.st} – ${e.et}<br>${ic('pin')} ${lc(e)}<br>${ic('map')} ${P[e.prov][L]} · ${R[e.region][L]}<br>${ic('seat')} ${e.seats>0?t('left')+' '+e.seats:t('full')}${dc(e)?`<br><span class="badge hot">${t('off')} ${dc(e)}%</span>`:''}<div class="pr"><b style="font-size:1.8rem">${fm(e.price)}</b>${e.orig>e.price?`<s>${fm(e.orig)}</s>`:''}</div>${e.seats>0?`<a class="btn" href="#/book/${e.id}">${t('book')}</a>`:`<span class="badge er">${t('full')}</span>`}</div></div></div></div>`}
+function pgDetail(id){const e=ev(id);if(!e)return emp();return`<div class="w" style="padding-top:20px"><a href="#/events">← ${t('events')}</a><div class="two" style="margin-top:12px"><img src="${Z(e.imageUrl || img(e.theme))}" alt="${Z(nm(e))}" style="border-radius:18px;width:100%;aspect-ratio:16/10;object-fit:cover"><div><span class="tag">${t(e.cat)}</span><h1>${Z(nm(e))}</h1><p>${Z(ds(e))}</p><div class="card pad">${ic('cal')} ${t('date')}: ${dt(e.date)}<br>${ic('clock')} ${e.st} – ${e.et}<br>${ic('pin')} ${lc(e)}<br>${ic('map')} ${P[e.prov][L]} · ${R[e.region][L]}<br>${ic('seat')} ${e.seats>0?t('left')+' '+e.seats:t('full')}${dc(e)?`<br><span class="badge hot">${t('off')} ${dc(e)}%</span>`:''}<div class="pr"><b style="font-size:1.8rem">${fm(e.price)}</b>${e.orig>e.price?`<s>${fm(e.orig)}</s>`:''}</div>${e.seats>0?`<a class="btn" href="#/book/${e.id}">${t('book')}</a>`:`<span class="badge er">${t('full')}</span>`}</div></div></div></div>`}
 const need=r=>{if(!ME){go('/login');return 0}if(r&&ME.role!=r){return 0}return 1};
 const lock=()=>emp(L?'Access denied':'ไม่มีสิทธิ์เข้าถึง');
 function pgBook(id){if(!ME){go('/login');return''}const e=ev(id);if(!e||e.arch||e.seats<1)return emp();return`<div class="w" style="padding-top:20px;max-width:760px"><h1>${t('book')}: ${Z(nm(e))}</h1><form class="card pad" onsubmit="return A.book(event,${e.id})"><div class="fg"><div><label>${t('qty')}</label><input name="qty" type="number" min="1" max="${e.seats}" value="1" required></div><div><label>${t('total')}</label><input disabled value="${fm(e.price)} / ${L?'ticket':'ตั๋ว'}"></div><div><label>${t('name')}*</label><input name="name" value="${Z(ME.name)}"></div><div><label>${t('phone')}*</label><input name="phone" value="${Z(ME.phone)}"></div><div><label>${t('email')}*</label><input name="email" type="email" value="${Z(ME.email)}"></div></div><p class="err" id="er"></p><button class="btn">${L?'Continue to payment':'ไปหน้าชำระเงิน'}</button></form></div>`}
@@ -434,7 +503,7 @@ const LG={Birthday:'party',Corporate:'party',Wedding:'wedding'};
 const ty=v=>{v=LG[v]||v;return TY[v]?TY[v][L]:v};
 const FL={name:['ชื่อ Event','Event name'],type:['ประเภท Event','Event type'],date:['วันที่จัดงาน','Event date'],loc:['สถานที่','Location'],cname:['ชื่อผู้ติดต่อ','Contact name'],phone:['เบอร์โทรศัพท์','Phone'],email:['อีเมล','Email']};
 const f2=(n,lb,rq,tp,v,x)=>`<div><label>${lb}${rq?' *':''}</label><input name="${n}" type="${tp||'text'}" value="${Z(v)}" ${x||''}></div>`;
-function pgCustom(){if(!ME)return go('/login');return`<div class="w pg"><a href="#" class="bk" onclick="history.back();return false">← ${L?'Back':'ย้อนกลับ'}</a><h1 style="font-size:clamp(1.7rem,4vw,2.4rem);margin-top:22px">${L?'Submit an Event Request':'ส่งคำขอจัด Event'}</h1><p class="mu" style="font-size:1.05rem">${L?'Tell us what you need and our team will get back to you.':'แจ้งความต้องการของคุณ ทีมงานจะติดต่อกลับ'}</p><form class="fc" onsubmit="return A.creq(event)" novalidate><div class="fg2">${f2('name',FL.name[L],1)}<div><label>${FL.type[L]} *</label><select name="type"><option value="">--</option>${Object.keys(TY).map(k=>`<option value="${k}">${TY[k][L]}</option>`).join('')}</select></div>${f2('date',FL.date[L],1,'date')}${f2('loc',FL.loc[L],1)}${f2('st',L?'Start time':'เวลาเริ่ม',0,'time')}${f2('et',L?'End time':'เวลาจบ',0,'time')}${f2('pax',L?'Participants':'จำนวนผู้เข้าร่วม',0,'number','','min=1')}${f2('budget',L?'Estimated budget (THB)':'งบประมาณ (บาท)',0,'number','','min=0')}${f2('theme',L?'Theme / style':'ธีม/สไตล์')}${f2('equip',L?'Equipment / services needed':'อุปกรณ์/บริการที่ต้องการ')}</div><label>${L?'Additional details':'รายละเอียดเพิ่มเติม'}</label><textarea name="detail"></textarea><hr class="dv"><div class="g3">${f2('cname',FL.cname[L],1,'text',ME.name)}${f2('phone',FL.phone[L],1,'tel',ME.phone)}${f2('email',FL.email[L],1,'email',ME.email)}</div><label>${L?'Upload images / reference files':'อัปโหลดรูปภาพ/ไฟล์อ้างอิง'}</label><label class="dz"><input type="file" name="files" multiple hidden onchange="$('#fn').textContent=[...this.files].map(f=>f.name).join(', ')"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M7 9l5-5 5 5M4 16v3a1 1 0 001 1h14a1 1 0 001-1v-3"/></svg><span>${L?'Upload images / reference files':'อัปโหลดรูปภาพ/ไฟล์อ้างอิง'}</span><span id="fn" class="mu"></span></label><p class="err" id="er"></p><button class="btn lg">${L?'Submit request':'ส่งคำขอ'}</button></form></div>`}
+function pgCustom(){if(!ME)return go('/login');return`<div class="w pg"><a href="#" class="bk" onclick="history.back();return false">← ${L?'Back':'ย้อนกลับ'}</a><h1 style="font-size:clamp(1.7rem,4vw,2.4rem);margin-top:22px">${L?'Submit an Event Request':'ส่งคำขอจัด Event'}</h1><p class="mu" style="font-size:1.05rem">${L?'Tell us what you need and our team will get back to you.':'แจ้งความต้องการของคุณ ทีมงานจะติดต่อกลับ'}</p><form class="fc" onsubmit="return A.creq(event)" novalidate><div class="fg2">${f2('name',FL.name[L],1)}<div><label>${FL.type[L]} *</label><select name="type"><option value="">--</option>${Object.keys(TY).map(k=>`<option value="${k}">${TY[k][L]}</option>`).join('')}</select></div>${f2('date',FL.date[L],1,'date')}${f2('loc',FL.loc[L],1)}${f2('st',L?'Start time':'เวลาเริ่ม',1,'time')}${f2('et',L?'End time':'เวลาจบ',1,'time')}${f2('pax',L?'Participants':'จำนวนผู้เข้าร่วม',0,'number','','min=1')}${f2('budget',L?'Estimated budget (THB)':'งบประมาณ (บาท)',0,'number','','min=0')}${f2('theme',L?'Theme / style':'ธีม/สไตล์')}${f2('equip',L?'Equipment / services needed':'อุปกรณ์/บริการที่ต้องการ')}</div><label>${L?'Additional details':'รายละเอียดเพิ่มเติม'}</label><textarea name="detail"></textarea><hr class="dv"><div class="g3">${f2('cname',FL.cname[L],1,'text',ME.name)}${f2('phone',FL.phone[L],1,'tel',ME.phone)}${f2('email',FL.email[L],1,'email',ME.email)}</div><label>${L?'Upload images / reference files':'อัปโหลดรูปภาพ/ไฟล์อ้างอิง'}</label><label class="dz"><input type="file" name="files" multiple accept="image/jpeg,image/png,image/webp,application/pdf" hidden onchange="$('#fn').textContent=[...this.files].map(f=>f.name).join(', ')"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M7 9l5-5 5 5M4 16v3a1 1 0 001 1h14a1 1 0 001-1v-3"/></svg><span>${L?'Upload images / reference files':'อัปโหลดรูปภาพ/ไฟล์อ้างอิง'}</span><span id="fn" class="mu"></span></label><p class="err" id="er"></p><button class="btn lg">${L?'Submit request':'ส่งคำขอ'}</button></form></div>`}
 function pgCustomOld(){if(!ME)return go('/login');return`<div class="w" style="padding-top:20px;max-width:900px"><h1>${t('ctab')}</h1><form class="card pad" onsubmit="return A.creq(event)"><div class="fg">${fl('name',L?'Event name':'ชื่องาน','',1)}${fl('type',L?'Event type':'ประเภทงาน','',1)}${fl('date',t('date'),'date',1)}${fl('st',L?'Start':'เริ่ม','time',1)}${fl('et',L?'End':'สิ้นสุด','time',1)}${fl('loc',t('loc'),'',1)}${fl('pax',L?'Participants':'จำนวนผู้เข้าร่วม','number',1,'','min=1')}${fl('budget',L?'Estimated budget (฿)':'งบประมาณโดยประมาณ (฿)','number',1,'','min=0')}${fl('theme',L?'Theme / style':'ธีม/สไตล์')}${fl('cname',L?'Contact name':'ชื่อผู้ติดต่อ','',1,ME.name)}${fl('phone',t('phone'),'',1,ME.phone)}${fl('email',t('email'),'email',1,ME.email)}</div>${fl('equip',L?'Equipment / services':'อุปกรณ์/บริการที่ต้องการ','ta')}${fl('detail',L?'Additional details':'รายละเอียดเพิ่มเติม','ta')}<label>${L?'Reference files':'ไฟล์อ้างอิง'}</label><input type="file" name="files" multiple><p class="err" id="er"></p><button class="btn">${L?'Submit request':'ส่งคำขอ'}</button></form></div>`}
 function pgReqs(){if(!ME)return go('/login');const l=DB.reqs.filter(r=>r.uid==ME.id).reverse();return`<div class="w" style="padding-top:20px"><div class="sh"><h1>${t('myreq')}</h1><a class="btn" href="#/custom">+ ${t('ctab')}</a></div>${l.length?`<div class="tw"><table><tr><th>${L?'Event':'งาน'}</th><th>${t('date')}</th><th>${t('loc')}</th><th>${t('status')}</th><th>${L?'Est. price':'ราคาประเมิน'}</th><th>${L?'Updated':'อัปเดต'}</th></tr>${l.map(r=>`<tr><td><a href="#/request/${r.id}">${Z(r.name)}</a></td><td>${dt(r.date)}</td><td>${Z(r.loc)}</td><td>${rs(r.status)}</td><td>${r.price?fm(r.price):'-'}</td><td>${dt(r.updated)}</td></tr>`).join('')}</table></div>`:emp(L?'No requests yet':'ยังไม่มีคำขอ')}</div>`}
 const QS=r=>r.q||(r.price>0?{no:'QT-'+String(r.id).padStart(4,'0'),rev:1,at:r.updated,exp:'',items:[{d:r.name,n:1,u:r.price}],disc:0,vat:0,pct:Math.round(r.deposit/r.price*100),terms:''}:null);
@@ -449,7 +518,7 @@ ${r.price&&(r.cc||['confirmed','progress','done'].includes(s))?payCard('request'
 <div class="card pad" style="margin-top:14px">${s=='confirm'&&ex&&!r.cc?`<p class="err">${L?'This quotation has expired. Please request changes to get a new one.':'ใบเสนอราคาหมดอายุแล้ว กรุณาขอแก้ไขเพื่อให้ออกใบใหม่'}</p>`:''}${s=='confirm'&&!r.cc&&!ex?`<button class="btn g" onclick="A.cc(${r.id})">${ic('ok')} ${L?'Confirm proposal':'ยืนยันข้อเสนอ'}</button> `:''}
 ${s=='info'||s=='confirm'?`<form onsubmit="return A.chg(event,${r.id})"><label>${s=='info'?(L?'Provide requested information':'ส่งข้อมูลเพิ่มเติม'):(L?'Request changes':'ขอแก้ไข')}</label><textarea name="m" required></textarea><button class="btn o" style="margin-top:8px">${L?'Send':'ส่ง'}</button></form>`:''}
 ${['pending','review','info','confirm'].includes(s)?`<button class="btn r sm" style="margin-top:10px" onclick="A.rcancel(${r.id})">${t('cancel')}</button>`:''}${['confirmed','progress','done','cancel'].includes(s)?`<span class="mu">${L?'No actions available':'ไม่มีการดำเนินการในสถานะนี้'}</span>`:''}</div></div></div><h3 style="margin-top:20px">${L?'Status history':'ประวัติสถานะ'}</h3>${hl('R'+r.id)}</div>`}
-function pgAcc(){if(!ME)return go('/login');return`<div class="w" style="padding-top:20px;max-width:600px"><h1>${t('acc')}</h1><form class="card pad" onsubmit="return A.acc(event)">${ME.av?`<img class="av" src="${ME.av}">`:`<div class="av">${Z(ME.name[0])}</div>`}<label>${L?'Profile image':'รูปโปรไฟล์'}</label><input type="file" name="av" accept="image/*">${fl('name',t('name'),'',1,ME.name)}${fl('phone',t('phone'),'',0,ME.phone)}<label>${t('email')}</label><input disabled value="${Z(ME.email)}"><label>Role</label><input disabled value="${ME.role}"><p><button class="btn">${t('save')}</button> <a class="btn o" href="#/bookings">${t('mybk')}</a></p></form></div>`}
+function pgAcc(){if(!ME)return `<div class="w pg"><p>${L?'Please sign in again.':'กรุณาเข้าสู่ระบบอีกครั้ง'}</p><a href="#/login" class="btn">${t('login')}</a></div>`;return`<div class="w bt-profile-card"><h1>${t('acc')}</h1><form class="card pad" onsubmit="BTBusiness.saveProfile(event);return false">${ME.av?`<img class="av" src="${ME.av}">`:`<div class="av">${Z(ME.name[0])}</div>`}<p class="mu">${L?'Profile details are saved to your account.':'ข้อมูลบัญชีจะถูกบันทึกลงฐานข้อมูล'}</p>${fl('name',t('name'),'',1,ME.name)}${fl('phone',t('phone'),'',0,ME.phone)}<label>${t('email')}</label><input disabled value="${Z(ME.email)}"><label>Role</label><input disabled value="${ME.role}"><p><button class="btn">${t('save')}</button> ${ME.role==="customer"?`<a class="btn o" href="#/bookings">${t('mybk')}</a>`:""}</p></form></div>`}
 function pgAuth(reg){return `<div class="w" style="padding-top:30px;max-width:440px"><h1>${reg?t("reg"):t("login")}</h1><form class="card pad" onsubmit="return A.auth(event,${reg?1:0})">${reg?fl("name",t("name"),"",1):""}${fl("email",t("email"),"email",1)}${fl("pw",t("pw"),"password",1)}<p class="err" id="er"></p><button class="btn">${reg?t("reg"):t("login")}</button> <a href="#/${reg?"login":"register"}">${reg?t("login"):t("reg")}</a></form></div>`}const tb=(h,rows)=>`<div class="tw"><table><tr>${h.map(x=>`<th>${x}</th>`).join('')}</tr>${rows.join('')}</table></div>`;
 function pgAdmin(){if(!need('admin'))return ME?lock():'';const tabs=[['ov','Overview'],['ev',L?'Events/Tours':'ทัวร์/Event'],['bk',t('mybk').replace(/ของฉัน|My /,'')],['pay',L?'Payment Verification':'ตรวจสอบการชำระเงิน'],['rq',L?'Event Requests':'คำขอ Event'],['us',L?'Users':'ผู้ใช้'],['og',L?'Organizers':'ผู้จัด'],['qt',L?'Quotations':'ใบเสนอราคา'],['ct',t('ch')]];let b='';const cnt=s=>DB.reqs.filter(r=>r.status==s).length;
 if(AT=='ov')b=BTAdminOverview.render();
@@ -460,7 +529,7 @@ if(AT=='rq'){b=BTAdminRequests.render({L});}
 if(AT=='us')b=BTBusiness.users();
 if(AT=='og')b=BTBusiness.organizers();
 if(AT=='qt')b=BTQuotation.renderAdmin();if(AT=='ct')b=BTBusiness.contactForm();
-return`<div class="w" style="padding-top:20px"><h1>${t('adm')}</h1><div class="tabs">${tabs.map(x=>`<button class="pill${AT==x[0]?' on':''}" onclick="A.tab('${x[0]}')">${x[1]}</button>`).join('')}</div>${b}</div>`}
+return`<div class="bt-admin"><aside class="bt-sidebar" aria-label="${L?'Admin sections':'เมนูแอดมิน'}"><div class="bt-admin-brand"><span class="lb">${ic('compass',20)}</span><div><b>BlueTrail</b><small>Admin Dashboard</small></div></div>${tabs.map(x=>`<button type="button" class="${AT==x[0]?'active':''}" onclick="A.tab('${x[0]}')">${x[1]}</button>`).join('')}<a class="bt-admin-home" href="#/">← ${L?"Back to home":"กลับหน้าแรก"}</a></aside><main class="bt-admin-content"><h1>${t('adm')}</h1>${b}</main></div>`}
 function pgAReq(id){if(!need('admin'))return ME?lock():'';const r=DB.reqs.find(x=>x.id==id);if(!r)return emp();const asg=DB.asg.find(a=>a.rid==r.id);return`<div class="w" style="padding-top:20px"><a href="#/admin">← ${t('adm')}</a><h1>${Z(r.name)} ${rs(r.status)}</h1><div class="two"><div><form class="card pad" onsubmit="return A.aedit(event,${r.id})"><b>${L?'Customer':'ลูกค้า'}: ${Z(r.cname)} · ${Z(r.phone)} · ${Z(r.email)}</b><div class="fg">${fl('name',L?'Event':'ชื่องาน','',1,r.name)}${fl('date',t('date'),'date',1,r.date)}${fl('st',L?'Start time':'เวลาเริ่ม','time',0,r.st)}${fl('et',L?'End time':'เวลาจบ','time',0,r.et)}${fl('loc',t('loc'),'',1,r.loc)}${fl('pax',L?'Participants':'ผู้เข้าร่วม','number',1,r.pax)}${fl('budget',L?'Budget':'งบ','number',0,r.budget)}${fl('theme',L?'Theme':'ธีม','',0,r.theme)}</div>${fl('equip',L?'Equipment':'อุปกรณ์','ta',0,r.equip)}${fl('detail',L?'Details':'รายละเอียด','ta',0,r.detail)}<p class="mu">${ic('clip')} ${r.files.map(Z).join(', ')||(L?'No attachments':'ไม่มีไฟล์แนบ')}</p><button class="btn">${t('save')}</button></form>
 <h3>${L?'Notes':'บันทึก'}</h3>${DB.notes.filter(n=>n.rid==r.id).map(n=>`<div class="card pad" style="margin-bottom:8px">${n.cust?'<span class="badge ok">'+(L?'Visible to customer':'ลูกค้าเห็น')+'</span>':'<span class="badge">'+(L?'Internal':'ภายใน')+'</span>'} ${Z(n.text)}<br><span class="mu">${Z(n.by)} · ${dt(n.at)}</span></div>`).join('')}<form onsubmit="return A.note(event,${r.id})"><textarea name="m" required></textarea><label><input type="checkbox" name="c" style="width:auto"> ${L?'Visible to customer':'แสดงให้ลูกค้าเห็น'}</label><button class="btn o sm">${L?'Add note':'เพิ่มบันทึก'}</button> <button class="btn o sm" name="ask" value="1">${L?'Request more info':'ขอข้อมูลเพิ่ม'}</button></form></div>
 <div><div class="card pad"><b>${L?'Quotation (PDF)':'ใบเสนอราคา (PDF)'}</b><p class="mu">${L?'Create the quotation from this request, then press Send there. The request moves to "Waiting for customer confirmation" and the customer can download the PDF from their request page.':'สร้างใบเสนอราคาจากคำขอนี้ แล้วกดส่งในหน้านั้น คำขอจะเปลี่ยนเป็น "รอลูกค้ายืนยัน" และลูกค้าโหลด PDF ได้จากหน้าคำขอของตัวเอง'}</p>${DB.qts.filter(x=>x.work.rid==r.id).map(x=>`<p>${x.no} ${qb(x.status)} <button class="btn sm o" onclick="A.qgo(${x.id})">${L?'Edit':'แก้ไข'}</button> <button class="btn sm o" onclick="A.qgo(${x.id},1)">${L?'History':'ประวัติ'}</button></p>`).join('')}<button class="btn" onclick="A.qfr(${r.id})">${DB.qts.some(x=>x.work.rid==r.id)?(L?'Open quotation':'เปิดใบเสนอราคา'):(L?'Create quotation':'สร้างใบเสนอราคา')}</button></div>
@@ -548,19 +617,66 @@ qpv(){A.qread();const q=DB.qts.find(x=>x.id==QID);A.show(qdh(QW,DB.tpl,q?q.no:'Q
 qpvw(id){const q=DB.qts.find(x=>x.id==id);A.show(qdh(q.work,DB.tpl,q.no,q.vers.length))},
 qpvv(id,rev){const q=DB.qts.find(x=>x.id==id),v=q.vers.find(x=>x.rev==rev);A.show(qdh(v.snap,v.tpl,q.no,rev))},
 show1(m){$('#md').innerHTML=`<div class="md"><div class="card pad"><p>${Z(m)}</p></div></div>`},
-show(h){$('#md').innerHTML=`<div class="md"><div class="card"><div style="overflow:auto"><div style="min-width:680px">${h}</div></div><div class="pad"><button class="btn" onclick="$('#md').innerHTML=''">${L?'Close':'ปิด'}</button></div></div></div>`},
+show(h){$('#md').innerHTML=`<div class="md bt-modal-shell" onclick="if(event.target===this)document.getElementById('md').innerHTML=''"><div class="card bt-modal-card" role="dialog" aria-modal="true"><div class="bt-modal-head"><strong>${L?'Details':'รายละเอียด'}</strong><button type="button" class="bt-close" aria-label="${L?'Close':'ปิด'}" onclick="document.getElementById('md').innerHTML=''">×</button></div><div class="bt-modal-body">${h}</div><div class="bt-modal-foot"><button class="btn o" onclick="document.getElementById('md').innerHTML=''">${L?'Close':'ปิด'}</button></div></div></div>`},
 ask(m,fn){window.__ask=fn;$('#md').innerHTML=`<div class="md"><div class="card pad"><p>${Z(m)}</p><button class="btn" onclick="$('#md').innerHTML='';__ask()">${L?'Confirm':'ยืนยัน'}</button> <button class="btn o" onclick="$('#md').innerHTML=''">${t('cancel')}</button></div></div>`},
 qsw(id){QW=cp(DB.qts.find(x=>x.id==id).work);QID=id;QV='form';draw();A.qsd()},
 qsd(){if(sending)return;A.qread();const e=qval(QW,1);if(e)return er(e)||toast(e,1);const q0=DB.qts.find(x=>x.id==QID),rev=q0?q0.vers.length:0;A.ask((L?'Send quotation as Rev.':'ยืนยันส่งใบเสนอราคา Rev.')+rev+'? '+(L?'A PDF will be created from the latest data.':'ระบบจะสร้าง PDF จากข้อมูลล่าสุด'),async()=>{if(sending)return;sending=1;A.show1(L?'Creating PDF…':'กำลังสร้าง PDF…');let q;try{q=A.qpersist();const tpl=cp(DB.tpl),snap=cp(q.work);const pdf=await Promise.race([mkpdf(snap,tpl,q.no,rev),new Promise((_,j)=>setTimeout(()=>j(new Error('timeout')),30000))]);q.vers.push({rev,at:now(),by:ME.name,snap,tpl,pdf});const os=q.status;q.status=rev?'revsent':'sent';q.updated=now();q.log.push({at:now(),by:ME.name,txt:T2('สร้าง PDF Rev.'+rev,'Created PDF Rev.'+rev)});try{localStorage.setItem('etm1',JSON.stringify(DB))}catch(x){if(x&&x.name=='QuotaExceededError'){q.vers.pop();q.status=os;q.log.pop();throw x}}const rq=DB.reqs.find(x=>x.id==q.work.rid);if(rq)DB.creqs.filter(c=>c.rid==rq.id&&c.type=='quotation_revision'&&['pending','progress'].includes(c.status)).forEach(c=>{c.status='done';c.updated=now();c.log.push({at:now(),by:ME.name,txt:T2('ส่งใบเสนอราคาฉบับใหม่: '+q.no+' Rev.'+rev,'New quotation sent: '+q.no+' Rev.'+rev)})});if(rq&&['pending','review','info','confirm'].includes(rq.status)){const k=qk(q.work);rq.price=k.net;rq.deposit=Math.round(k.net*(q.work.dep==null?30:q.work.dep)/100);rq.q=null;rq.cc=false;setR(rq,'confirm',T2('ส่งใบเสนอราคา '+q.no+' Rev.'+rev,'Quotation sent: '+q.no+' Rev.'+rev))}$('#md').innerHTML='';QV='hist';draw();toast(L?'PDF Rev.'+rev+' created and saved. Email is not connected, so please download it and send it to the customer.':'สร้างและเก็บ PDF Rev.'+rev+' แล้ว ระบบยังไม่ได้ต่ออีเมล กรุณาดาวน์โหลดไปส่งให้ลูกค้า')}catch(x){console.error(x);const m=(L?'PDF could not be created or stored, so nothing was recorded as sent. Reason: ':'สร้างหรือเก็บ PDF ไม่สำเร็จ จึงยังไม่บันทึกว่าส่ง สาเหตุ: ')+(x&&x.message||x);$('#md').innerHTML=`<div class="md"><div class="card pad"><p class="err">${Z(m)}</p><button class="btn" onclick="$('#md').innerHTML=''">OK</button></div></div>`;draw()}sending=0})},
 qst(id,s){const q=DB.qts.find(x=>x.id==id);q.log.push({at:now(),by:ME.name,txt:T2(QST[q.status][0]+' → '+QST[s][0],QST[q.status][1]+' → '+QST[s][1])});q.status=s;sv();draw()},
 qts(e){e.preventDefault();const d=fd(e),f=e.target.logo.files[0];rd(f,u=>{Object.assign(DB.tpl,{name:d.name,tax:d.tax,phone:d.phone,email:d.email,addr:d.addr,terms:d.terms,note:d.note,foot:d.foot});if(u)DB.tpl.logo=u;else if(f)toast(L?'Logo too large, kept the old one':'โลโก้ใหญ่เกินไป ใช้ของเดิมต่อ',1);sv();QV='list';draw();toast(L?'Template saved':'บันทึกแม่แบบแล้ว')});return false}};
 function page(){const h=location.hash.slice(2).split('?')[0],[p,a]=h.split('/');
-switch(p){case'':return pgHome();case'events':return pgEvents();case'event':return pgDetail(a);case'book':return pgBook(a);case'pay':return pgPay(a);case'api-detail':return pgApiDetail(a);case'api-book':return pgApiBook(a);case'bookings':return BTBookings.renderMy();case'custom':return pgCustom();case'requests':return BTQuotation.customerShortcut()+pgReqsAPI();case'quotations':return BTQuotation.renderCustomer();case'request':return pgReqAPI(a);case'account':return BTBusiness.profileForm();case'login':return pgAuth(0);case'register':return pgAuth(1);case'admin':return a=='request'?pgAReq(h.split('/')[2]):pgAdmin();case'organizer':return BTBusiness.organizerPage();default:return emp()}}
+switch(p){case'':return pgHome();case'events':return pgEvents();case'event':return pgDetail(a);case'book':return pgBook(a);case'pay':return pgPay(a);case'api-detail':return pgApiDetail(a);case'api-book':return pgApiBook(a);case'bookings':return ME&&ME.role==="admin"?pgAdmin():BTBookings.renderMy();case'custom':return pgCustom();case'requests':return ME&&ME.role==="admin"?pgAdmin():pgReqsAPI();case'quotations':return BTQuotation.renderCustomer();case'request':return pgReqAPI(a);case'account':return pgAcc();case'login':return pgAuth(0);case'register':return pgAuth(1);case'admin':return a=='request'?pgAReq(h.split('/')[2]):pgAdmin();case'organizer':return BTBusiness.organizerPage();default:return emp()}}
 function sizes(){const n=$('#nv'),b=$('#bar'),s=document.documentElement.style;if(n)s.setProperty('--nh',n.offsetHeight+'px');s.setProperty('--bh',(b?b.offsetHeight:0)+'px')}
 const bdue=b=>b.dueAt||new Date(new Date(b.created).getTime()+(+DB.contact.hold||24)*36e5).toISOString();
 function migLegacy(){if(DB.legMig)return;DB.reqs.forEach(r=>{if(!(r.price>0)||DB.qts.some(x=>x.work.rid==r.id))return;const q=QS(r);let no=q.no;while(DB.qts.some(x=>x.no==no))no+='x';const work={rid:r.id,co:r.cname,ct:r.cname,em:r.email,ad:'',tx:'',issue:(q.at||now()).slice(0,10),exp:q.exp||(q.at||now()).slice(0,10),items:q.items.map((i,k)=>({d:i.d,n:i.n,un:'',u:i.u,x:k?0:(q.disc||0)})),vat:q.vat?7:0,dep:q.pct==null?30:q.pct,terms:q.terms||DB.tpl.terms,note:DB.tpl.note,lang:0};DB.qts.push({id:Date.now()+r.id,no,work,status:['confirmed','progress','done'].includes(r.status)?'approved':'sent',vers:[{rev:(q.rev||1)-1,at:q.at||now(),by:'ระบบ (ย้ายข้อมูลเดิม)',snap:cp(work),tpl:cp(DB.tpl),pdf:''}],log:[],created:q.at||now(),updated:now(),by:'ระบบ'});r.q=null});DB.legMig=1;sv()}
 function sweep(){let ch=0;DB.bookings.forEach(b=>{if(b.st!='Pending'||b.pay=='Paid'||b.pay=='Partial')return;if(bdue(b)<now()&&!DB.slips.some(x=>x.kind=='booking'&&x.ref==b.id&&x.status!='rejected')){b.st='Expired';b.pay='Pending';const e=ev(b.eid);if(e&&!b.rel){e.seats+=b.qty;b.rel=1}ch=1}});if(ch)sv();return ch}
-function draw(){try{sweep();if(ME&&ME.off){ME=null;ls.s('me',null)}$('#app').innerHTML=nav()+(page()||'')+foot();document.documentElement.lang=L?'en':'th'}catch(x){console.error(x);$('#app').innerHTML=nav()+emp(t('err'),`<button class="btn" onclick="draw()">${t('retry')}</button>`)}sizes()}
+// Keep the main navigation mounted across route changes. Recreating the entire
+// app on each draw caused the header and images to visibly flash.
+let btLastNavbar = null, btLastFooter = null, btLastRoute = null;
+function draw(){
+  const root = document.getElementById('app');
+  if(!root)return;
+  try{
+    sweep();
+    if(ME&&ME.off){ME=null;ls.s('me',null)}
+    let navMount=document.getElementById('bt-nav-mount');
+    let pageMount=document.getElementById('bt-page-mount');
+    let footMount=document.getElementById('bt-footer-mount');
+    if(!navMount||!pageMount||!footMount){
+      root.innerHTML='<div id="bt-nav-mount"></div><main id="bt-page-mount"></main><div id="bt-footer-mount"></div>';
+      navMount=document.getElementById('bt-nav-mount');
+      pageMount=document.getElementById('bt-page-mount');
+      footMount=document.getElementById('bt-footer-mount');
+      btLastNavbar=btLastFooter=btLastRoute=null;
+    }
+    const newNav=nav();
+    if(newNav!==btLastNavbar){navMount.innerHTML=newNav;btLastNavbar=newNav}
+    const currentRoute=location.hash||'#/';
+    const previousHeight=pageMount.offsetHeight;
+    const newPage=page()||'';
+    // On identical re-renders keep existing DOM, preserving image decode, focus,
+    // form inputs and active animations. Async pages can still update own regions.
+    if(pageMount.innerHTML!==newPage){
+      if(currentRoute!==btLastRoute && previousHeight>0){
+        pageMount.style.minHeight=Math.min(previousHeight,window.innerHeight)+'px';
+        pageMount.classList.remove('bt-route-enter');
+      }
+      pageMount.innerHTML=newPage;
+      if(currentRoute!==btLastRoute){
+        pageMount.classList.add('bt-route-enter');
+        requestAnimationFrame(()=>pageMount.style.minHeight='');
+      }
+    }
+    btLastRoute=currentRoute;
+    const newFooter=foot();
+    if(newFooter!==btLastFooter){footMount.innerHTML=newFooter;btLastFooter=newFooter}
+    document.documentElement.lang=L?'en':'th';
+  }catch(x){
+    console.error(x);
+    const target=document.getElementById('bt-page-mount')||root;
+    target.innerHTML=emp(t('err'),'<button class="btn" onclick="draw()">'+t('retry')+'</button>');
+  }
+  sizes();
+}
 const fd=e=>Object.fromEntries(new FormData(e.target).entries()),er=m=>{const x=$('#er');if(x)x.textContent=m;return false};
 const rd=(f,cb)=>{if(f&&f.size&&f.size<250000){const r=new FileReader();r.onload=()=>cb(r.result);r.readAsDataURL(f)}else cb('')};
 const A={...QA,...PA,async apiBook(event,id){
@@ -613,7 +729,10 @@ const A={...QA,...PA,async apiBook(event,id){
       },
       body: JSON.stringify({
         eventId: Number(id),
-        quantity: qty
+        quantity: qty,
+        contactName: form.elements.contactName.value.trim(),
+        contactPhone: form.elements.contactPhone.value.trim(),
+        contactEmail: form.elements.contactEmail.value.trim()
       })
     });
 
@@ -626,7 +745,19 @@ const A={...QA,...PA,async apiBook(event,id){
     }
 
     const booking = await response.json();
-
+    const slip = form.elements.slip?.files?.[0];
+    let uploadWarning = '';
+    if (slip) {
+      try {
+        if (slip.size > 5000000 || !['image/jpeg','image/png','image/webp'].includes(slip.type))
+          throw new Error('สลิปต้องเป็น JPG, PNG หรือ WebP ขนาดไม่เกิน 5 MB');
+        const fd = new FormData(); fd.append('file', slip);
+        const sr = await fetch(`/api/payments/booking/${booking.id}/slip`, {
+          method:'POST', credentials:'same-origin', headers:{[csrf.headerName]:csrf.token},body:fd
+        });
+        if (!sr.ok) throw new Error('อัปโหลดสลิปไม่สำเร็จ (HTTP '+sr.status+')');
+      } catch (ex) {uploadWarning = ex.message;}
+    }
 
     const modal = document.getElementById('md');
 
@@ -707,7 +838,7 @@ const A={...QA,...PA,async apiBook(event,id){
           ">
             รายการจองนี้ยังไม่ใช่การยืนยันชำระเงิน
             <br>
-            กรุณาตรวจสอบสถานะในหน้าการจองของฉัน
+            ${uploadWarning ? 'การจองสำเร็จ แต่ '+Z(uploadWarning)+' กรุณาแนบสลิปในหน้าการจองของฉัน' : (slip ? 'ส่งสลิปให้ผู้ดูแลตรวจสอบแล้ว' : 'สามารถชำระเงินและแนบสลิปเพิ่มเติมได้ในหน้าการจองของฉัน')}
           </p>
 
           <button type="button" class="btn"
@@ -717,11 +848,10 @@ const A={...QA,...PA,async apiBook(event,id){
               background:#1d4ed8;color:white
             "
             onclick="document.getElementById('md').innerHTML=''">
-            ดูรายการจองของฉัน →
+            ปิดหน้าต่าง
           </button>
         </div>
       </div>`;
-    go('/bookings');
     BTBookings.refresh('my');
     loadAPIEvents();
 
@@ -745,7 +875,7 @@ creq(e){
 
     const d = fd(e);
     const required = [
-        "name", "type", "date", "loc",
+        "name", "type", "date", "loc", "st", "et",
         "cname", "phone", "email"
     ];
 
@@ -771,13 +901,9 @@ creq(e){
         'input[name="files"]'
     );
 
-    if (files && files.files.length) {
-        return er(
-            L
-              ? "File uploads are not available yet. Please remove attachments."
-              : "ระบบยังไม่รองรับการอัปโหลดไฟล์ กรุณานำไฟล์แนบออกก่อนส่งคำขอ"
-        );
-    }
+    if (files && (files.files.length > 5 || [...files.files].some(f =>
+        f.size > 5000000 || !['image/jpeg','image/png','image/webp','application/pdf'].includes(f.type))))
+        return er('แนบได้สูงสุด 5 ไฟล์ (JPG, PNG, WebP หรือ PDF ไม่เกิน 5 MB ต่อไฟล์)');
 
     if (!ME || !ME.id) {
         go("/login");
@@ -816,7 +942,19 @@ creq(e){
         },
         body: JSON.stringify(payload)
     })
-    .then(result => {
+    .then(async result => {
+        if (files?.files?.length) {
+          const token = await fetch('/api/auth/csrf',{credentials:'same-origin'}).then(r=>r.json());
+          let failures=0;
+          for (const file of files.files) {
+            const data=new FormData();data.append('file',file);
+            const r=await fetch(`/api/event-requests/${Number(result.id)}/files`,{
+              method:'POST',credentials:'same-origin',headers:{[token.headerName]:token.token},body:data
+            });
+            if(!r.ok) failures++;
+          }
+          if(failures) toast(`สร้างคำขอแล้ว แต่มีไฟล์ ${failures} ไฟล์ที่อัปโหลดไม่สำเร็จ`,1);
+        }
         go("/");
         draw();
 
@@ -851,4 +989,4 @@ window.addEventListener('hashchange',()=>{draw();window.scrollTo(0,0)});window.a
 migLegacy();BTBusiness.refreshContact();loadAPIEvents();setInterval(()=>{if(sweep())draw()},60000);setInterval(()=>{if($('#car')&&!document.hidden)A.car(1)},5500);BTAuth.restore().then(user=>{ME=user;draw()}).catch(error=>{console.error(error);ME=null;draw()});
 
 </script><script src="/js/admin-overview.js"></script>
-</body></html>
+<script>document.addEventListener("keydown",function(e){if(e.key==="Escape"&&document.getElementById("md")?.firstElementChild){document.getElementById("md").innerHTML="";}});</script></body></html>
