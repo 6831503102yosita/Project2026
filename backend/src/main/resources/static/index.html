@@ -989,4 +989,5 @@ window.addEventListener('hashchange',()=>{draw();window.scrollTo(0,0)});window.a
 migLegacy();BTBusiness.refreshContact();loadAPIEvents();setInterval(()=>{if(sweep())draw()},60000);setInterval(()=>{if($('#car')&&!document.hidden)A.car(1)},5500);BTAuth.restore().then(user=>{ME=user;draw()}).catch(error=>{console.error(error);ME=null;draw()});
 
 </script><script src="/js/admin-overview.js"></script>
-<script>document.addEventListener("keydown",function(e){if(e.key==="Escape"&&document.getElementById("md")?.firstElementChild){document.getElementById("md").innerHTML="";}});</script></body></html>
+<script>document.addEventListener("keydown",function(e){if(e.key==="Escape"&&document.getElementById("md")?.firstElementChild){document.getElementById("md").innerHTML="";}});</script><script src="/js/bluetrail-i18n-modal-fix.js" defer></script>
+</body></html>
