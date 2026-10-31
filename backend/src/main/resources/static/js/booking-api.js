@@ -1,4 +1,3 @@
-
 window.BTBookings = (() => {
   const states = {
     my: {data: [], loaded: false, loading: false, error: ""},
@@ -89,14 +88,16 @@ window.BTBookings = (() => {
         <td>${esc(b.quantity)}</td>
         <td>${money(b.totalPrice)}</td>
         <td><span class="badge">${esc(b.status)}</span>
-        ${!admin && b.status === 'PENDING' && b.paymentDueAt ? `<div class="mu bt-due" data-due="${esc(b.paymentDueAt)}">${en?'Payment deadline':'กำหนดชำระ'}: ${esc(String(b.paymentDueAt).replace('T',' ').slice(0,16))}</div>` : ''}
-        ${!admin && b.status === 'PENDING' ? `<button class="btn sm o"
+        ${!admin && b.status === 'PENDING' && b.paymentDueAt ? `<div class="mu bt-due" data-due="${esc(b.paymentDueAt)}">${en ? 'Payment deadline' : 'กำหนดชำระ'}: ${esc(String(b.paymentDueAt).replace('T', ' ').slice(0, 16))}</div>` : ''}
+        ${!admin && ['PENDING', 'CONFIRMED'].includes(b.status) ? `<button class="btn sm o"
           ${BTPayments.bookingButtonStyle(Number(b.id))}
           onclick="BTPayments.openCustomer(
             ${Number(b.id)},
             ${Number(b.totalPrice)},
             '${esc(b.status)}'
-          )">ชำระเงิน / ดูสลิป</button>` : ""}
+          )">${b.status === 'CONFIRMED'
+            ? (en ? 'View Payment' : 'ดูการชำระเงิน')
+            : (en ? 'Pay / View Slip' : 'ชำระเงิน / ดูสลิป')}</button>` : ""}
         </td>
         <td>${esc(String(b.bookingDate || "").replace("T", " ").slice(0, 16))}</td>
       </tr>
