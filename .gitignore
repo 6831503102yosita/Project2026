@@ -30,3 +30,5 @@ BlueTrail-Source-For-Migration.zip
 .env
 .env.*
 !.env.example
+
+.env.local

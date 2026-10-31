@@ -1,0 +1,42 @@
+name: bluetrail-local
+
+services:
+  db:
+    image: mysql:8.4
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: bluetrail_db
+      MYSQL_USER: bluetrail
+      MYSQL_PASSWORD: ${BT_LOCAL_DB_PASSWORD:?Set BT_LOCAL_DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${BT_LOCAL_ROOT_PASSWORD:?Set BT_LOCAL_ROOT_PASSWORD}
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - MYSQL_PWD="$$MYSQL_PASSWORD" mysql -h 127.0.0.1 -u "$$MYSQL_USER" -D "$$MYSQL_DATABASE" -e 'SELECT 1'
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 30s
+
+  app:
+    build:
+      context: ./backend
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "127.0.0.1:8082:8080"
+    environment:
+      SPRING_DATASOURCE_URL: "jdbc:mysql://db:3306/bluetrail_db?allowPublicKeyRetrieval=true&useSSL=false"
+      SPRING_DATASOURCE_USERNAME: bluetrail
+      SPRING_DATASOURCE_PASSWORD: ${BT_LOCAL_DB_PASSWORD:?Set BT_LOCAL_DB_PASSWORD}
+      BLUETRAIL_UPLOAD_DIR: /data/slips
+    volumes:
+      - slips:/data/slips
+
+volumes:
+  mysql_data:
+  slips:
