@@ -9,6 +9,8 @@ services:
       MYSQL_USER: bluetrail
       MYSQL_PASSWORD: ${BT_LOCAL_DB_PASSWORD:?Set BT_LOCAL_DB_PASSWORD}
       MYSQL_ROOT_PASSWORD: ${BT_LOCAL_ROOT_PASSWORD:?Set BT_LOCAL_ROOT_PASSWORD}
+    ports:
+      - "127.0.0.1:3306:3306"
     volumes:
       - mysql_data:/var/lib/mysql
     healthcheck:
@@ -20,7 +22,7 @@ services:
       retries: 30
       start_period: 30s
 
-    app:
+  app:
     build:
       context: .
       dockerfile: backend/Dockerfile
