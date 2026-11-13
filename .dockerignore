@@ -1,0 +1,10 @@
+.git
+.gitignore
+target
+*.bak
+*.bak-*
+.env
+.env.*
+.secrets
+*.sql
+.DS_Store
