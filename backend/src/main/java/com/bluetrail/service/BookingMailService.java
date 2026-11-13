@@ -35,7 +35,14 @@ public class BookingMailService {
     private void queueInternal(Booking b,String update,boolean manual){
         // Serialize queue creation per booking across requests and instances.
         db.queryForObject("SELECT id FROM bookings WHERE id=? FOR UPDATE",Long.class,b.getId());
-        String recipient=b.getUser().getEmail();
+        String recipient = Objects.toString(b.getContactEmail(), "").trim();
+if (!recipient.matches("^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$")) {
+    LoggerFactory.getLogger(getClass()).warn(
+        "Booking email not queued: invalid contact email for booking {}",
+        b.getId()
+    );
+    return;
+}
         String total=java.text.NumberFormat.getNumberInstance(Locale.US).format(b.getTotalPrice());
         String text="BlueTrail — รายละเอียดการจอง / Booking details\n\n"+
             "เลขที่การจอง: #"+b.getId()+"\nงาน: "+b.getEvent().getTitle()+

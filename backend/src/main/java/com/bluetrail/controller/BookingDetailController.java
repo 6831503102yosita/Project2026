@@ -31,24 +31,54 @@ public class BookingDetailController {
         out.put("id",b.getId());out.put("eventTitle",b.getEvent().getTitle());out.put("eventTitleEn",b.getEvent().getTitleEn());out.put("eventDate",b.getEvent().getEventDate());
         out.put("location",b.getEvent().getLocation());out.put("quantity",b.getQuantity());out.put("totalPrice",b.getTotalPrice());
         out.put("status",b.getStatus());out.put("bookingDate",b.getBookingDate());out.put("paymentDueAt",b.getPaymentDueAt());
-        out.put("email",b.getUser().getEmail());out.put("contactName",b.getContactName());out.put("mail",mail.state(id));return out;
+        out.put("email", b.getContactEmail());
+out.put("contactEmail", b.getContactEmail());out.put("contactName",b.getContactName());out.put("mail",mail.state(id));return out;
     }
     @PostMapping("/api/admin/bookings/{id}/payment-confirmation-email")
-    @Transactional
-    public Map<String,Object> paymentConfirmation(@PathVariable long id,Authentication auth){
-        Booking b=own(id,auth,true);
-        if(auth.getAuthorities().stream().noneMatch(a->"ROLE_ADMIN".equals(a.getAuthority())))
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
-        Integer approved=db.queryForObject("SELECT COUNT(*) FROM payments WHERE booking_id=? AND status='APPROVED'",Integer.class,id);
-        if(approved==null || approved==0 || !"CONFIRMED".equals(String.valueOf(b.getStatus())))
-            throw new ResponseStatusException(HttpStatus.CONFLICT,"Approve the payment slip first");
-        if(!mail.configured())throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE,"Email sender is not configured");
-        // Reuse the automatic approval message, including a recent completed delivery.
-        Integer recent=db.queryForObject("SELECT COUNT(*) FROM booking_email_outbox WHERE booking_id=? AND (status='PENDING' OR created_at>DATE_SUB(UTC_TIMESTAMP(6),INTERVAL 1 MINUTE))",Integer.class,id);
-        if(recent==null || recent==0)
-            mail.queueResend(b,"ยืนยันสลิปการจองแล้ว ตรวจสอบการชำระเงินเรียบร้อยแล้ว / Your payment slip has been verified and your booking is confirmed.");
-        return mail.state(id);
+@Transactional
+public Map<String, Object> paymentConfirmation(
+        @PathVariable long id, Authentication auth) {
+
+    Booking b = own(id, auth, true);
+
+    if (auth.getAuthorities().stream()
+            .noneMatch(a -> "ROLE_ADMIN".equals(a.getAuthority()))) {
+        throw new ResponseStatusException(HttpStatus.FORBIDDEN);
     }
+
+    Integer approved = db.queryForObject(
+        "SELECT COUNT(*) FROM payments " +
+        "WHERE booking_id=? AND status='APPROVED'",
+        Integer.class, id
+    );
+
+    if (approved == null || approved == 0
+            || !"CONFIRMED".equals(b.getStatus())) {
+        throw new ResponseStatusException(
+            HttpStatus.CONFLICT, "Approve the payment slip first");
+    }
+
+    if (!mail.configured()) {
+        throw new ResponseStatusException(
+            HttpStatus.SERVICE_UNAVAILABLE,
+            "Email sender is not configured");
+    }
+
+    String update = "ผลตรวจสอบการชำระเงิน: APPROVED\n";
+
+    Integer existing = db.queryForObject(
+        "SELECT COUNT(*) FROM booking_email_outbox " +
+        "WHERE booking_id=? AND status IN ('PENDING','SENT') " +
+        "AND LOCATE(?, message)>0",
+        Integer.class, id, update
+    );
+
+    if (existing == null || existing == 0) {
+        mail.queue(b, update);
+    }
+
+    return mail.state(id);
+}
     @GetMapping({"/api/bookings/{id}/email","/api/admin/bookings/{id}/email"})
     @Transactional
     public Map<String,Object> emailState(@PathVariable long id,Authentication auth){
