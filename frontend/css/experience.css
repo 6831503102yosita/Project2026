@@ -1,0 +1,100 @@
+/* BlueTrail spacing and shared detail panels */
+.w{max-width:1680px;padding-left:clamp(16px,3vw,44px);padding-right:clamp(16px,3vw,44px)}
+.w.pg{max-width:1180px}#bt-nav-mount{position:sticky;top:0;z-index:80}.top{position:static}.bt-sidebar{align-self:start;height:calc(100dvh - var(--nh));min-height:0;overflow-y:auto;top:var(--nh)}
+.bt-admin-content{padding:28px clamp(20px,3vw,48px)}.bt-profile-card{max-width:1100px}
+.bt-date-range{grid-column:1/-1;background:var(--bg);border:1px solid var(--ln);border-radius:18px;padding:16px 20px}.bt-date-range>span{font-weight:700;color:var(--b)}
+.bt-experience-dialog{width:min(92vw,900px);max-height:88dvh;overflow:auto;border-radius:22px;padding:28px;background:var(--c);color:var(--tx)}
+.bt-experience-dialog h2{margin-right:50px}.bt-detail-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;padding:20px 0}.bt-detail-grid dt{font-size:.85rem;color:var(--mu)}.bt-detail-grid dd{margin:5px 0;overflow-wrap:anywhere}
+.bt-mail-panel{padding:20px;background:var(--bg);border-radius:16px}.bt-account-history{margin-top:32px}.bt-account-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:18px 0}
+.bt-account-stats article{background:var(--c);border:1px solid var(--ln);border-radius:18px;padding:22px}.bt-account-stats strong{display:block;font-size:1.5rem;color:var(--b);overflow-wrap:anywhere}.bt-account-stats span{color:var(--mu);font-size:.85rem}
+.bt-history-item{margin:14px 0}.bt-stars{color:#bf8200;font-size:1.4rem;letter-spacing:3px}.bt-review{border-top:1px solid var(--ln);margin-top:16px;padding-top:12px}.bt-report{border-left:3px solid var(--b);padding:12px 18px;margin:14px 0;background:var(--bg);border-radius:0 12px 12px 0}.bt-prewrap{white-space:pre-wrap;overflow-wrap:anywhere}
+.bt-experience-dialog progress{width:100%;height:14px;accent-color:var(--b)}.bt-number-preview{display:block;font-variant-numeric:tabular-nums;margin-top:4px;min-height:1em}
+@media(max-width:850px){.bt-sidebar{position:static;height:auto;overflow-x:auto;overflow-y:visible;align-self:auto}.bt-admin-content{padding:20px 16px}}
+@media(max-width:600px){.bt-account-stats{grid-template-columns:1fr}.bt-detail-grid{grid-template-columns:1fr}.bt-experience-dialog{padding:20px}.bt-date-range{padding:12px}.w{padding-inline:16px}}
+
+/* BlueTrail office layout — November 2026 */
+.bt-admin-content>h1{font-size:1.7rem;margin:0 0 24px}
+.bto-office{font-size:.94rem;line-height:1.55}
+.bto-office .bto-heading{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:22px}
+.bto-office h2{font-size:1.15rem;margin:0 0 4px}.bto-office .bto-heading p{margin:0;color:var(--mu);font-size:.88rem}
+.bto-office .bto-summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;margin:0 0 28px;padding:18px 0;background:var(--c);border-block:1px solid var(--ln)}
+.bto-office .bto-summary>div{padding:0 22px;border-right:1px solid var(--ln)}.bto-office .bto-summary>div:last-child{border:0}
+.bto-office dt{color:var(--mu);font-size:.85rem}.bto-office dd{margin:4px 0 0;font-weight:600;font-variant-numeric:tabular-nums}
+.bto-office .bto-summary dd{font-size:1.7rem;line-height:1.2;color:var(--tx)}
+.bto-office .bto-columns{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(260px,1fr);gap:22px;align-items:start}
+.bto-office .bto-sheet{min-width:0;background:var(--c);border:1px solid var(--ln);border-radius:6px;overflow:hidden}
+.bto-office .bto-sheet>header{padding:16px 18px;display:flex;gap:12px;align-items:center;justify-content:space-between;border-bottom:1px solid var(--ln)}
+.bto-office h3{font-size:1rem;margin:0}.bto-office .bto-sheet header .mu{font-size:.78rem}
+.bto-office .bto-scroll{max-width:100%;overflow-x:auto}.bto-office table{width:100%;border-collapse:collapse;margin:0;min-width:720px}
+.bto-office .bto-task-table{min-width:430px}.bto-office th,.bto-office td{padding:13px 18px;text-align:left;border-bottom:1px solid var(--ln);vertical-align:middle}
+.bto-office th{background:var(--bg);font-size:.78rem;font-weight:600;color:var(--mu);white-space:nowrap}.bto-office tr:last-child td{border-bottom:0}
+.bto-office td small{display:block;font-size:.78rem;color:var(--mu);margin-top:4px}.bto-office td strong{font-weight:600}.bto-office .bto-number{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}.bto-office .bto-pending{color:var(--b);font-weight:700}
+.bto-office .bto-action{text-align:right;white-space:nowrap}.bto-office button:not(.btn){border:0;background:none;color:var(--b);padding:4px 0;text-decoration:underline;text-underline-offset:4px;font:inherit;cursor:pointer}
+.bto-office .bto-date{white-space:nowrap;font-variant-numeric:tabular-nums}.bto-office .bto-empty{padding:28px 18px;color:var(--mu);text-align:center}
+.bto-office .bto-status-list{margin:0;padding:4px 18px}.bto-office .bto-status-list>div{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:10px 0;border-bottom:1px solid var(--ln)}.bto-office .bto-status-list>div:last-child{border:0}.bto-office .bto-status-list dd{margin:0;font-size:.95rem}
+.bto-office .bto-payment-total{border-top:1px solid var(--ln);padding:15px 18px;display:flex;justify-content:space-between;gap:14px;align-items:center}.bto-office .bto-payment-total span{color:var(--mu);font-size:.8rem}.bto-office .bto-payment-total strong{white-space:nowrap;font-size:1.15rem;font-variant-numeric:tabular-nums}
+.bto-office .bto-recent{margin-top:24px}.bto-office .bto-state{font-size:.8rem;border-left:3px solid var(--ln);padding-left:8px;white-space:nowrap}.bto-office .bto-state[data-state=pending]{border-color:var(--b)}.bto-office .bto-state[data-state=confirmed]{border-color:var(--ok)}
+.bto-office .bto-sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+/* Keep fields in predictable rows: name/type, date range, location, start/end. */
+.fc .fg2{gap:22px 28px;align-items:start}.fc .fg2>div:has(input[name="loc"]){grid-column:1/-1}.fc .fg2 label{margin:0 0 8px;display:block}.fc .fg2 :is(input,select){width:100%;height:56px;min-height:56px}.fc .bt-date-range>.fg{margin-top:16px;gap:16px 20px}.fc .bt-date-range{border-radius:10px}
+/* The modal sits above the sticky navigation, with an accessible action row. */
+#md{position:relative;z-index:2000}
+#md>.md:has(.btq-editor-dialog){padding:20px;align-items:center}
+#md .btq-editor-dialog{width:min(1080px,calc(100vw - 40px))!important;max-width:1080px!important;max-height:calc(100dvh - 40px)!important;padding:24px;border-radius:12px!important;overflow:auto;overscroll-behavior:contain}
+#md .btq-editor-dialog>h2{font-size:1.3rem;margin:0 50px 24px 0}
+#md .btq-editor-dialog label{line-height:1.45;margin:0 0 8px;font-size:.88rem}
+#md .btq-editor-dialog :is(input,select){height:44px;min-height:44px;border-radius:7px}
+#md .btq-editor-dialog textarea{border-radius:7px;min-height:90px}
+#md .btq-editor-dialog .bt-doc-fields{margin:24px 0;padding-bottom:14px;border-bottom:1px solid var(--ln)}
+#md .btq-editor-dialog .bt-doc-grid{gap:16px 20px}
+#md .btq-editor-dialog .bt-quote-item{grid-template-columns:minmax(180px,2.3fr) minmax(80px,.7fr) minmax(130px,1fr) 56px!important;gap:12px!important;align-items:end;margin:16px 0!important}
+#md .btq-editor-dialog .bt-quote-item>label{margin:0}.bt-item-qty,.bt-item-price,input[name=discount],input[name=taxPercent],.bt-numeric{font-variant-numeric:tabular-nums}
+#md .btq-editor-dialog .bt-quote-item input{margin-top:8px}#md .btq-editor-dialog .bt-quote-item .btn{height:44px!important;min-height:44px!important;border-width:1px;border-radius:7px}
+#md .btq-editor-dialog .bt-item-qty,#md .btq-editor-dialog .bt-item-price,#md .btq-editor-dialog input[name=discount],#md .btq-editor-dialog input[name=taxPercent]{text-align:right}
+#md .btq-editor-dialog .fg{gap:16px 20px;margin-bottom:20px}
+#md .btq-editor-actions{position:sticky;bottom:-24px;margin:22px -24px -24px;padding:16px 24px;border-top:1px solid var(--ln);background:var(--c);z-index:5;display:flex;flex-wrap:wrap;overflow:visible;gap:10px}
+#md .btq-editor-actions .btn{border-radius:7px;min-height:42px}
+#md .btq-editor-dialog>.bt-patch-modal-close{top:0!important;margin:0 0 12px 16px!important;box-shadow:none!important}
+.bt-number-preview{display:none!important}
+@media(max-width:1100px){.bto-office .bto-columns{grid-template-columns:1fr}}
+@media(max-width:700px){.bto-office .bto-summary{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:20px}.bto-office .bto-summary>div:nth-child(2){border-right:0}.bto-office .bto-heading{align-items:flex-start;flex-wrap:wrap}#md .btq-editor-dialog .bt-quote-item{grid-template-columns:1fr 1fr 56px!important}#md .btq-editor-dialog .bt-quote-item>label:first-child{grid-column:1/-1}#md .btq-editor-dialog .bt-doc-grid{grid-template-columns:1fr}#md .btq-editor-dialog .bt-doc-grid .bt-wide{grid-column:auto}}
+@media(max-width:480px){#md>.md:has(.btq-editor-dialog){padding:8px}#md .btq-editor-dialog{width:calc(100vw - 16px)!important;padding:18px;max-height:calc(100dvh - 16px)!important}#md .btq-editor-actions{bottom:-18px;margin-inline:-18px;margin-bottom:-18px;padding:12px 18px}.bto-office .bto-summary>div{padding-inline:14px}.bto-office .bto-summary dt{font-size:.75rem}}
+
+/* Unified event request fields */
+.fc .bt-date-range,
+.fc .bt-date-range > .fg {
+  display:contents;
+}
+.fc .bt-date-range > span {
+  display:none;
+}
+.fc select {
+  appearance:none;
+  -webkit-appearance:none;
+  border-radius:20px;
+  padding-right:48px;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24'%3E%3Cpath d='m6 9 6 6 6-6' fill='none' stroke='%235b6b8c' stroke-width='2'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;
+  background-position:right 18px center;
+}
+
+/* Readable admin tables and consistent change dialogs */
+.bt-admin-content .tw{max-width:100%;overflow-x:auto}
+.bt-admin-content .tw table{table-layout:auto;min-width:850px}
+.bt-admin-content .tw th{white-space:nowrap}
+.bt-admin-content .tw td{word-break:normal;overflow-wrap:normal;font-variant-numeric:tabular-nums}
+.bt-admin-content .tw td:not(:first-child){white-space:nowrap}
+.bt-admin-content .tw td:first-child{min-width:200px}
+.bt-admin-content .badge{white-space:nowrap;display:inline-block;width:auto;min-width:max-content;line-height:1.35}
+.bt-admin-content .tw td .btn{white-space:nowrap;margin-block:3px}
+dialog input,dialog textarea,dialog select{background:var(--bg);color:var(--tx);border:1px solid var(--ln)}
+dialog::backdrop{background:rgb(4 10 25 / .58)}
+:root[data-theme="dark"] .bto-office .bto-sheet,
+:root[data-theme="dark"] .bto-office .bto-summary{background:var(--c);color:var(--tx)}
+:root[data-theme="dark"] .bto-office .bto-revenue{background:var(--bg);color:var(--tx)}
+
+/* Booking history and proportional organizer progress */
+.bt-history-tools{display:flex;gap:16px;justify-content:space-between;flex-wrap:wrap;margin:24px 0}.bt-history-tabs{display:flex;flex-wrap:wrap;gap:8px}.bt-history-search{max-width:340px!important;margin:0!important}.bt-history-item{display:flex;gap:24px;margin-top:16px}.bt-history-body{flex:1;min-width:0}.bt-history-body h3{margin:8px 0}.bt-history-visual{width:160px;min-height:150px;flex-shrink:0;border-radius:12px;overflow:hidden;background:var(--bg);display:grid;place-items:center;color:var(--b);font-weight:700}.bt-history-visual img{width:100%;height:100%;max-height:240px;object-fit:cover}.bt-progress{display:block!important;width:100%!important;height:10px!important;overflow:hidden;background:var(--ln);border-radius:8px;margin-top:12px}.bt-progress>span{display:block!important;height:100%!important;max-width:100%;background:var(--b);border-radius:inherit;transition:width .15s}.bt-progress-value{text-align:right;font-variant-numeric:tabular-nums;margin:6px 0 16px}.bt-experience-dialog input[type=range]{padding:0;width:100%;height:28px;accent-color:var(--b)}
+@media(max-width:600px){.bt-history-item{flex-direction:column;gap:12px}.bt-history-visual{width:100%;height:140px;min-height:0}.bt-history-search{max-width:none!important;width:100%}}
+
+.bt-history-search{border:1px solid var(--ln);border-radius:10px;padding:10px 14px;background:var(--c);color:var(--tx);font:inherit}.bt-history-visual [hidden]{display:none!important}.bt-account-history .bt-account-stats{grid-template-columns:repeat(4,minmax(0,1fr))}@media(max-width:750px){.bt-account-history .bt-account-stats{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:420px){.bt-account-history .bt-account-stats{grid-template-columns:1fr}}
