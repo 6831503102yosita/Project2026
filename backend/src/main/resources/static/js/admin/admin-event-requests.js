@@ -68,12 +68,12 @@ window.BTAdminRequests = (() => {
       <tr>
         <td>${esc(r.id)}</td>
         <td>${esc(r.customerName)}</td>
-        <td>${esc(r.title)}</td>
-        <td>${esc(String(r.requestedDate || "").slice(0,10))}</td>
-        <td>${esc(r.location)}</td>
-        <td>${esc(r.guestCount)}</td>
-        <td>${esc(r.budget)}</td>
-        <td><span class="badge">${esc(r.status)}</span></td>
+        <td>${esc(BTLocale.title(r))}</td>
+        <td>${esc(BTLocale.eventDate(String(r.requestedDate || "").slice(0,10)))}</td>
+        <td>${esc(BTLocale.place(r.location))}</td>
+        <td>${Number(r.guestCount||0).toLocaleString("th-TH")}</td>
+        <td>${Number(r.budget||0).toLocaleString("th-TH")}</td>
+        <td><span class="badge">${esc(BTLocale.status(r.status))}</span></td>
         <td>
           <button class="btn sm"
             onclick="A.show(BTAdminRequests.details(${Number(r.id)}))">
@@ -118,11 +118,11 @@ window.BTAdminRequests = (() => {
     const en=typeof L!=='undefined'&&Boolean(L);
     const val=v=>v===null||v===undefined||v===''?'-':esc(v);
     const sections=[
-      [en?'Event information':'ข้อมูลงาน',[[en?'Event title':'ชื่องาน',r.title],[en?'Category':'ประเภทงาน',r.category],[en?'Event date':'วันที่จัดงาน',r.requestedDate?String(r.requestedDate).slice(0,10):''],[en?'Start time':'เวลาเริ่ม',d.startTime||d.st||((String(r.requestedDate||'').slice(11,16)!=='00:00')?String(r.requestedDate||'').slice(11,16):'')],[en?'End time':'เวลาสิ้นสุด',d.endTime||d.et],[en?'Location':'สถานที่',r.location],[en?'Guests':'จำนวนผู้ร่วมงาน',r.guestCount],[en?'Budget':'งบประมาณ',r.budget]]],
+      [en?'Event information':'ข้อมูลงาน',[[en?'Event title':'ชื่องาน',r.title],[en?'Category':'ประเภทงาน',BTLocale.category(r.category)],[en?'Event date':'วันที่จัดงาน',r.requestedDate?BTLocale.eventDate(String(r.requestedDate).slice(0,10)):''],[en?'End date':'วันจบงาน',BTLocale.eventDate(String(r.endDate||r.requestedDate||'').slice(0,10))],[en?'Start time':'เวลาเริ่ม',d.startTime||d.st||((String(r.requestedDate||'').slice(11,16)!=='00:00')?String(r.requestedDate||'').slice(11,16):'')],[en?'End time':'เวลาสิ้นสุด',d.endTime||d.et],[en?'Location':'สถานที่',BTLocale.place(r.location)],[en?'Guests':'จำนวนผู้ร่วมงาน',Number(r.guestCount||0).toLocaleString('th-TH')],[en?'Budget':'งบประมาณ',Number(r.budget||0).toLocaleString('th-TH')]]],
       [en?'Contact information':'ข้อมูลผู้ติดต่อ',[[en?'Customer':'ลูกค้า',r.customerName],[en?'Email':'อีเมล',d.contactEmail||r.customerEmail],[en?'Phone':'เบอร์โทร',d.contactPhone||d.phone||r.customerPhone]]],
       [en?'Additional information':'รายละเอียดเพิ่มเติม',[[en?'Theme':'ธีม',d.theme],[en?'Equipment':'อุปกรณ์',d.equipment],[en?'Description':'คำอธิบาย',r.description]]]
     ];
-    return `<div class="card pad"><div style="display:flex;align-items:center;justify-content:space-between;gap:12px"><h2>${val(r.title)}</h2></div><span class="badge">${val(r.status)}</span>
+    return `<div class="card pad"><div style="display:flex;align-items:center;justify-content:space-between;gap:12px"><h2>${val(r.title)}</h2></div><span class="badge">${val(BTLocale.status(r.status))}</span>
       ${sections.map(([heading,rows])=>`<h3 style="margin:22px 0 10px">${heading}</h3><div class="tw"><table class="bt-request-data"><tbody>${rows.map(([k,v])=>`<tr><th>${esc(k)}</th><td>${val(v)}</td></tr>`).join('')}</tbody></table></div>`).join('')}</div>`;
   }
 
@@ -233,7 +233,11 @@ window.BTAdminRequests = (() => {
     load,
     reload,
     render,
-    details: enhancedDetails,
+    details(id) {
+      return enhancedDetails(id) + BTEventDecisionMail.fields(id,null) +
+        (typeof window.BTRequestChangeSection === "function"
+          ? window.BTRequestChangeSection(id) : "");
+    },
     updateStatus,
     quote(id){document.getElementById('md').innerHTML='';AT='qt';draw();BTQuotation.createForRequest(id);}
   };

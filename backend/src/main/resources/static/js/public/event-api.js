@@ -70,8 +70,8 @@ EventAPI.toFrontend = function(event, legacy = null) {
     'Surat Thani': ['suratthani', 'south']
   };
 
-  const fallback = provinceMap[event.location] ||
-    ['chiangrai', 'north'];
+  const match=typeof P!=='undefined'?Object.entries(P).find(([key,p])=>p[0]===event.location||p[1].toLowerCase()===String(event.location||'').toLowerCase()):null;
+  const fallback = provinceMap[event.location] || (match?[match[0],match[1][2]]:['','']);
 
   const details = legacy || {};
 
@@ -114,7 +114,8 @@ EventAPI.toFrontend = function(event, legacy = null) {
     th: thaiTitle,
     en: englishTitle,
     d: [thaiDescription, englishDescription],
-    cat: event.category === 'tour' ? 'tour' : 'event',
+    cat: String(event.category).toLowerCase() === 'tour' ? 'tour' : 'event',
+    location: String(event.location||''),
     prov: details.prov || fallback[0],
     region: details.region || fallback[1],
     date: event.eventDate ? event.eventDate.slice(0, 10) : '',

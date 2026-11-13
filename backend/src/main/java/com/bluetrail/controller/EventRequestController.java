@@ -37,6 +37,7 @@ public class EventRequestController {
         String description,
         String location,
         String requestedDate,
+        String endDate,
         Integer guestCount,
         BigDecimal budget,
         String additionalDetails
@@ -65,6 +66,7 @@ public class EventRequestController {
         result.put("additionalDetails", req.getAdditionalDetails());
         result.put("location", req.getLocation());
         result.put("requestedDate", req.getRequestedDate());
+        result.put("endDate", req.getEndDate());
         result.put("guestCount", req.getGuestCount());
         result.put("budget", req.getBudget());
         result.put("status", req.getStatus());
@@ -106,7 +108,9 @@ public class EventRequestController {
             input.guestCount() == null ||
             input.guestCount() < 1 ||
             input.budget() == null ||
-            input.budget().signum() < 0) {
+            input.budget().signum() < 0 ||
+            input.budget().compareTo(new BigDecimal("9999999999999.99")) > 0 ||
+            input.budget().stripTrailingZeros().scale() > 2) {
 
             return ResponseEntity.badRequest()
                 .body(Map.of("error", "Invalid event details"));
@@ -123,12 +127,21 @@ public class EventRequestController {
                 .body(Map.of("error", "Invalid event date"));
         }
 
-        if (eventDate.toLocalDate().isBefore(LocalDate.now())) {
+        if (eventDate.toLocalDate().isBefore(LocalDate.now(java.time.ZoneId.of("Asia/Bangkok")))) {
             return ResponseEntity.badRequest()
                 .body(Map.of("error", "Event date is in the past"));
         }
 
+        LocalDate endDate;
+        try {
+            endDate = input.endDate()==null || input.endDate().isBlank()
+                ? eventDate.toLocalDate() : LocalDate.parse(input.endDate());
+            if(endDate.isBefore(eventDate.toLocalDate())) throw new IllegalArgumentException();
+        } catch(Exception ex) {
+            return ResponseEntity.badRequest().body(Map.of("error","End date must not precede start date"));
+        }
         EventRequest req = new EventRequest();
+        req.setEndDate(endDate);
 
         req.setUser(currentUser(auth));
         req.setTitle(title);

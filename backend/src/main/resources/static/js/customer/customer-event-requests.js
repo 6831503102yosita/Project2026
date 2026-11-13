@@ -198,32 +198,24 @@
                     return;
                 }
 
-                container.innerHTML = requests.map(r => `
-                    <div class="card pad" style="margin-bottom:14px">
-                        <h3>${escapeHTML(r.title)}</h3>
-                        <p class="mu">
-                            #${escapeHTML(r.id)} ·
-                            ${escapeHTML(r.category)} ·
-                            ${fmtDate(r.requestedDate)}
-                        </p>
-                        <p>
-                            ${thai("สถานะ","Status")}:
-                            <strong>${escapeHTML(r.status)}</strong>
-                        </p>
-                        <p>
-                            ${thai("สถานที่","Location")}:
-                            ${escapeHTML(r.location)}
-                        </p>
-                        <div class="bt-request-buttons">
-                          <a class="btn o"
-                             href="#/request/${encodeURIComponent(r.id)}">
-                              ${thai("ดูรายละเอียด","View details")}
-                          </a>
-                          ${quotes.filter(q => String(q.eventRequestId) === String(r.id))
-                            .map(quoteCard).join('')}
+                container.innerHTML = requests.map(r => {
+                  const requestQuotes = quotes.filter(q => String(q.eventRequestId) === String(r.id));
+                  return `
+                    <article class="card pad bt-request-card">
+                      <div class="bt-request-card-head">
+                        <div class="bt-request-card-summary">
+                          <h3>${escapeHTML(BTLocale.title(r))}</h3>
+                          <p class="mu">#${escapeHTML(r.id)} · ${escapeHTML(BTLocale.category(r.category))} · ${fmtDate(r.requestedDate)}</p>
                         </div>
-                    </div>
-                `).join("");
+                        <a class="btn o bt-request-details" href="#/request/${encodeURIComponent(r.id)}">${thai("ดูรายละเอียด","View details")}</a>
+                      </div>
+                      <div class="bt-request-meta">
+                        <p><span class="mu">${thai("สถานะ","Status")}</span><strong>${escapeHTML(BTLocale.status(r.status))}</strong></p>
+                        <p><span class="mu">${thai("สถานที่","Location")}</span><span>${escapeHTML(BTLocale.place(r.location))}</span></p>
+                      </div>
+                      ${requestQuotes.length ? `<section class="bt-request-quotes" aria-label="${thai('ใบเสนอราคา','Quotations')}">${requestQuotes.map(quoteCard).join('')}</section>` : ''}
+                    </article>`;
+                }).join("");
 
             } catch (error) {
                 if (container.isConnected)
@@ -232,7 +224,30 @@
         });
 
         return `
-            <div class="w" style="padding-top:24px;max-width:900px">
+            <div class="w bt-customer-requests" style="padding-top:24px;max-width:1000px">
+              <style>
+              .bt-customer-requests .bt-request-actions{gap:16px;margin-bottom:16px}
+              .bt-customer-requests .bt-request-actions h1{margin:0}
+              .bt-customer-requests .bt-request-quotation-nav{margin-bottom:20px}
+              .bt-customer-requests .bt-request-card{margin-bottom:20px}
+              .bt-customer-requests .bt-request-card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:20px}
+              .bt-customer-requests .bt-request-card-summary{min-width:0}
+              .bt-customer-requests .bt-request-card-summary h3{margin:0 0 8px;overflow-wrap:anywhere}
+              .bt-customer-requests .bt-request-card-summary p{margin:0;line-height:1.6}
+              .bt-customer-requests .bt-request-details{flex:none;white-space:nowrap;margin:0}
+              .bt-customer-requests .bt-request-meta{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:20px 0 0}
+              .bt-customer-requests .bt-request-meta p{display:flex;flex-direction:column;gap:6px;margin:0;min-width:0;overflow-wrap:anywhere}
+              .bt-customer-requests .bt-request-quotes{display:grid;gap:12px;margin-top:20px;padding-top:20px;border-top:1px solid var(--ln)}
+              .bt-customer-requests .bt-request-quote{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:18px;width:100%;box-sizing:border-box;margin:0;padding:16px}
+              .bt-customer-requests .bt-request-quote>div{min-width:0;overflow-wrap:anywhere}
+              .bt-customer-requests .bt-request-quote .btn{margin:0;white-space:nowrap}
+              @media(max-width:600px){
+                .bt-customer-requests .bt-request-card-head{flex-direction:column;gap:14px}
+                .bt-customer-requests .bt-request-meta{grid-template-columns:1fr}
+                .bt-customer-requests .bt-request-quote{grid-template-columns:minmax(0,1fr);gap:12px}
+                .bt-customer-requests .bt-request-quote .btn{justify-self:start}
+              }
+              </style>
                 <div class="bt-request-actions"><h1>${thai(
                     "คำขอ Event ของฉัน",
                     "My Event Requests"
@@ -293,12 +308,13 @@
                 const fileMarkup=files.map(f=>`<a class="bt-file-item" target="_blank" rel="noopener" href="/api/media/${Number(f.id)}">${escapeHTML(f.fileName||'Attachment')}</a>`).join("");
 
                 const fields = [
-                    [thai("ประเภทงาน","Category"),request.category],
-                    [thai("สถานที่","Location"),request.location],
+                    [thai("ประเภทงาน","Category"),BTLocale.category(request.category)],
+                    [thai("สถานที่","Location"),BTLocale.place(request.location)],
                     [thai("วันจัดงาน","Event date"),
                         fmtDate(request.requestedDate)],
+                    [thai("วันจบงาน","End date"), fmtDate(request.endDate || request.requestedDate)],
                     [thai("จำนวนผู้ร่วมงาน","Guests"),
-                        request.guestCount],
+                        Number(request.guestCount || 0).toLocaleString("th-TH")],
                     [thai("งบประมาณ","Budget"),
                         fmtMoney(request.budget)],
                     [thai("เวลาเริ่ม","Start time"),d.startTime],
@@ -326,10 +342,10 @@
 
                 container.innerHTML = `
                     <div class="card pad">
-                        <h2>${escapeHTML(request.title)}</h2>
+                        <h2>${escapeHTML(BTLocale.title(request))}</h2>
                         <p>
                             ${thai("สถานะ","Status")}:
-                            <strong>${escapeHTML(request.status)}</strong>
+                            <strong>${escapeHTML(BTLocale.status(request.status))}</strong>
                         </p>
                         <div class="tw">
                             <table>${rows}</table>

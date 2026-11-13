@@ -4,6 +4,7 @@
 (function () {
   'use strict';
   const translations = new Map(Object.entries({
+    'โหลดใหม่':'Refresh',
     'การจองของฉัน':'My Bookings','โหลดข้อมูลใหม่':'Refresh','รายการจองทั้งหมด':'All Bookings',
     'ใบเสนอราคา':'Quotations','ใบเสนอราคา (PDF)':'Quotation (PDF)',
     'ใบเสนอราคา (2)':'Quotations (2)','ผู้จัดงาน':'Organizers','ผู้ใช้':'Users',
@@ -27,7 +28,7 @@
     'ชื่อบริษัท':'Company Name','เลขผู้เสียภาษี':'Tax ID','โทรศัพท์':'Phone',
     'อีเมล':'Email','ที่อยู่':'Address','เงื่อนไขชำระเงิน':'Payment Terms',
     'เงื่อนไขการชำระเงิน':'Payment Terms','ข้อความท้ายเอกสาร':'Document Footer',
-    'บันทึกลง MySQL':'Save Template','บันทึกลง MySQL สำเร็จ':'Saved to MySQL successfully',
+    'บันทึกลง MySQL':'Save','บันทึกลง MySQL สำเร็จ':'Saved to MySQL successfully',
     'ยกเลิก':'Cancel','ปิด':'Close','กลับ':'Back',
     'ชำระเงิน / ดูสลิป':'Pay / View Slip','ชำระเงิน':'Payment',
     'จำนวน':'Quantity','รอชำระเงิน':'Pending Payment',
@@ -94,7 +95,13 @@
     const md=document.getElementById('md');
     if (!md || !md.firstElementChild) return;
     const dialog = md.querySelector('[role="dialog"]') || md.querySelector('.md > .card');
-    if (!dialog || dialog.querySelector('.bt-patch-modal-close')) return;
+    if (!dialog) return;
+    // The event editor already owns its close button; do not add a second one.
+    if (dialog.querySelector('.bt-edit-close')) {
+      dialog.querySelectorAll('.bt-patch-modal-close').forEach(button => button.remove());
+      return;
+    }
+    if (dialog.querySelector('.bt-patch-modal-close,.bt-close')) return;
     const close=document.createElement('button');
     close.type='button';close.className='bt-patch-modal-close';
     close.setAttribute('aria-label',isEnglish()?'Close dialog':'ปิดหน้าต่าง');
@@ -123,6 +130,10 @@
       pending=false;
       localise(document.getElementById('app'));
       localise(document.getElementById('md'));
+      document.querySelectorAll('[data-bt-success-th]').forEach(el=>{
+        const text=isEnglish()?el.dataset.btSuccessEn:el.dataset.btSuccessTh;
+        if(el.textContent!==text)el.textContent=text;
+      });
       patchModal();
     });
   }

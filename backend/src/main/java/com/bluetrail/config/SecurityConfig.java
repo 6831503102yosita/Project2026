@@ -45,6 +45,7 @@ public class SecurityConfig {
     }
 
     @Bean
+    @org.springframework.context.annotation.DependsOn("blueTrailSessionSchema")
     public SecurityFilterChain securityFilterChain(HttpSecurity http)
             throws Exception {
 
@@ -113,6 +114,8 @@ public class SecurityConfig {
                     HttpMethod.GET, "/api/bookings/my"
                 ).hasRole("CUSTOMER")
 
+                .requestMatchers("/api/bookings/**").hasRole("CUSTOMER")
+
                 // Authenticated Payment APIs
                 .requestMatchers(
                     "/api/payments", "/api/payments/**"
@@ -124,7 +127,7 @@ public class SecurityConfig {
                 ).hasRole("CUSTOMER")
 
                 // Public contact details; writes require admin role
-                .requestMatchers(HttpMethod.GET, "/api/site/contact").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/site/contact", "/api/site/banks").permitAll()
                 // Organizer work is private to the signed-in organizer
                 .requestMatchers("/api/organizer/**").hasRole("ORGANIZER")
 

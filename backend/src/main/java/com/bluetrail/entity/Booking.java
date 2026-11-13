@@ -42,6 +42,10 @@ public class Booking {
     private String contactPhone;
     @Column(name="contact_email",length=160)
     private String contactEmail;
+    @jakarta.persistence.Column(length=10)
+    private String bankId;
+    public String getBankId(){return bankId;}
+    public void setBankId(String v){bankId=v;}
 
     public Booking() {
     }

@@ -18,7 +18,7 @@ public class QuotationExtrasController {
  @Transactional
  public Map<String,Object> templateSave(@RequestBody String body,Authentication auth){
   if(body==null||body.length()>150000)throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
-  jdbc.update("INSERT INTO quotation_templates(id,template_json,updated_by) VALUES(1,?,?) ON DUPLICATE KEY UPDATE template_json=VALUES(template_json),updated_by=VALUES(updated_by)",body,auth.getName());
+  jdbc.update("INSERT INTO quotation_templates(id,template_json,updated_by) VALUES(1,?,?) ON DUPLICATE KEY UPDATE template_json=VALUES(template_json),updated_by=VALUES(updated_by)",com.bluetrail.service.CompanyBanks.templateDocument(body),auth.getName());
   return Map.of("saved",true);
  }
  @GetMapping("/api/admin/quotations/{id}/revisions")

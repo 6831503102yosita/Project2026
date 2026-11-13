@@ -259,7 +259,7 @@ public class QuotationController {
                 throw error(HttpStatus.BAD_REQUEST, "Quotation document too large");
             }
             jdbc.update("INSERT INTO quotation_documents(quotation_id,document_json) VALUES (?,?)",
-                id, input.documentJson());
+                id, com.bluetrail.service.CompanyBanks.canonicalDocument(input.documentJson()));
         }
         return quotation(id);
     }

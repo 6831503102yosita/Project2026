@@ -10,6 +10,14 @@ public class BusinessSchemaBootstrap {
   @Bean
   ApplicationRunner ensureBusinessTables(JdbcTemplate db) {
     return args -> {
+      Integer bankColumn=db.queryForObject("SELECT COUNT(*) FROM information_schema.columns WHERE table_schema=DATABASE() AND table_name='bookings' AND column_name='bank_id'",Integer.class);
+      if(bankColumn!=null&&bankColumn==0){
+        try{db.execute("ALTER TABLE bookings ADD COLUMN bank_id VARCHAR(10) NULL");}
+        catch(org.springframework.dao.DataAccessException e){
+          Throwable cause=e.getMostSpecificCause();
+          if(!(cause instanceof java.sql.SQLException sql)||sql.getErrorCode()!=1060)throw e;
+        }
+      }
       db.execute("CREATE TABLE IF NOT EXISTS event_change_history (id BIGINT AUTO_INCREMENT PRIMARY KEY, event_id BIGINT NOT NULL, changed_by VARCHAR(255), field_name VARCHAR(90) NOT NULL, old_value TEXT, new_value TEXT, changed_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6), INDEX (event_id)) ENGINE=InnoDB");
       db.execute("CREATE TABLE IF NOT EXISTS organizer_assignments (id BIGINT AUTO_INCREMENT PRIMARY KEY, request_id BIGINT NOT NULL, organizer_id BIGINT NOT NULL, note TEXT, status VARCHAR(30) NOT NULL DEFAULT 'ASSIGNED', created_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6), INDEX (request_id), INDEX (organizer_id)) ENGINE=InnoDB");
       db.execute("CREATE TABLE IF NOT EXISTS quotations (id BIGINT AUTO_INCREMENT PRIMARY KEY, event_request_id BIGINT NOT NULL, quotation_number VARCHAR(60), revision INT NOT NULL DEFAULT 0, status VARCHAR(30) NOT NULL DEFAULT 'DRAFT', subtotal DECIMAL(12,2) NOT NULL DEFAULT 0, discount DECIMAL(12,2) NOT NULL DEFAULT 0, tax_amount DECIMAL(12,2) NOT NULL DEFAULT 0, total_amount DECIMAL(12,2) NOT NULL DEFAULT 0, admin_note TEXT, customer_note TEXT, created_by VARCHAR(255), created_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6), sent_at DATETIME(6), responded_at DATETIME(6), INDEX(event_request_id)) ENGINE=InnoDB");
@@ -20,6 +28,10 @@ public class BusinessSchemaBootstrap {
       db.execute("CREATE TABLE IF NOT EXISTS site_settings (setting_key VARCHAR(40) PRIMARY KEY, setting_value TEXT) ENGINE=InnoDB");
       db.execute("CREATE TABLE IF NOT EXISTS legacy_event_imports (event_id BIGINT PRIMARY KEY, source_data LONGTEXT) ENGINE=InnoDB");
       db.execute("CREATE TABLE IF NOT EXISTS bluetrail_uploads (id BIGINT AUTO_INCREMENT PRIMARY KEY, owner_email VARCHAR(255) NOT NULL, event_request_id BIGINT, event_id BIGINT, file_name VARCHAR(255) NOT NULL, content_type VARCHAR(80) NOT NULL, file_data MEDIUMBLOB NOT NULL, created_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6), INDEX(event_request_id), INDEX(event_id)) ENGINE=InnoDB");
+      db.execute("CREATE TABLE IF NOT EXISTS booking_reviews (id BIGINT AUTO_INCREMENT PRIMARY KEY, booking_id BIGINT NOT NULL UNIQUE, user_id BIGINT NOT NULL, rating INT NOT NULL, comment TEXT, created_at DATETIME(6) DEFAULT CURRENT_TIMESTAMP(6), INDEX(user_id)) ENGINE=InnoDB");
+      db.execute("CREATE TABLE IF NOT EXISTS organizer_work_reports (id BIGINT AUTO_INCREMENT PRIMARY KEY, assignment_id BIGINT NOT NULL, progress INT NOT NULL, message TEXT NOT NULL, created_by VARCHAR(255) NOT NULL, created_at DATETIME(6) DEFAULT CURRENT_TIMESTAMP(6), INDEX(assignment_id)) ENGINE=InnoDB");
+      db.execute("CREATE TABLE IF NOT EXISTS booking_email_outbox (id BIGINT AUTO_INCREMENT PRIMARY KEY, booking_id BIGINT NOT NULL, recipient VARCHAR(160) NOT NULL, subject VARCHAR(255) NOT NULL, message TEXT NOT NULL, status VARCHAR(20) NOT NULL DEFAULT 'PENDING', attempts INT NOT NULL DEFAULT 0, next_attempt DATETIME(6) DEFAULT CURRENT_TIMESTAMP(6), created_at DATETIME(6) DEFAULT CURRENT_TIMESTAMP(6), sent_at DATETIME(6), INDEX(status,next_attempt), INDEX(booking_id)) ENGINE=InnoDB");
+      db.update("INSERT INTO site_settings(setting_key,setting_value) VALUES ('email','Bluetrail888@gmail.com') ON DUPLICATE KEY UPDATE setting_value=VALUES(setting_value)");
       db.update("INSERT IGNORE INTO site_settings(setting_key,setting_value) VALUES ('hold','24')");
     };
   }

@@ -14,7 +14,7 @@ import java.util.*;
 public class BusinessDataController {
     private final JdbcTemplate jdbc;
     private final UserRepository users;
-    private static final List<String> CONTACT_KEYS = List.of("phone", "email", "line", "fb", "ig", "addr", "pay", "hold");
+    private static final List<String> CONTACT_KEYS = List.of("phone", "email", "line", "fb", "ig", "addr", "addrEn", "pay", "hold");
 
     public BusinessDataController(JdbcTemplate jdbc, UserRepository users) {
         this.jdbc = jdbc;
@@ -28,7 +28,7 @@ public class BusinessDataController {
     @GetMapping("/api/site/contact")
     public Map<String,String> contact() {
         Map<String,String> result = new LinkedHashMap<>();
-        jdbc.query("SELECT setting_key, setting_value FROM site_settings WHERE setting_key IN ('phone','email','line','fb','ig','addr','pay','hold')",
+        jdbc.query("SELECT setting_key, setting_value FROM site_settings WHERE setting_key IN ('phone','email','line','fb','ig','addr','addrEn','pay','hold')",
             rs -> { result.put(rs.getString(1), rs.getString(2)); });
         return result;
     }
@@ -39,6 +39,7 @@ public class BusinessDataController {
         if (payload == null) throw invalid("Missing contact settings");
         for (String key : CONTACT_KEYS) {
             String value = payload.getOrDefault(key, "").trim();
+            if(key.equals("email")) value="Bluetrail888@gmail.com";
             if (value.length() > 1500) throw invalid("Contact value too long: " + key);
             if (key.equals("hold")) {
                 try {

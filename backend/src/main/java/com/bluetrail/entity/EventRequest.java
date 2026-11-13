@@ -32,10 +32,13 @@ public class EventRequest {
     private String location;
 
     private LocalDateTime requestedDate;
+    private java.time.LocalDate endDate;
+    public java.time.LocalDate getEndDate(){return endDate;}
+    public void setEndDate(java.time.LocalDate value){endDate=value;}
 
     private Integer guestCount;
 
-    @Column(precision = 10, scale = 2)
+    @Column(precision = 15, scale = 2)
     private BigDecimal budget;
 
     @Column(nullable = false, length = 30)

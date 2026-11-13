@@ -15,6 +15,8 @@ import java.util.List;
 @Service
 public class BookingExpiryService {
     @PersistenceContext private EntityManager em;
+    private final BookingMailService mail;
+    public BookingExpiryService(BookingMailService mail){this.mail=mail;}
     @Scheduled(fixedDelay = 60000)
     @Transactional
     public void expireUnpaid(){
@@ -28,6 +30,7 @@ public class BookingExpiryService {
             if(submitted>0)continue; // Never expire a payment awaiting admin review.
             Event event=em.find(Event.class,booking.getEvent().getId(),LockModeType.PESSIMISTIC_WRITE);
             booking.setStatus("EXPIRED");
+            mail.queue(booking,"หมดเวลาชำระเงิน ระบบคืนที่นั่งแล้ว");
             if(event!=null)event.setAvailableSeats(Math.min(event.getTotalSeats(),event.getAvailableSeats()+booking.getQuantity()));
         }
     }
