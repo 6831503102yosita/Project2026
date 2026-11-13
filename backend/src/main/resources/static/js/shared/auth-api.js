@@ -137,3 +137,30 @@ const BTAuth = {
 };
 
 window.BTAuth = BTAuth;
+
+// Booking drafts stay in this tab's memory, never in persistent browser storage.
+window.BTBookingSession=(()=>{
+ let draft=null;
+ const fields=['qty','contactName','contactPhone','contactEmail','bankId'];
+ const text=(th,en)=>typeof L!=='undefined'&&L?en:th;
+ function remember(form,id){draft={id:Number(id),owner:ME?.email,values:Object.fromEntries(fields.map(k=>[k,form.elements[k]?.value])),file:form.elements.slip?.files?.[0]};}
+ function expired(form,id){
+  remember(form,id);ME=null;ls.s('me',null);
+  go('/login');draw();
+  const box=document.getElementById('er');if(box)box.textContent=text('เซสชันหมดอายุ กรุณาเข้าสู่ระบบใหม่ด้วยบัญชีเดิมเพื่อกลับไปยืนยันการจอง ข้อมูลที่กรอกเก็บไว้ในแท็บนี้แล้ว','Your session expired. Sign in to the same account to return and confirm your booking. Your draft is kept in this tab.');
+ }
+ function resume(user){
+  if(!draft)return false;
+  if(user.role!=='customer'||user.email.toLowerCase()!==String(draft.owner).toLowerCase()){draft=null;return false;}
+  go('/api-book/'+draft.id);draw();return true;
+ }
+ function restore(){
+  if(!draft||location.hash!=='#/api-book/'+draft.id||ME?.email?.toLowerCase()!==String(draft.owner).toLowerCase())return;
+  const form=document.querySelector('form[data-booking-id="'+draft.id+'"]');if(!form)return;
+  for(const k of fields)if(form.elements[k])form.elements[k].value=draft.values[k]||'';
+  window.BTBanks?.sync(form);
+  if(draft.file&&typeof DataTransfer!=='undefined'){try{const transfer=new DataTransfer();transfer.items.add(draft.file);form.elements.slip.files=transfer.files;}catch{}}
+  const qty=form.elements.qty;qty.dispatchEvent(new Event('input',{bubbles:true}));draft=null;
+ }
+ return {expired,resume,restore,clear(){draft=null;}};
+})();

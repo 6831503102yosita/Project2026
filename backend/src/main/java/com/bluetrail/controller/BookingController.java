@@ -25,15 +25,19 @@ import java.time.LocalDateTime;
 public class BookingController {
 
     private final BookingRepository bookings;
+    private final com.bluetrail.service.BookingMailService mail;
 
     @PersistenceContext
     private EntityManager em;
 
-    public BookingController(BookingRepository bookings) {
+    public BookingController(BookingRepository bookings,com.bluetrail.service.BookingMailService mail) {
         this.bookings = bookings;
+        this.mail = mail;
     }
 
-    public record NewBooking(Long eventId, Integer quantity, String contactName, String contactPhone, String contactEmail) {}
+    public record NewBooking(Long eventId, Integer quantity, String contactName, String contactPhone, String contactEmail, String bankId) {
+        public NewBooking(Long eventId,Integer quantity,String name,String phone,String email){this(eventId,quantity,name,phone,email,null);}
+    }
 
     private User currentUser(Authentication auth) {
         if (auth == null || !auth.isAuthenticated()
@@ -57,6 +61,8 @@ public class BookingController {
         result.put("id", b.getId());
         result.put("eventId", b.getEvent().getId());
         result.put("eventTitle", b.getEvent().getTitle());
+        result.put("eventTitleEn", b.getEvent().getTitleEn());
+        result.put("location", b.getEvent().getLocation());
         result.put("userId", b.getUser().getId());
         result.put("quantity", b.getQuantity());
         result.put("totalPrice", b.getTotalPrice());
@@ -66,6 +72,8 @@ public class BookingController {
         result.put("contactName", b.getContactName());
         result.put("contactPhone", b.getContactPhone());
         result.put("contactEmail", b.getContactEmail());
+        result.put("bankId", b.getBankId());
+        if(b.getBankId()!=null)result.put("paymentBank", com.bluetrail.service.CompanyBanks.require(b.getBankId()));
         return result;
     }
 
@@ -95,6 +103,8 @@ public class BookingController {
             return ResponseEntity.badRequest()
                 .body(Map.of("error", "Quantity exceeds limit"));
         }
+
+        com.bluetrail.service.CompanyBanks.require(input.bankId());
 
         Event event = em.find(
             Event.class,
@@ -139,11 +149,13 @@ public class BookingController {
         booking.setContactName(input.contactName().trim());
         booking.setContactPhone(input.contactPhone().trim());
         booking.setContactEmail(input.contactEmail().trim());
+        booking.setBankId(input.bankId());
 
         event.setAvailableSeats(available - input.quantity());
         em.flush();
 
         Booking saved = bookings.saveAndFlush(booking);
+        mail.queue(saved,"สร้างการจองสำเร็จ กรุณาชำระภายในเวลาที่กำหนด");
 
         return ResponseEntity.status(HttpStatus.CREATED)
             .body(response(saved));

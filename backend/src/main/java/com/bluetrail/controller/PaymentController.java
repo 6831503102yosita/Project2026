@@ -2,6 +2,7 @@ package com.bluetrail.controller;
 
 import com.bluetrail.entity.Booking;
 import com.bluetrail.entity.Payment;
+import com.bluetrail.entity.PaymentSlip;
 import com.bluetrail.entity.User;
 import com.bluetrail.repository.PaymentRepository;
 
@@ -27,6 +28,7 @@ import java.util.*;
 public class PaymentController {
 
     private final PaymentRepository payments;
+    private final com.bluetrail.service.BookingMailService mail;
 
     @PersistenceContext
     private EntityManager em;
@@ -34,8 +36,9 @@ public class PaymentController {
     @Value("${bluetrail.upload-dir:${user.home}/BlueTrail-Uploads}")
     private String uploadDir;
 
-    public PaymentController(PaymentRepository payments) {
+    public PaymentController(PaymentRepository payments,com.bluetrail.service.BookingMailService mail) {
         this.payments = payments;
+        this.mail = mail;
     }
 
     public record Decision(String status, String reason) {}
@@ -169,31 +172,20 @@ public class PaymentController {
         }
 
         String ext = detectExtension(data);
-        Path dir = Paths.get(uploadDir).toAbsolutePath().normalize();
-
-        Files.createDirectories(dir);
-
         String name = UUID.randomUUID() + ext;
-        Path destination = dir.resolve(name);
+        Payment payment = new Payment();
+        payment.setBooking(booking);
+        payment.setAmount(booking.getTotalPrice());
+        payment.setPaymentMethod("BANK_TRANSFER");
+        payment.setStatus("PENDING");
+        payment.setSlipUrl(name);
 
-        Files.write(destination, data, StandardOpenOption.CREATE_NEW);
-
-        try {
-            Payment payment = new Payment();
-            payment.setBooking(booking);
-            payment.setAmount(booking.getTotalPrice());
-            payment.setPaymentMethod("BANK_TRANSFER");
-            payment.setStatus("PENDING");
-            payment.setSlipUrl(name);
-
-            Payment saved = payments.saveAndFlush(payment);
-
-            return ResponseEntity.status(HttpStatus.CREATED)
-                .body(toResponse(saved));
-        } catch (RuntimeException ex) {
-            Files.deleteIfExists(destination);
-            throw ex;
-        }
+        Payment saved = payments.saveAndFlush(payment);
+        em.persist(new PaymentSlip(saved, data));
+        mail.queue(booking,"รับสลิปแล้ว รอแอดมินตรวจสอบ");
+        em.flush();
+        return ResponseEntity.status(HttpStatus.CREATED)
+            .body(toResponse(saved));
     }
 
     @GetMapping("/api/payments/booking/{bookingId}")
@@ -240,14 +232,21 @@ public class PaymentController {
             throw fail(HttpStatus.NOT_FOUND, "Slip not found");
         }
 
-        Path dir = Paths.get(uploadDir).toAbsolutePath().normalize();
-        Path path = dir.resolve(payment.getSlipUrl()).normalize();
-
-        if (!path.getParent().equals(dir) || !Files.isRegularFile(path)) {
-            throw fail(HttpStatus.NOT_FOUND, "Slip not found");
+        PaymentSlip stored = em.find(PaymentSlip.class, paymentId);
+        byte[] data;
+        String filename = payment.getSlipUrl();
+        if (stored != null) {
+            data = stored.getData();
+        } else {
+            // Existing local slips remain readable until they are migrated.
+            Path dir = Paths.get(uploadDir).toAbsolutePath().normalize();
+            Path path = dir.resolve(filename).normalize();
+            if (!dir.equals(path.getParent()) || !Files.isRegularFile(path)) {
+                throw fail(HttpStatus.NOT_FOUND, "Slip not found");
+            }
+            data = Files.readAllBytes(path);
         }
 
-        String filename = path.getFileName().toString();
         MediaType type = filename.endsWith(".png")
             ? MediaType.IMAGE_PNG
             : filename.endsWith(".webp")
@@ -258,7 +257,7 @@ public class PaymentController {
             .contentType(type)
             .header(HttpHeaders.CACHE_CONTROL, "no-store")
             .header("X-Content-Type-Options", "nosniff")
-            .body(Files.readAllBytes(path));
+            .body(data);
     }
 
     @GetMapping("/api/admin/payments")
@@ -341,6 +340,7 @@ public class PaymentController {
         payment.setStatus(next);
         payment.setVerifiedAt(LocalDateTime.now());
 
+        mail.queue(booking,"ผลตรวจสอบการชำระเงิน: "+next+"\n"+Objects.toString(payment.getRejectionReason(),""));
         return toResponse(payments.saveAndFlush(payment));
     }
 }

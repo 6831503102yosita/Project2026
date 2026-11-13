@@ -20,7 +20,7 @@ public class OrganizerAssignmentController {
     public record AssignmentInput(Long requestId, Long organizerId, String note) {}
     private List<Map<String,Object>> list(String where, Object... args) {
         return jdbc.queryForList("SELECT a.id, a.request_id AS requestId, a.organizer_id AS organizerId," +
-            " a.status, a.note, a.created_at AS createdAt, r.title AS eventTitle," +
+            " (SELECT w.progress FROM organizer_work_reports w WHERE w.assignment_id=a.id ORDER BY w.id DESC LIMIT 1) AS progress, (SELECT w.created_at FROM organizer_work_reports w WHERE w.assignment_id=a.id ORDER BY w.id DESC LIMIT 1) AS updatedAt, (SELECT COUNT(*) FROM organizer_work_reports w WHERE w.assignment_id=a.id) AS reportCount, a.status, a.note, a.created_at AS createdAt, r.title AS eventTitle," +
             " r.location, r.requested_date AS requestedDate, r.guest_count AS guestCount," +
             " u.name AS organizerName FROM organizer_assignments a" +
             " JOIN event_requests r ON r.id=a.request_id JOIN users u ON u.id=a.organizer_id" +
@@ -58,4 +58,57 @@ public class OrganizerAssignmentController {
         if(changed==0) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         return Map.of("id",id,"status",status);
     }
+
+    private void assignmentAdmin(Authentication auth) {
+        if (auth == null || !auth.isAuthenticated() ||
+            auth.getAuthorities().stream().noneMatch(
+                a -> "ROLE_ADMIN".equals(a.getAuthority())))
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+    }
+
+    public record ReassignInput(Long organizerId) {}
+
+    @DeleteMapping("/api/admin/organizer-assignments/{id}")
+    @Transactional
+    public Map<String,Object> cancelAssignment(
+            @PathVariable Long id, Authentication auth) {
+        assignmentAdmin(auth);
+        int changed = jdbc.update(
+            "DELETE FROM organizer_assignments WHERE id=?", id);
+        if (changed != 1)
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        return Map.of("message", "Assignment cancelled");
+    }
+
+    @PatchMapping("/api/admin/organizer-assignments/{id}/organizer")
+    @Transactional
+    public Map<String,Object> reassignAssignment(
+            @PathVariable Long id,
+            @RequestBody ReassignInput input,
+            Authentication auth) {
+        assignmentAdmin(auth);
+        if (input == null || input.organizerId() == null)
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        var people = jdbc.queryForList(
+            "SELECT id,role FROM users WHERE id=? FOR UPDATE",
+            input.organizerId());
+        if (people.isEmpty() ||
+                !"ORGANIZER".equals(people.get(0).get("role")))
+            throw new ResponseStatusException(
+                HttpStatus.BAD_REQUEST, "User must be an organizer");
+        var assignments = jdbc.queryForList(
+            "SELECT id,organizer_id FROM organizer_assignments WHERE id=? FOR UPDATE",
+            id);
+        if (assignments.isEmpty())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        long oldId = ((Number)assignments.get(0).get("organizer_id")).longValue();
+        if (oldId == input.organizerId().longValue())
+            return Map.of("message", "Organizer unchanged");
+
+        jdbc.update(
+            "UPDATE organizer_assignments SET organizer_id=?,status='ASSIGNED' WHERE id=?",
+            input.organizerId(), id);
+        return Map.of("message", "Organizer changed");
+    }
+
 }
