@@ -1,14 +1,23 @@
-
 window.BTAdminEvents = (() => {
   const state = {
-    loaded: false, loading: false, rows: [], error: ""
+    loaded: false,
+    loading: false,
+    rows: [],
+    error: ""
   };
 
   const esc = x => String(x ?? "").replace(/[&<>"']/g, c =>
-    ({ "&":"&amp;", "<":"&lt;", ">":"&gt;",
-       '"':"&quot;", "'":"&#39;" })[c]);
+    ({
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#39;"
+    })[c]
+  );
 
-  const money = x => "฿" + Number(x || 0).toLocaleString("th-TH");
+  const money = x =>
+    "฿" + Number(x || 0).toLocaleString("th-TH");
 
   async function request(url, options = {}) {
     const res = await fetch(url, {
@@ -18,8 +27,10 @@ window.BTAdminEvents = (() => {
     });
 
     if (!res.ok) {
-      throw new Error("HTTP " + res.status + ": " +
-        (await res.text()).slice(0, 160));
+      throw new Error(
+        "HTTP " + res.status + ": " +
+        (await res.text()).slice(0, 160)
+      );
     }
 
     return res.json();
@@ -32,6 +43,7 @@ window.BTAdminEvents = (() => {
 
   async function load() {
     if (state.loading) return;
+
     state.loading = true;
     state.error = "";
 
@@ -42,10 +54,12 @@ window.BTAdminEvents = (() => {
       state.error = e.message;
     } finally {
       state.loading = false;
-      if (typeof draw === "function" && AT === "ev") draw();
+
+      if (typeof draw === "function" && AT === "ev") {
+        draw();
+      }
     }
   }
-
 
   function deleteEvent(id, confirmed = false) {
     const e = state.rows.find(
@@ -70,12 +84,16 @@ window.BTAdminEvents = (() => {
             ">
 
             <div style="
-              width:72px;height:72px;
-              background:#fee2e2;color:#dc2626;
+              width:72px;
+              height:72px;
+              background:#fee2e2;
+              color:#dc2626;
               border-radius:50%;
-              display:grid;place-items:center;
+              display:grid;
+              place-items:center;
               margin:0 auto 18px;
-              font-size:34px;font-weight:700
+              font-size:34px;
+              font-weight:700
             ">!</div>
 
             <h2>ยืนยันการลบ Event?</h2>
@@ -140,8 +158,13 @@ window.BTAdminEvents = (() => {
   }
 
   async function performDelete(id) {
-    const button = document.getElementById("bt-delete-confirm");
-    const errorBox = document.getElementById("bt-delete-error");
+    const button = document.getElementById(
+      "bt-delete-confirm"
+    );
+
+    const errorBox = document.getElementById(
+      "bt-delete-error"
+    );
 
     if (!button || button.disabled) return;
 
@@ -195,9 +218,7 @@ window.BTAdminEvents = (() => {
       }
 
       document.getElementById("md").innerHTML = "";
-
       refresh();
-
     } catch (err) {
       if (errorBox) {
         errorBox.textContent = err.message;
@@ -214,7 +235,12 @@ window.BTAdminEvents = (() => {
     load();
   }
 
-  const field = (label, name, value, type = "text") => `
+  const field = (
+    label,
+    name,
+    value,
+    type = "text"
+  ) => `
     <label style="display:block;margin:12px 0 4px">
       ${label}
     </label>
@@ -227,9 +253,13 @@ window.BTAdminEvents = (() => {
     >`;
 
   function edit(id) {
-    const e = state.rows.find(x => Number(x.id) === Number(id));
+    const e = state.rows.find(
+      x => Number(x.id) === Number(id)
+    );
 
-    if (id && !e) return alert("ไม่พบ Event");
+    if (id && !e) {
+      return alert("ไม่พบ Event");
+    }
 
     const date = e?.eventDate
       ? String(e.eventDate).slice(0, 16)
@@ -240,50 +270,139 @@ window.BTAdminEvents = (() => {
     dialog.innerHTML = `
       <div class="md">
         <div class="card pad"
-          style="width:min(95vw,620px);max-height:85vh;overflow:auto;position:relative">
-          <div class="bt-edit-head"><h2>${typeof L!=="undefined"&&L?(e?"Edit Event / Tour":"Add Event / Tour"):(e?"แก้ไข Event / Tour":"เพิ่ม Event / Tour")}</h2><button type="button" class="bt-edit-close" aria-label="Close" title="ปิดหน้าต่าง" onclick="document.getElementById('md').innerHTML=''">&times;</button></div>
+          style="
+            width:min(95vw,620px);
+            max-height:85vh;
+            overflow:auto;
+            position:relative
+          ">
+
+          <div class="bt-edit-head">
+            <h2>
+              ${typeof L !== "undefined" && L
+                ? (e ? "Edit Event / Tour" : "Add Event / Tour")
+                : (e ? "แก้ไข Event / Tour" : "เพิ่ม Event / Tour")}
+            </h2>
+
+            <button type="button"
+              class="bt-edit-close"
+              aria-label="Close"
+              title="ปิดหน้าต่าง"
+              onclick="document.getElementById('md').innerHTML=''">
+              &times;
+            </button>
+          </div>
 
           <form onsubmit="return BTAdminEvents.save(event,${Number(id)})">
-            ${field((typeof L!=='undefined'&&L?"Event / Tour title (Thai)":"ชื่อ Event / Tour (ภาษาไทย)"), "title", e?.title || "")}
-            ${field("Event / Tour title (English)", "titleEn", e?.titleEn || "")}
+            ${field(
+              typeof L !== "undefined" && L
+                ? "Event / Tour title (Thai)"
+                : "ชื่อ Event / Tour (ภาษาไทย)",
+              "title",
+              e?.title || ""
+            )}
+
+            ${field(
+              "Event / Tour title (English)",
+              "titleEn",
+              e?.titleEn || ""
+            )}
 
             <label style="display:block;margin:12px 0 4px">
               ประเภท
             </label>
+
             <select name="category"
               style="width:100%;box-sizing:border-box">
               <option value="event"
                 ${e?.category === "event" ? "selected" : ""}>
                 Event
               </option>
+
               <option value="tour"
                 ${e?.category === "tour" ? "selected" : ""}>
                 Tour
               </option>
             </select>
 
-            ${field("สถานที่", "location", e?.location || "")}
-            ${field((typeof L!=='undefined'&&L?"Event date":"วันที่จัดงาน"), "eventDate", date, "datetime-local")}
-            ${field((typeof L!=='undefined'&&L?"Price (THB)":"ราคา (บาท)"), "price", e?.price ?? 0, "number")}
-            ${field((typeof L!=='undefined'&&L?"Total seats":"จำนวนที่นั่งทั้งหมด"), "totalSeats",
-                    e?.totalSeats ?? 20, "number")}
+            ${field(
+              "สถานที่",
+              "location",
+              e?.location || ""
+            )}
 
-            <label style="display:block;margin:12px 0 4px">${typeof L!=='undefined'&&L?'Tour / Event image (JPG, PNG, WebP up to 5 MB)':'รูปภาพทัวร์ / Event (JPG, PNG, WebP ไม่เกิน 5 MB)'}</label>
-            <input type="file" name="eventImage" accept="image/png,image/jpeg,image/webp">
-            ${e?.imageUrl ? `<img src="${esc(e.imageUrl)}" alt="${typeof L!=='undefined'&&L?'Current image':'รูปปัจจุบัน'}" style="width:180px;max-height:120px;object-fit:cover;border-radius:12px;margin-top:8px">` : ''}
+            ${field(
+              typeof L !== "undefined" && L
+                ? "Event date"
+                : "วันที่จัดงาน",
+              "eventDate",
+              date,
+              "datetime-local"
+            )}
+
+            ${field(
+              typeof L !== "undefined" && L
+                ? "Price (THB)"
+                : "ราคา (บาท)",
+              "price",
+              e?.price ?? 0,
+              "number"
+            )}
+
+            ${field(
+              typeof L !== "undefined" && L
+                ? "Total seats"
+                : "จำนวนที่นั่งทั้งหมด",
+              "totalSeats",
+              e?.totalSeats ?? 20,
+              "number"
+            )}
+
+            <label style="display:block;margin:12px 0 4px">
+              ${typeof L !== "undefined" && L
+                ? "Tour / Event image (JPG, PNG, WebP up to 5 MB)"
+                : "รูปภาพทัวร์ / Event (JPG, PNG, WebP ไม่เกิน 5 MB)"}
+            </label>
+
+            <input type="file"
+              name="eventImage"
+              accept="image/png,image/jpeg,image/webp">
+
+            ${e?.imageUrl ? `
+              <img
+                src="${esc(e.imageUrl)}"
+                alt="${typeof L !== "undefined" && L
+                  ? "Current image"
+                  : "รูปปัจจุบัน"}"
+                style="
+                  width:180px;
+                  max-height:120px;
+                  object-fit:cover;
+                  border-radius:12px;
+                  margin-top:8px
+                ">
+            ` : ""}
+
             <label style="display:block;margin:12px 0 4px">
               รายละเอียด
             </label>
+
             <textarea name="description" rows="4"
               style="width:100%;box-sizing:border-box"
             >${esc(e?.description || "")}</textarea>
 
             <label>Details (English)</label>
-            <textarea name="descriptionEn" rows="3">${esc(e?.descriptionEn || "")}</textarea>
+
+            <textarea name="descriptionEn" rows="3"
+            >${esc(e?.descriptionEn || "")}</textarea>
+
             <p id="bt-event-error" style="color:#dc2626"></p>
 
             <div style="display:flex;gap:10px;margin-top:18px">
-              <button class="btn" type="submit">บันทึก</button>
+              <button class="btn" type="submit">
+                บันทึก
+              </button>
+
               <button class="btn o" type="button"
                 onclick="document.getElementById('md').innerHTML=''">
                 ยกเลิก
@@ -314,10 +433,15 @@ window.BTAdminEvents = (() => {
       descriptionEn: f.descriptionEn.value.trim()
     };
 
-    if (!Number.isFinite(input.price) || input.price < 0 ||
-        !Number.isInteger(input.totalSeats) ||
-        input.totalSeats < 1) {
-      error.textContent = "กรุณากรอกราคาและจำนวนที่นั่งให้ถูกต้อง";
+    if (
+      !Number.isFinite(input.price) ||
+      input.price < 0 ||
+      !Number.isInteger(input.totalSeats) ||
+      input.totalSeats < 1
+    ) {
+      error.textContent =
+        "กรุณากรอกราคาและจำนวนที่นั่งให้ถูกต้อง";
+
       return false;
     }
 
@@ -340,14 +464,36 @@ window.BTAdminEvents = (() => {
       );
 
       const picture = f.eventImage?.files?.[0];
+
       if (picture) {
-        if (picture.size > 5000000 || !['image/jpeg','image/png','image/webp'].includes(picture.type))
-          throw new Error('รูปต้องเป็น JPG, PNG หรือ WebP ขนาดไม่เกิน 5 MB');
-        const data = new FormData(); data.append('file',picture);
-        await request(`/api/admin/events/${Number(id || savedEvent.id)}/image`,
-          {method:'POST',headers:await csrf(),body:data});
+        if (
+          picture.size > 5000000 ||
+          ![
+            "image/jpeg",
+            "image/png",
+            "image/webp"
+          ].includes(picture.type)
+        ) {
+          throw new Error(
+            "รูปต้องเป็น JPG, PNG หรือ WebP ขนาดไม่เกิน 5 MB"
+          );
+        }
+
+        const data = new FormData();
+        data.append("file", picture);
+
+        await request(
+          `/api/admin/events/${Number(id || savedEvent.id)}/image`,
+          {
+            method: "POST",
+            headers: await csrf(),
+            body: data
+          }
+        );
       }
+
       document.getElementById("md").innerHTML = "";
+
       await loadAPIEvents();
       refresh();
     } catch (e) {
@@ -361,7 +507,8 @@ window.BTAdminEvents = (() => {
 
   async function toggle(id, currentStatus, confirmed = false) {
     const next = currentStatus === "ACTIVE"
-      ? "INACTIVE" : "ACTIVE";
+      ? "INACTIVE"
+      : "ACTIVE";
 
     const closing = next === "INACTIVE";
 
@@ -383,13 +530,16 @@ window.BTAdminEvents = (() => {
             ">
 
             <div style="
-              width:76px;height:76px;
-              display:grid;place-items:center;
+              width:76px;
+              height:76px;
+              display:grid;
+              place-items:center;
               border-radius:50%;
               margin:0 auto 18px;
               background:${closing ? "#fee2e2" : "#dcfce7"};
               color:${closing ? "#dc2626" : "#16a34a"};
-              font-size:36px;font-weight:700
+              font-size:36px;
+              font-weight:700
             ">${closing ? "!" : "✓"}</div>
 
             <h2 style="font-size:24px;margin:0 0 12px">
@@ -399,7 +549,8 @@ window.BTAdminEvents = (() => {
             </h2>
 
             <p style="
-              font-weight:700;font-size:16px;
+              font-weight:700;
+              font-size:16px;
               margin:0 0 18px
             ">
               ${esc(eventData?.title || "Event / Tour")}
@@ -433,10 +584,14 @@ window.BTAdminEvents = (() => {
               <button type="button"
                 id="bt-event-toggle-confirm"
                 style="
-                  flex:1;border:0;border-radius:12px;
-                  padding:13px;color:white;
+                  flex:1;
+                  border:0;
+                  border-radius:12px;
+                  padding:13px;
+                  color:white;
                   background:${closing ? "#dc2626" : "#16a34a"};
-                  font-weight:700;cursor:pointer
+                  font-weight:700;
+                  cursor:pointer
                 "
                 onclick="BTAdminEvents.toggle(
                   ${Number(id)},'${currentStatus}',true
@@ -471,10 +626,11 @@ window.BTAdminEvents = (() => {
           ...headers,
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({status:next})
+        body: JSON.stringify({ status: next })
       });
 
       document.getElementById("md").innerHTML = "";
+
       await loadAPIEvents();
       refresh();
     } catch (e) {
@@ -490,14 +646,16 @@ window.BTAdminEvents = (() => {
       if (button) {
         button.disabled = false;
         button.textContent = closing
-          ? "ปิดรับจอง" : "เปิดรับจอง";
+          ? "ปิดรับจอง"
+          : "เปิดรับจอง";
       }
     }
   }
 
-
   async function history(id) {
-    const eventData = state.rows.find(e => Number(e.id) === Number(id));
+    const eventData = state.rows.find(
+      e => Number(e.id) === Number(id)
+    );
 
     const modal = document.getElementById("md");
 
@@ -505,7 +663,8 @@ window.BTAdminEvents = (() => {
       <div class="md">
         <div class="card pad" style="
           width:min(95vw,700px);
-          max-height:85vh;overflow:auto
+          max-height:85vh;
+          overflow:auto
         ">
           <h2>ประวัติการแก้ไข Event</h2>
           <p>${esc(eventData?.title || "")}</p>
@@ -514,7 +673,9 @@ window.BTAdminEvents = (() => {
       </div>`;
 
     try {
-      const rows = await request(`/api/admin/events/${id}/history`);
+      const rows = await request(
+        `/api/admin/events/${id}/history`
+      );
 
       const fieldNames = {
         title: "ชื่อ",
@@ -534,16 +695,25 @@ window.BTAdminEvents = (() => {
           border-bottom:1px solid #e2e8f0;
           overflow-wrap:anywhere
         ">
-          <strong>${esc(fieldNames[x.fieldName] || x.fieldName)}</strong>
+          <strong>
+            ${esc(fieldNames[x.fieldName] || x.fieldName)}
+          </strong>
+
           <p class="mu" style="font-size:12px;margin:5px 0">
             ${esc(x.changedBy)} ·
-            ${esc(String(x.changedAt || "").replace("T"," ").slice(0,19))}
+            ${esc(
+              String(x.changedAt || "")
+                .replace("T", " ")
+                .slice(0, 19)
+            )}
           </p>
+
           <div style="font-size:14px;margin-top:8px">
             <span style="color:#b91c1c">
               เดิม: ${esc(x.oldValue || "—")}
             </span>
           </div>
+
           <div style="font-size:14px;margin-top:5px">
             <span style="color:#15803d">
               ใหม่: ${esc(x.newValue || "—")}
@@ -556,7 +726,8 @@ window.BTAdminEvents = (() => {
         <div class="md">
           <div class="card pad" style="
             width:min(95vw,700px);
-            max-height:85vh;overflow:auto
+            max-height:85vh;
+            overflow:auto
           ">
             <h2>ประวัติการแก้ไข Event</h2>
             <p><b>${esc(eventData?.title || "")}</b></p>
@@ -579,7 +750,9 @@ window.BTAdminEvents = (() => {
         <div class="md">
           <div class="card pad" style="width:min(95vw,500px)">
             <h2>โหลดประวัติไม่สำเร็จ</h2>
-            <p style="color:#dc2626">${esc(error.message)}</p>
+            <p style="color:#dc2626">
+              ${esc(error.message)}
+            </p>
             <button class="btn o" type="button"
               onclick="document.getElementById('md').innerHTML=''">
               ปิด
@@ -590,44 +763,112 @@ window.BTAdminEvents = (() => {
   }
 
   function render() {
-    if (!state.loaded && !state.loading && !state.error) load();
+    if (!state.loaded && !state.loading && !state.error) {
+      load();
+    }
 
-    if (state.error) return `
-      <div class="card pad">
-        <p style="color:#dc2626">${esc(state.error)}</p>
-        <button class="btn" onclick="BTAdminEvents.refresh()">
-          ลองใหม่
-        </button>
-      </div>`;
+    if (state.error) {
+      return `
+        <div class="card pad">
+          <p style="color:#dc2626">
+            ${esc(state.error)}
+          </p>
+          <button class="btn" onclick="BTAdminEvents.refresh()">
+            ลองใหม่
+          </button>
+        </div>`;
+    }
 
-    if (!state.loaded) return `
-      <div class="card pad">กำลังโหลด Event จาก MySQL...</div>`;
+    if (!state.loaded) {
+      return `
+        <div class="card pad">
+          กำลังโหลด Event จาก MySQL...
+        </div>`;
+    }
 
     const rows = [...state.rows].reverse().map(e => `
-      <tr class="bt-event-row" data-search="${esc([e.title,e.titleEn,e.category,e.location].join(' ').toLowerCase())}">
-        <td><div class="bt-event-cell">${e.imageUrl ? `<img src="${esc(e.imageUrl)}" loading="lazy" alt="" onerror="this.style.display='none'">` : `<span class="bt-event-noimage">◈</span>`}<div><b>${esc(e.titleEn && typeof L !== 'undefined' && L ? e.titleEn : e.title)}</b><small>${esc(BTLocale.eventDate(String(e.eventDate || '').slice(0,10)))}</small></div></div></td>
-        <td>${esc(BTLocale.category(e.category))}</td>
-        <td>${esc(BTLocale.place(e.location))}</td>
-        <td>${esc(BTLocale.eventDate(String(e.eventDate || '').slice(0,10)))}</td>
-        <td>${money(e.price)}</td>
-        <td>${Number(e.availableSeats ?? 0)}
-            / ${Number(e.totalSeats ?? 0)}</td>
+      <tr class="bt-event-row"
+        data-search="${esc(
+          [e.title, e.titleEn, e.category, e.location]
+            .join(" ")
+            .toLowerCase()
+        )}">
+
         <td>
-          <span class="badge">${esc(BTLocale.status(e.status))}</span>
+          <div class="bt-event-cell">
+            ${e.imageUrl ? `
+              <img src="${esc(e.imageUrl)}"
+                loading="lazy"
+                alt=""
+                onerror="this.style.display='none'">
+            ` : `
+              <span class="bt-event-noimage">◈</span>
+            `}
+
+            <div>
+              <b>
+                ${esc(
+                  e.titleEn && typeof L !== "undefined" && L
+                    ? e.titleEn
+                    : e.title
+                )}
+              </b>
+
+              <small>
+                ${esc(
+                  BTLocale.eventDate(
+                    String(e.eventDate || "").slice(0, 10)
+                  )
+                )}
+              </small>
+            </div>
+          </div>
         </td>
+
+        <td>${esc(BTLocale.category(e.category))}</td>
+
+        <td>${esc(BTLocale.place(e.location))}</td>
+
+        <td>
+          ${esc(
+            BTLocale.eventDate(
+              String(e.eventDate || "").slice(0, 10)
+            )
+          )}
+        </td>
+
+        <td>${money(e.price)}</td>
+
+        <td>
+          ${Number(e.availableSeats ?? 0)}
+          / ${Number(e.totalSeats ?? 0)}
+        </td>
+
+        <td>
+          <span class="badge">
+            ${esc(BTLocale.status(e.status))}
+          </span>
+        </td>
+
         <td>
           <button class="btn sm o"
             onclick="BTAdminEvents.edit(${Number(e.id)})">
             แก้ไข
           </button>
+
           <button class="btn sm o"
             onclick="BTAdminEvents.history(${Number(e.id)})">
             ประวัติ
           </button>
+
           <button class="btn sm o"
+            style="${e.status === "ACTIVE"
+              ? "background:#fff7ed;color:#c2410c;border-color:#fb923c"
+              : ""}"
             onclick="BTAdminEvents.toggle(${Number(e.id)},'${esc(e.status)}')">
             ${e.status === "ACTIVE" ? "ปิดรับจอง" : "เปิดรับจอง"}
           </button>
+
           <button class="btn sm o" type="button"
             style="color:#dc2626;border-color:#fecaca"
             onclick="BTAdminEvents.deleteEvent(${Number(e.id)})">
@@ -640,39 +881,83 @@ window.BTAdminEvents = (() => {
     return `
       <div class="sh">
         <h2>จัดการ Event / Tour (${state.rows.length})</h2>
+
         <div class="rw">
           <button class="btn" onclick="BTAdminEvents.edit(0)">
             + เพิ่ม Event / Tour
           </button>
+
           <button class="btn o" onclick="BTAdminEvents.refresh()">
             โหลดใหม่
           </button>
         </div>
       </div>
 
+      <div class="bt-event-toolbar">
+        <input type="search"
+          aria-label="${typeof L !== "undefined" && L
+            ? "Search tours and events"
+            : "ค้นหาทัวร์และอีเวนต์"}"
+          placeholder="${typeof L !== "undefined" && L
+            ? "Search tours and events..."
+            : "ค้นหาทัวร์ / Event..."}"
+          oninput="BTAdminEvents.filterRows(this.value)">
+      </div>
 
-
-      <div class="bt-event-toolbar"><input type="search" aria-label="${typeof L!=='undefined'&&L?'Search tours and events':'ค้นหาทัวร์และอีเวนต์'}" placeholder="${typeof L!=='undefined'&&L?'Search tours and events...':'ค้นหาทัวร์ / Event...'}" oninput="BTAdminEvents.filterRows(this.value)"></div>
       <div class="tw bt-event-table">
         <table>
           <tr>
-            <th>ชื่อ</th><th>ประเภท</th><th>สถานที่</th>
-            <th>วันที่</th><th>ราคา</th><th>ที่นั่ง</th>
-            <th>สถานะ</th><th>จัดการ</th>
+            <th>ชื่อ</th>
+            <th>ประเภท</th>
+            <th>สถานที่</th>
+            <th>วันที่</th>
+            <th>ราคา</th>
+            <th>ที่นั่ง</th>
+            <th>สถานะ</th>
+            <th>จัดการ</th>
           </tr>
+
           ${rows}
-          <tr class="bt-event-empty" ${state.rows.length?'hidden':''}><td colspan="8" role="status">${typeof L!=='undefined'&&L?'No matching items':'ไม่พบรายการ'}</td></tr>
+
+          <tr class="bt-event-empty"
+            ${state.rows.length ? "hidden" : ""}>
+            <td colspan="8" role="status">
+              ${typeof L !== "undefined" && L
+                ? "No matching items"
+                : "ไม่พบรายการ"}
+            </td>
+          </tr>
         </table>
       </div>`;
   }
 
-  function filterRows(query){
-    const q=String(query||'').toLowerCase().trim();
-    let visible=0;
-    document.querySelectorAll('.bt-event-row').forEach(row=>{
-      row.hidden=!row.dataset.search.includes(q);if(!row.hidden)visible++;
+  function filterRows(query) {
+    const q = String(query || "").toLowerCase().trim();
+    let visible = 0;
+
+    document.querySelectorAll(".bt-event-row").forEach(row => {
+      row.hidden = !row.dataset.search.includes(q);
+
+      if (!row.hidden) {
+        visible++;
+      }
     });
-    const empty=document.querySelector('.bt-event-empty');if(empty)empty.hidden=visible>0;
+
+    const empty = document.querySelector(".bt-event-empty");
+
+    if (empty) {
+      empty.hidden = visible > 0;
+    }
   }
-  return {render, refresh, edit, save, toggle, history, deleteEvent, filterRows};
+
+  return {
+    render,
+    refresh,
+    edit,
+    save,
+    toggle,
+    history,
+    deleteEvent,
+    filterRows
+  };
 })();
