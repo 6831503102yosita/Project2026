@@ -73,6 +73,20 @@ public class OrganizerAssignmentController {
     public Map<String,Object> cancelAssignment(
             @PathVariable Long id, Authentication auth) {
         assignmentAdmin(auth);
+
+        var assignments = jdbc.queryForList(
+            "SELECT id FROM organizer_assignments WHERE id=? FOR UPDATE", id);
+        if (assignments.isEmpty())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+
+        Long reportCount = jdbc.queryForObject(
+            "SELECT COUNT(*) FROM organizer_work_reports WHERE assignment_id=?",
+            Long.class, id);
+        if (reportCount != null && reportCount > 0)
+            throw new ResponseStatusException(
+                HttpStatus.CONFLICT,
+                "Cannot delete assignment with existing work reports");
+
         int changed = jdbc.update(
             "DELETE FROM organizer_assignments WHERE id=?", id);
         if (changed != 1)
