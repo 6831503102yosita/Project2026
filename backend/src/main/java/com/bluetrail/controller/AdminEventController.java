@@ -200,7 +200,9 @@ public class AdminEventController {
     public Event update(
             @PathVariable Long id,
             @RequestBody EventInput input,
-            Authentication auth) {
+            Authentication auth,
+            @RequestHeader(value = "If-Match", required = false)
+            String editToken) {
 
         validate(input);
 
@@ -210,6 +212,13 @@ public class AdminEventController {
         if (event == null)
             throw new ResponseStatusException(
                 HttpStatus.NOT_FOUND, "Event not found");
+
+        if (editToken == null ||
+                !event.getEditToken().equals(editToken)) {
+            throw new ResponseStatusException(
+                HttpStatus.CONFLICT,
+                "Event changed. Reload the latest data before saving.");
+        }
 
         int oldTotal = event.getTotalSeats() == null
             ? 0 : event.getTotalSeats();

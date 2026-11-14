@@ -151,4 +151,29 @@ public class Event {
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
+
+    @Transient
+    public String getEditToken() {
+        StringBuilder source = new StringBuilder();
+
+        Object[] values = {
+            id, title, titleEn, category, description, descriptionEn,
+            location, eventDate, price, totalSeats, status, imageUrl
+        };
+
+        for (Object value : values) {
+            String text = value == null ? "" : value.toString();
+            source.append(text.length()).append(':').append(text);
+        }
+
+        try {
+            byte[] digest = java.security.MessageDigest
+                .getInstance("SHA-256")
+                .digest(source.toString().getBytes(
+                    java.nio.charset.StandardCharsets.UTF_8));
+            return java.util.HexFormat.of().formatHex(digest);
+        } catch (java.security.NoSuchAlgorithmException ex) {
+            throw new IllegalStateException(ex);
+        }
+    }
 }

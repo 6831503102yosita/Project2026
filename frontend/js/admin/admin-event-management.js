@@ -294,6 +294,9 @@ window.BTAdminEvents = (() => {
           </div>
 
           <form onsubmit="return BTAdminEvents.save(event,${Number(id)})">
+            <input type="hidden" name="editToken"
+              value="${esc(e?.editToken || '')}">
+
             ${field(
               typeof L !== "undefined" && L
                 ? "Event / Tour title (Thai)"
@@ -457,6 +460,7 @@ window.BTAdminEvents = (() => {
           method: id ? "PUT" : "POST",
           headers: {
             ...headers,
+            ...(id ? {"If-Match": f.editToken.value} : {}),
             "Content-Type": "application/json"
           },
           body: JSON.stringify(input)
