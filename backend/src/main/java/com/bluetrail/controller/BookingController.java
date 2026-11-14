@@ -77,8 +77,98 @@ public class BookingController {
         return result;
     }
 
+    @org.springframework.beans.factory.annotation.Autowired
+    private org.springframework.jdbc.core.JdbcTemplate bookingJdbc;
+
     @PostMapping("/api/bookings")
-    @Transactional
+    @org.springframework.transaction.annotation.Transactional(
+        isolation = org.springframework.transaction.annotation.Isolation.READ_COMMITTED
+    )
+    public ResponseEntity<?> createOnce(
+            @RequestBody NewBooking input,
+            Authentication auth,
+            @RequestHeader(value = "Idempotency-Key", required = false)
+            String key) {
+
+        User user = currentUser(auth);
+
+        if (key == null ||
+                !key.matches("^[A-Za-z0-9_-]{16,80}$")) {
+            return ResponseEntity.badRequest().body(
+                Map.of("error", "A valid Idempotency-Key is required"));
+        }
+
+        if (input == null) {
+            return ResponseEntity.badRequest().body(
+                Map.of("error", "Invalid booking information"));
+        }
+
+        // Serialize booking attempts for this customer across instances.
+        bookingJdbc.queryForObject(
+            "SELECT id FROM users WHERE id=? FOR UPDATE",
+            Long.class, user.getId());
+
+        String fingerprint;
+        try {
+            byte[] digest = java.security.MessageDigest
+                .getInstance("SHA-256")
+                .digest(input.toString().getBytes(
+                    java.nio.charset.StandardCharsets.UTF_8));
+            fingerprint = java.util.HexFormat.of().formatHex(digest);
+        } catch (java.security.NoSuchAlgorithmException ex) {
+            throw new IllegalStateException(ex);
+        }
+
+        var previous = bookingJdbc.queryForList(
+            "SELECT request_hash, booking_id FROM booking_idempotency " +
+            "WHERE user_id=? AND request_key=? FOR UPDATE",
+            user.getId(), key);
+
+        if (!previous.isEmpty()) {
+            var row = previous.get(0);
+
+            if (!fingerprint.equals(row.get("request_hash"))) {
+                return ResponseEntity.status(HttpStatus.CONFLICT).body(
+                    Map.of("error",
+                        "This Idempotency-Key was used with different booking data"));
+            }
+
+            Booking existing = em.find(
+                Booking.class,
+                ((Number) row.get("booking_id")).longValue(),
+                LockModeType.PESSIMISTIC_READ);
+
+            if (existing == null ||
+                    !user.getId().equals(existing.getUser().getId())) {
+                throw new IllegalStateException(
+                    "Invalid booking idempotency record");
+            }
+
+            return ResponseEntity.ok()
+                .header("Idempotency-Replayed", "true")
+                .body(response(existing));
+        }
+
+        ResponseEntity<?> result = create(input, auth);
+
+        if (result.getStatusCode().value() == 201) {
+            if (!(result.getBody() instanceof Map<?, ?> body) ||
+                    !(body.get("id") instanceof Number bookingId)) {
+                throw new IllegalStateException(
+                    "Booking response has no identifier");
+            }
+
+            bookingJdbc.update(
+                "INSERT INTO booking_idempotency " +
+                "(user_id,request_key,request_hash,booking_id) " +
+                "VALUES (?,?,?,?)",
+                user.getId(), key, fingerprint,
+                bookingId.longValue());
+        }
+
+        return result;
+    }
+
     public ResponseEntity<?> create(
             @RequestBody NewBooking input,
             Authentication auth) {

@@ -61,6 +61,10 @@ const A={...QA,...PA,async apiBook(event,id){
   event.preventDefault();
 
   const form = event.target;
+  if (form.dataset.btCompletedBooking) {
+    go('/bookings');
+    return false;
+  }
   const button = form.querySelector('button[type="submit"]');
   const qty = Number(form.elements.qty.value);
   const selected = API_EVENTS &&
@@ -102,21 +106,47 @@ const A={...QA,...PA,async apiBook(event,id){
       throw new Error('ไม่พบ CSRF Token');
     }
 
+    const bookingPayload = {
+      eventId: Number(id),
+      quantity: qty,
+      contactName: form.elements.contactName.value.trim(),
+      contactPhone: form.elements.contactPhone.value.trim(),
+      contactEmail: form.elements.contactEmail.value.trim(),
+      bankId: form.elements.bankId.value
+    };
+
+    const payloadText = JSON.stringify(bookingPayload);
+    const attemptSlot =
+      'bt-booking-attempt:' + currentUser.id + ':' + Number(id);
+
+    let attempt = null;
+    try {
+      attempt = JSON.parse(sessionStorage.getItem(attemptSlot) || 'null');
+    } catch {
+      attempt = null;
+    }
+
+    if (!attempt || attempt.payload !== payloadText ||
+        typeof attempt.key !== 'string' ||
+        !/^[A-Za-z0-9_-]{16,80}$/.test(attempt.key)) {
+      attempt = {
+        key: crypto.randomUUID(),
+        payload: payloadText
+      };
+    }
+
+    // Save before sending. Keep this key if the response is lost.
+    sessionStorage.setItem(attemptSlot, JSON.stringify(attempt));
+
     const response = await fetch('/api/bookings', {
       method: 'POST',
       credentials: 'same-origin',
       headers: {
         'Content-Type': 'application/json',
+        'Idempotency-Key': attempt.key,
         [csrf.headerName]: csrf.token
       },
-      body: JSON.stringify({
-        eventId: Number(id),
-        quantity: qty,
-        contactName: form.elements.contactName.value.trim(),
-        contactPhone: form.elements.contactPhone.value.trim(),
-        contactEmail: form.elements.contactEmail.value.trim(),
-        bankId: form.elements.bankId.value
-      })
+      body: payloadText
     });
 
     if(response.status===401){BTBookingSession.expired(form,id);return false;}
@@ -130,6 +160,10 @@ const A={...QA,...PA,async apiBook(event,id){
     }
 
     const booking = await response.json();
+
+    // Prevent resubmitting this already completed form.
+    form.dataset.btCompletedBooking = String(booking.id);
+    sessionStorage.removeItem(attemptSlot);
     BTBookingSession.clear();
     const slip = form.elements.slip?.files?.[0];
     let uploadWarning = '';

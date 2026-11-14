@@ -18,6 +18,19 @@ public class BusinessSchemaBootstrap {
           if(!(cause instanceof java.sql.SQLException sql)||sql.getErrorCode()!=1060)throw e;
         }
       }
+      db.execute(
+          "CREATE TABLE IF NOT EXISTS booking_idempotency (" +
+          "user_id BIGINT NOT NULL," +
+          "request_key VARCHAR(80) CHARACTER SET ascii COLLATE ascii_bin NOT NULL," +
+          "request_hash CHAR(64) CHARACTER SET ascii COLLATE ascii_bin NOT NULL," +
+          "booking_id BIGINT NOT NULL," +
+          "created_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6)," +
+          "PRIMARY KEY(user_id,request_key)," +
+          "UNIQUE KEY uq_booking_idempotency_booking(booking_id)," +
+          "CONSTRAINT fk_booking_idempotency_user FOREIGN KEY(user_id) REFERENCES users(id)," +
+          "CONSTRAINT fk_booking_idempotency_booking FOREIGN KEY(booking_id) REFERENCES bookings(id)" +
+          ") ENGINE=InnoDB"
+      );
       db.execute("CREATE TABLE IF NOT EXISTS event_change_history (id BIGINT AUTO_INCREMENT PRIMARY KEY, event_id BIGINT NOT NULL, changed_by VARCHAR(255), field_name VARCHAR(90) NOT NULL, old_value TEXT, new_value TEXT, changed_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6), INDEX (event_id)) ENGINE=InnoDB");
       db.execute("CREATE TABLE IF NOT EXISTS organizer_assignments (id BIGINT AUTO_INCREMENT PRIMARY KEY, request_id BIGINT NOT NULL, organizer_id BIGINT NOT NULL, note TEXT, status VARCHAR(30) NOT NULL DEFAULT 'ASSIGNED', created_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6), INDEX (request_id), INDEX (organizer_id)) ENGINE=InnoDB");
       db.execute("CREATE TABLE IF NOT EXISTS quotations (id BIGINT AUTO_INCREMENT PRIMARY KEY, event_request_id BIGINT NOT NULL, quotation_number VARCHAR(60), revision INT NOT NULL DEFAULT 0, status VARCHAR(30) NOT NULL DEFAULT 'DRAFT', subtotal DECIMAL(12,2) NOT NULL DEFAULT 0, discount DECIMAL(12,2) NOT NULL DEFAULT 0, tax_amount DECIMAL(12,2) NOT NULL DEFAULT 0, total_amount DECIMAL(12,2) NOT NULL DEFAULT 0, admin_note TEXT, customer_note TEXT, created_by VARCHAR(255), created_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6), sent_at DATETIME(6), responded_at DATETIME(6), INDEX(event_request_id)) ENGINE=InnoDB");
