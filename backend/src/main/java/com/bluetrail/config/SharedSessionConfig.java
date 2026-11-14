@@ -13,8 +13,16 @@ import org.springframework.session.web.http.DefaultCookieSerializer;
 @EnableJdbcHttpSession(maxInactiveIntervalInSeconds = 3600, tableName = "BT_HTTP_SESSION")
 public class SharedSessionConfig {
     @Bean
-    public InitializingBean blueTrailSessionSchema(DataSource dataSource) {
-        return () -> initializeSchema(new JdbcTemplate(dataSource));
+    public InitializingBean blueTrailSessionSchema(
+            DataSource dataSource,
+            @org.springframework.beans.factory.annotation.Value(
+                "${bluetrail.schema.bootstrap:true}") boolean bootstrap) {
+        // Keep this bean present for SecurityConfig's dependency.
+        return () -> {
+            if (bootstrap) {
+                initializeSchema(new JdbcTemplate(dataSource));
+            }
+        };
     }
 
     public static void initializeSchema(JdbcTemplate jdbc) {

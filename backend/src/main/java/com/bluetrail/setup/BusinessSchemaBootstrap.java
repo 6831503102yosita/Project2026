@@ -8,8 +8,12 @@ import org.springframework.jdbc.core.JdbcTemplate;
 @Configuration
 public class BusinessSchemaBootstrap {
   @Bean
-  ApplicationRunner ensureBusinessTables(JdbcTemplate db) {
+  ApplicationRunner ensureBusinessTables(
+      JdbcTemplate db,
+      @org.springframework.beans.factory.annotation.Value(
+          "${bluetrail.schema.bootstrap:true}") boolean bootstrap) {
     return args -> {
+      if (!bootstrap) return;
       Integer bankColumn=db.queryForObject("SELECT COUNT(*) FROM information_schema.columns WHERE table_schema=DATABASE() AND table_name='bookings' AND column_name='bank_id'",Integer.class);
       if(bankColumn!=null&&bankColumn==0){
         try{db.execute("ALTER TABLE bookings ADD COLUMN bank_id VARCHAR(10) NULL");}

@@ -15,7 +15,13 @@ public class EventDecisionMailController {
  private final JdbcTemplate db;private final BookingMailService mail;
  @PersistenceContext private EntityManager em;
  public EventDecisionMailController(JdbcTemplate db,BookingMailService mail){this.db=db;this.mail=mail;}
- @PostConstruct public void schema(){db.execute("CREATE TABLE IF NOT EXISTS event_decision_mail (mail_key VARCHAR(100) PRIMARY KEY,last_attempt DATETIME(6),sent_at DATETIME(6),status VARCHAR(20) NOT NULL)");}
+ @org.springframework.beans.factory.annotation.Value(
+     "${bluetrail.schema.bootstrap:true}")
+ private boolean schemaBootstrap = true;
+
+ @PostConstruct public void schema(){
+  if (!schemaBootstrap) return;
+  db.execute("CREATE TABLE IF NOT EXISTS event_decision_mail (mail_key VARCHAR(100) PRIMARY KEY,last_attempt DATETIME(6),sent_at DATETIME(6),status VARCHAR(20) NOT NULL)");}
  @PostMapping("/api/admin/event-requests/{id}/decision-email")
  @Transactional public Map<String,Object> send(@PathVariable long id,@RequestBody(required=false) Map<String,Object> input,Authentication auth){
   if(auth==null||auth.getAuthorities().stream().noneMatch(a->"ROLE_ADMIN".equals(a.getAuthority())))throw new ResponseStatusException(HttpStatus.FORBIDDEN);
